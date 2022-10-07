@@ -4,7 +4,7 @@ import io
 from pathlib import Path
 import labelbox
 
-# Opening the yaml secrets
+# Opening the Labelbox secrets
 def open_yaml(yaml_path):
     with open(yaml_path) as file:
         yaml_dict = yaml.safe_load(file)
@@ -37,7 +37,8 @@ def main():
     project_id = labelbox_secrets["project_id"]
 
     # Downloading the labels
-    download_labels(api_key, project_id)
+    labels = download_labels(api_key, project_id)
+    print(labels)
 
 if __name__ == "__main__":
     main()
