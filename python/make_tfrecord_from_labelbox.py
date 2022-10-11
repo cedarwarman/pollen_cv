@@ -93,7 +93,7 @@ def parse_labelbox_data(data):
         # Adding them to a nice list using the "label" class defined above.
         # For now I'm only including bounding boxes, so just pollen no tube tips.
         for l in label_objs:
-            if(l.get("bbox")):
+            if l.get("bbox"):
                 # print(l.get("bbox"))
                 labels.append(label_from_labelbox_obj(l))
             else:
@@ -103,9 +103,39 @@ def parse_labelbox_data(data):
         # All images uploaded to Labelbox are 2048 by 2048 until further 
         # notice. If necessary I can add the code to download them and get 
         # the actual dimensions be seems like a lot of unnecessary IO for now.
+        # I will add the other things as I need them.
+        records.append(TFRecordInfo(2048, 2048, image_name, "empty", "empty", "empty", "empty", "empty", "empty", labels))
 
+    print(f"{len(data)} labeled images parsed")
+    
+    return data, records
 
+# Getting classes.
+def get_classes_from_labelbox(data):
+    labels_set = set()
+    for record in data:
+        if isinstance(record, dict):
+            if "objects" in record["Label"]:
+                label_objs = record["Label"]["objects"]
+                for obj in label_objs:
+                    # This version does only bounding boxes
+                    if obj.get("bbox"):
+                        labels_set.add(obj["value"])
+    labels_list = list(labels_set)
+    labels = {}
+    for i in range(0, len(labels_list)):
+        labels[labels_list[i]] = i
+    return labels
 
+# Making the tfrecords with split
+def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class_dict):
+    print("Making tfrecords")
+
+    # Hopefully from here it's pretty straightforward? Just need to add the 
+    # images as an arg and deal with their paths in parse_labelbox_data and/or
+    # create_tf_example, figure out what's actually necessary in create_tf_example,
+    # and write it up.
+    
 
 def main():
     # Getting the secrets
@@ -117,10 +147,17 @@ def main():
     # Downloading the labels
     labels = download_labels(api_key, project_id)
     # print("Length of labels is: ", len(labels))
-    print(labels[1]["Labeled Data"])
+    # print(labels[1]["Labeled Data"])
 
     # Parsing the labels
-    parse_labelbox_data(labels)
+    data, records = parse_labelbox_data(labels)
+
+    # Getting the different classes present
+    class_dict = get_classes_from_labelbox(data)
+    #print(class_dict)
+
+    # Making the tfrecords
+    generate_tfrecords("add_image_path", "add_tfrecord_path", "80 20", data, records, class_dict)
 
 if __name__ == "__main__":
     main()
