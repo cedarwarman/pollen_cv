@@ -1,9 +1,19 @@
 #!/usr/bin/env python3
+
+# Largely based off of https://github.com/caseydaly/LabelboxToTFRecord/
+
 import yaml
 import io
+import os
+from datetime import datetime
 import random
 from pathlib import Path
 import labelbox
+import argparse
+import tensorflow as tf
+from PIL import Image
+
+from object_detection.utils import dataset_util
 
 # Opening the Labelbox secrets
 def open_yaml(yaml_path):
@@ -73,19 +83,33 @@ class TFRecordInfo:
     def __repr__(self):
         return "TFRecordInfo({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8})".format(self.height, self.width, self.filename, self.source_id, type(self.encoded), self.format, self.sha_key, self.labelbox_rowid, self.labels)
 
-# Parsing the labels (based off https://github.com/caseydaly/LabelboxToTFRecord/)
+# Parsing the labels 
 def parse_labelbox_data(data):
     records = list()
+    image_format = b'jpg'
+
     for i in range(len(data)):
         record = data[i]
 
-        # The original author got the image dimensions from the url, but I 
-        # think I will get them when I import the actual image later (the 
-        # labelbox images are compressed but probably will be the same size 
-        # unless I downscale for the trianing/inference).
-        #image_url = record["Labeled Data"]
-        #print(image_url)
         image_name = record['External ID']
+
+        # Reading in the image from the disk
+        # Getting the correct filename. In the future make the image base path an arg
+        #filename = record_obj.filename.encode('utf8')
+        print(f'Importing {image_name}')
+        image_path = path_from_filename(image_name)
+
+        with tf.io.gfile.GFile(image_path, 'rb') as fid:
+            encoded_jpg = fid.read()
+
+            # Skipping this because the disk image size might eventually be different 
+            # from the Labelbox upload size and I want the ratios to be right, so 
+            # manually inputting the labelbox upload size below. Can be changed in future.
+            # im = Image.open(image_path)
+            # width, height = im.size
+            #print(f'Image width is: {width}')
+            #print(f'Image height is: {height}')
+
 
         # Object labels.
         labels = list()
@@ -105,7 +129,7 @@ def parse_labelbox_data(data):
         # notice. If necessary I can add the code to download them and get 
         # the actual dimensions be seems like a lot of unnecessary IO for now.
         # I will add the other things as I need them.
-        records.append(TFRecordInfo(2048, 2048, image_name, "empty", "empty", "empty", "empty", "empty", "empty", labels))
+        records.append(TFRecordInfo(2048, 2048, image_name, "empty", encoded_jpg, image_format, "empty", "empty", "empty", labels))
 
     print(f"{len(data)} labeled images parsed")
     
@@ -171,6 +195,61 @@ def splits_to_record_indices(splits, num_records):
     # Dedupe
     return list(OrderedDict.fromkeys(img_indices))
 
+# Get path from filename (for loading images locally according to my directory structure)
+def path_from_filename(filename):
+    split_string = filename.split("_")
+    dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_stab" 
+    # Will change, consider arg later
+    path_base = Path('/media/volume/sdb/jpgs')
+    out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
+    
+    return out_path
+
+
+def create_tf_example(record_obj, class_dict):
+
+    xmins = []
+    xmaxs = []
+    ymins = []
+    ymaxs = []
+    classes_text = []
+    classes = []
+
+    for label_obj in record_obj.labels:
+        print(label_obj.xmin)
+        print(record_obj.width)
+        print(label_obj.xmax)
+        print(record_obj.width)
+        print(label_obj.ymin)
+        print(record_obj.height)
+        print(label_obj.ymax)
+        print(record_obj.height)
+        xmins.append(label_obj.xmin / record_obj.width)
+        xmaxs.append(label_obj.xmax / record_obj.width)
+        ymins.append(label_obj.ymin / record_obj.height)
+        ymaxs.append(label_obj.ymax / record_obj.height)
+        print("Label_obj.label: ", label_obj.label)
+        classes_text.append(label_obj.label.encode('utf8'))
+        print(class_dict[label_obj.label])
+        classes.append(class_dict[label_obj.label])
+        print(" ")
+
+    tf_example = tf.train.Example(features=tf.train.Features(feature={
+        'image/height': dataset_util.int64_feature(record_obj.height),
+        'image/width': dataset_util.int64_feature(record_obj.width),
+        'image/filename': dataset_util.bytes_feature(record_obj.filename.encode('utf8')),
+        'image/source_id': dataset_util.bytes_feature(record_obj.source_id.encode('utf8')),
+        'image/encoded': dataset_util.bytes_feature(record_obj.encoded),
+        'image/format': dataset_util.bytes_feature(record_obj.format),
+        'image/object/bbox/xmin': dataset_util.float_list_feature(xmins),
+        'image/object/bbox/xmax': dataset_util.float_list_feature(xmaxs),
+        'image/object/bbox/ymin': dataset_util.float_list_feature(ymins),
+        'image/object/bbox/ymax': dataset_util.float_list_feature(ymaxs),
+        'image/object/class/text': dataset_util.bytes_list_feature(classes_text),
+        'image/object/class/label': dataset_util.int64_list_feature(classes),
+    }))
+    return tf_example
+
 # Making the tfrecords with split
 def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class_dict):
     print("Making tfrecords")
@@ -182,14 +261,16 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
 
     # Making a directory for the output tfrecords
     tfrecord_folder = tfrecord_dest
+    print(tfrecord_folder)
     if not os.path.exists(tfrecord_folder):
         os.makedirs(tfrecord_folder)
     # Might not need to do this if I'm using pathlib
     if tfrecord_folder[len(tfrecord_folder)-1] != '/':
         tfrecord_folder += '/'
 
-    strnow = datetime.now().strftime('%Y-%m-%dT%H%M')
+    strnow = datetime.now().strftime('%Y-%m-%d_t%H%M')
     splits = splits_to_record_indices(splits, len(records))
+    print("splits is: ", splits)
     assert splits[-1] == len(records), f'{splits}, {len(records)}'
 
     random.shuffle(records)
@@ -198,7 +279,8 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
     split_start = 0
     print(f'Creating {len(splits)} TFRecord files:')
     for split_end in splits:
-        outfile = f'{puid}_{strnow}_{split_end - split_start}.tfrecord'
+        outfile = f'{strnow}_{split_end - split_start}.tfrecord'
+        print(f"Outfile is: {outfile}")
         outpath = tfrecord_folder + outfile
         with tf.io.TFRecordWriter(outpath) as writer:
             for record in records[split_start:split_end]:
@@ -209,7 +291,7 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
         print('Successfully created TFRecord file at location: {}'.format(outpath))
         split_start = split_end
 
-    pb_file_name = f'{puid}_{strnow}.pbtxt'
+    pb_file_name = f'{strnow}.pbtxt'
     #### CHECK THIS ONE ####
     label_text = class_dict_to_label_map_str(class_dict)
     with open(tfrecord_folder + pb_file_name, 'w') as label_file:
@@ -236,20 +318,17 @@ def main():
 
     # Downloading the labels
     labels = download_labels(api_key, project_id)
-    # print("Length of labels is: ", len(labels))
-    # print(labels[1]["Labeled Data"])
 
     # Parsing the labels
     data, records = parse_labelbox_data(labels)
 
     # Getting the different classes present
     class_dict = get_classes_from_labelbox(data)
-    #print(class_dict)
 
     splits = validate_splits(args.splits)
 
     # Making the tfrecords
-    generate_tfrecords("add_image_path", "add_tfrecord_path", "80 20", data, records, class_dict)
+    generate_tfrecords("add_image_path", args.tfrecord_dest, args.splits, data, records, class_dict)
 
 if __name__ == "__main__":
     main()
