@@ -14,6 +14,8 @@ import tensorflow as tf
 from PIL import Image
 
 from object_detection.utils import dataset_util
+from object_detection.protos import string_int_label_map_pb2
+from google.protobuf import text_format
 
 # Opening the Labelbox secrets
 def open_yaml(yaml_path):
@@ -250,6 +252,18 @@ def create_tf_example(record_obj, class_dict):
     }))
     return tf_example
 
+# Maps a { 'shark': 1, 'person': 2 } dict to a labelmap structure
+# for the pbtxt file
+def class_dict_to_label_map_str(class_dict):
+    label_map_proto = string_int_label_map_pb2.StringIntLabelMap()
+    for key,val in class_dict.items():
+        item = label_map_proto.item.add()
+        item.name = key
+        # 0 is reserved for 'background' only, which we aren't using
+        item.id = val + 1
+
+    return text_format.MessageToString(label_map_proto)
+
 # Making the tfrecords with split
 def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class_dict):
     print("Making tfrecords")
@@ -268,7 +282,7 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
     if tfrecord_folder[len(tfrecord_folder)-1] != '/':
         tfrecord_folder += '/'
 
-    strnow = datetime.now().strftime('%Y-%m-%d_t%H%M')
+    strnow = datetime.now().strftime('%Y-%m-%d_t%H%M%S')
     splits = splits_to_record_indices(splits, len(records))
     print("splits is: ", splits)
     assert splits[-1] == len(records), f'{splits}, {len(records)}'
@@ -279,7 +293,7 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
     split_start = 0
     print(f'Creating {len(splits)} TFRecord files:')
     for split_end in splits:
-        outfile = f'{strnow}_{split_end - split_start}.tfrecord'
+        outfile = f'{strnow}_n{split_end - split_start}.tfrecord'
         print(f"Outfile is: {outfile}")
         outpath = tfrecord_folder + outfile
         with tf.io.TFRecordWriter(outpath) as writer:
@@ -288,15 +302,15 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
                 # The create_tf_example function is going to need some modification
                 tf_example = create_tf_example(record, class_dict)
                 writer.write(tf_example.SerializeToString())
-        print('Successfully created TFRecord file at location: {}'.format(outpath))
+        print(f'Successfully created TFRecord file at: {outpath}')
         split_start = split_end
 
     pb_file_name = f'{strnow}.pbtxt'
     #### CHECK THIS ONE ####
     label_text = class_dict_to_label_map_str(class_dict)
     with open(tfrecord_folder + pb_file_name, 'w') as label_file:
-        print(f'Creating label map file')
         label_file.write(label_text)
+        print(f'Successfully created label map file at: {tfrecord_folder + pb_file_name}')
 
 def main():
     # Some args
