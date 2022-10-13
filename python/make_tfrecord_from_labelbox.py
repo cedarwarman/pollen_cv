@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import yaml
 import io
+import random
 from pathlib import Path
 import labelbox
 
@@ -127,6 +128,49 @@ def get_classes_from_labelbox(data):
         labels[labels_list[i]] = i
     return labels
 
+def validate_splits(args_splits):
+    if not args_splits:
+        splits = [100]
+    else:
+        if any(s <= 0 for s in args_splits):
+            parser.error(message='splits must be positive integers')
+
+        if sum(args_splits) < 100:
+            splits = args_splits + [100 - sum(args_splits)]
+        elif sum(args_splits) > 100:
+            parser.error("splits must sum up to <= 100")
+        else:
+            splits = args_splits
+
+    splits.sort()
+
+    return splits
+
+# Convert a list of percentages adding to 100, ie [20, 30, 50] to a list of indices into the list of records
+# at which to split off a new file
+def splits_to_record_indices(splits, num_records):
+    if splits is None or splits == []:
+        splits = [100]
+    if sum(splits) != 100: raise ValueError("Percentages must add to 100")
+    if not splits or splits == [100]: return [num_records]
+
+    prev_idx = 0
+    img_indices = []
+    for split_idx,split in enumerate(splits[:-1]):
+        end_img_idx = round(prev_idx + (split / 100) * num_records)
+
+        if end_img_idx == prev_idx:
+            #Leave in dupes for now. Take out at the end
+            pass
+        else:
+            img_indices += [min(end_img_idx, num_records)]
+        prev_idx = end_img_idx
+
+    # Adding the last index this way ensures that it isn't rounded down
+    img_indices += [num_records]
+    # Dedupe
+    return list(OrderedDict.fromkeys(img_indices))
+
 # Making the tfrecords with split
 def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class_dict):
     print("Making tfrecords")
@@ -135,9 +179,55 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
     # images as an arg and deal with their paths in parse_labelbox_data and/or
     # create_tf_example, figure out what's actually necessary in create_tf_example,
     # and write it up.
+
+    # Making a directory for the output tfrecords
+    tfrecord_folder = tfrecord_dest
+    if not os.path.exists(tfrecord_folder):
+        os.makedirs(tfrecord_folder)
+    # Might not need to do this if I'm using pathlib
+    if tfrecord_folder[len(tfrecord_folder)-1] != '/':
+        tfrecord_folder += '/'
+
+    strnow = datetime.now().strftime('%Y-%m-%dT%H%M')
+    splits = splits_to_record_indices(splits, len(records))
+    assert splits[-1] == len(records), f'{splits}, {len(records)}'
+
+    random.shuffle(records)
     
+    # Making the tfrecord files
+    split_start = 0
+    print(f'Creating {len(splits)} TFRecord files:')
+    for split_end in splits:
+        outfile = f'{puid}_{strnow}_{split_end - split_start}.tfrecord'
+        outpath = tfrecord_folder + outfile
+        with tf.io.TFRecordWriter(outpath) as writer:
+            for record in records[split_start:split_end]:
+                #### STOPPED HERE ####
+                # The create_tf_example function is going to need some modification
+                tf_example = create_tf_example(record, class_dict)
+                writer.write(tf_example.SerializeToString())
+        print('Successfully created TFRecord file at location: {}'.format(outpath))
+        split_start = split_end
+
+    pb_file_name = f'{puid}_{strnow}.pbtxt'
+    #### CHECK THIS ONE ####
+    label_text = class_dict_to_label_map_str(class_dict)
+    with open(tfrecord_folder + pb_file_name, 'w') as label_file:
+        print(f'Creating label map file')
+        label_file.write(label_text)
 
 def main():
+    # Some args
+    parser = argparse.ArgumentParser(description='Convert Labelbox data to TFRecord and store .tfrecord file(s) locally.')
+    parser.add_argument('--tfrecord-dest', help="Destination folder for .tfrecord file(s)", default="tfrecord")
+    parser.add_argument('--splits', help="Space-separated list of integer percentages for splitting the " +
+        "output into multiple TFRecord files instead of one. Sum of values should be <=100. " +
+        "Example: '--splits 10 70' will write 3 files with 10%%, 70%%, and 20%% of the data, respectively",
+        nargs='+',
+        type=int,
+    )
+    args = parser.parse_args()
+
     # Getting the secrets
     yaml_path = Path.home() / '.credentials' / 'labelbox.yaml'
     labelbox_secrets = open_yaml(yaml_path)
@@ -155,6 +245,8 @@ def main():
     # Getting the different classes present
     class_dict = get_classes_from_labelbox(data)
     #print(class_dict)
+
+    splits = validate_splits(args.splits)
 
     # Making the tfrecords
     generate_tfrecords("add_image_path", "add_tfrecord_path", "80 20", data, records, class_dict)
