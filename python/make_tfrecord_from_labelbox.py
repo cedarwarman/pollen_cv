@@ -149,6 +149,8 @@ def get_classes_from_labelbox(data):
                     if obj.get("bbox"):
                         labels_set.add(obj["value"])
     labels_list = list(labels_set)
+    # Sort labels list so it's the same every time (at least until I add more classes)
+    labels_list.sort()
     labels = {}
     for i in range(0, len(labels_list)):
         labels[labels_list[i]] = i
@@ -218,22 +220,24 @@ def create_tf_example(record_obj, class_dict):
     classes = []
 
     for label_obj in record_obj.labels:
-        print(label_obj.xmin)
-        print(record_obj.width)
-        print(label_obj.xmax)
-        print(record_obj.width)
-        print(label_obj.ymin)
-        print(record_obj.height)
-        print(label_obj.ymax)
-        print(record_obj.height)
+        # print(label_obj.xmin)
+        # print(record_obj.width)
+        # print(label_obj.xmax)
+        # print(record_obj.width)
+        # print(label_obj.ymin)
+        # print(record_obj.height)
+        # print(label_obj.ymax)
+        # print(record_obj.height)
         xmins.append(label_obj.xmin / record_obj.width)
         xmaxs.append(label_obj.xmax / record_obj.width)
         ymins.append(label_obj.ymin / record_obj.height)
         ymaxs.append(label_obj.ymax / record_obj.height)
-        print("Label_obj.label: ", label_obj.label)
+        print("Label_obj.label (classes_text): ", label_obj.label)
         classes_text.append(label_obj.label.encode('utf8'))
-        print(class_dict[label_obj.label])
-        classes.append(class_dict[label_obj.label])
+        print(f"Class_dict at label_obj.label with one added is: {class_dict[label_obj.label] + 1}")
+        # To match the classes in class_dict
+        classes.append(class_dict[label_obj.label] + 1)
+        print(class_dict)
         print(" ")
 
     tf_example = tf.train.Example(features=tf.train.Features(feature={
@@ -298,8 +302,6 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
         outpath = tfrecord_folder + outfile
         with tf.io.TFRecordWriter(outpath) as writer:
             for record in records[split_start:split_end]:
-                #### STOPPED HERE ####
-                # The create_tf_example function is going to need some modification
                 tf_example = create_tf_example(record, class_dict)
                 writer.write(tf_example.SerializeToString())
         print(f'Successfully created TFRecord file at: {outpath}')
