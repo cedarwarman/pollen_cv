@@ -12,6 +12,7 @@ import labelbox
 import argparse
 import tensorflow as tf
 from PIL import Image
+from collections import OrderedDict
 
 from object_detection.utils import dataset_util
 from object_detection.protos import string_int_label_map_pb2
@@ -232,13 +233,13 @@ def create_tf_example(record_obj, class_dict):
         xmaxs.append(label_obj.xmax / record_obj.width)
         ymins.append(label_obj.ymin / record_obj.height)
         ymaxs.append(label_obj.ymax / record_obj.height)
-        print("Label_obj.label (classes_text): ", label_obj.label)
+        # print("Label_obj.label (classes_text): ", label_obj.label)
         classes_text.append(label_obj.label.encode('utf8'))
-        print(f"Class_dict at label_obj.label with one added is: {class_dict[label_obj.label] + 1}")
+        # print(f"Class_dict at label_obj.label with one added is: {class_dict[label_obj.label] + 1}")
         # To match the classes in class_dict
         classes.append(class_dict[label_obj.label] + 1)
-        print(class_dict)
-        print(" ")
+        # print(class_dict)
+        # print(" ")
 
     tf_example = tf.train.Example(features=tf.train.Features(feature={
         'image/height': dataset_util.int64_feature(record_obj.height),
@@ -279,7 +280,7 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
 
     # Making a directory for the output tfrecords
     tfrecord_folder = tfrecord_dest
-    print(tfrecord_folder)
+    # print(tfrecord_folder)
     if not os.path.exists(tfrecord_folder):
         os.makedirs(tfrecord_folder)
     # Might not need to do this if I'm using pathlib
@@ -288,7 +289,7 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
 
     strnow = datetime.now().strftime('%Y-%m-%d_t%H%M%S')
     splits = splits_to_record_indices(splits, len(records))
-    print("splits is: ", splits)
+    # print("splits is: ", splits)
     assert splits[-1] == len(records), f'{splits}, {len(records)}'
 
     random.shuffle(records)
@@ -298,7 +299,7 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
     print(f'Creating {len(splits)} TFRecord files:')
     for split_end in splits:
         outfile = f'{strnow}_n{split_end - split_start}.tfrecord'
-        print(f"Outfile is: {outfile}")
+        # print(f"Outfile is: {outfile}")
         outpath = tfrecord_folder + outfile
         with tf.io.TFRecordWriter(outpath) as writer:
             for record in records[split_start:split_end]:
@@ -308,7 +309,6 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
         split_start = split_end
 
     pb_file_name = f'{strnow}.pbtxt'
-    #### CHECK THIS ONE ####
     label_text = class_dict_to_label_map_str(class_dict)
     with open(tfrecord_folder + pb_file_name, 'w') as label_file:
         label_file.write(label_text)
