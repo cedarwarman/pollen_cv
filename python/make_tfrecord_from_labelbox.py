@@ -65,6 +65,40 @@ def label_from_labelbox_obj(lbl_box_obj):
     xmax = xmin + lbl_box_obj["bbox"]["width"]
     return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
 
+def tube_tip_label_from_labelbox_obj(lbl_box_obj):
+    # The length of the edge of the box in pixels. For a 2048x2048 image.
+    # I will try 35x35 to start.
+    image_w = 2048
+    image_h = 2048
+    box_edge_len = 35
+
+    point_x = lbl_box_obj["point"]["x"]
+    point_y = lbl_box_obj["point"]["y"]
+
+    # Doing the x first
+    if (point_x - (0.5 * box_edge_len)) >= 0 and (point_x + (0.5 * box_edge_len)) <= image_w:
+        xmin = point_x - (0.5 * box_edge_len)  
+        xmax = point_x + (0.5 * box_edge_len)
+    elif (point_x - (0.5 * box_edge_len)) < 0:
+        xmin = 0
+        xmax = point_x + (0.5 * box_edge_len)
+    else:
+        xmin = point_x - (0.5 * box_edge_len)
+        xmax = image_w
+
+    # Now the y
+    if (point_y - (0.5 * box_edge_len)) >= 0 and (point_y + (0.5 * box_edge_len)) <= image_h:
+        ymin = point_y - (0.5 * box_edge_len)  
+        ymax = point_y + (0.5 * box_edge_len)
+    elif (point_y - (0.5 * box_edge_len)) < 0:
+        ymin = 0
+        ymax = point_y + (0.5 * box_edge_len)
+    else:
+        ymin = point_y - (0.5 * box_edge_len)
+        ymax = image_h
+
+    return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
+
 # Making a "TFRecordInfo" class to store multiple label classes and some 
 # metadata. Since I'm not downloading the images I don't need a lot of these 
 # things so I might end up getting rid of this one and pulling the metadata 
@@ -125,8 +159,12 @@ def parse_labelbox_data(data):
                 # print(l.get("bbox"))
                 labels.append(label_from_labelbox_obj(l))
             else:
-                # print("Not a bounding box")
-                pass
+                # Makes bounding box from point. Change the bounding bix size 
+                # inside the fuction.
+                # print("Test print in tube else: ")
+                # print(l.get("point"))
+                labels.append(tube_tip_label_from_labelbox_obj(l)) 
+                # pass
 
         # All images uploaded to Labelbox are 2048 by 2048 until further 
         # notice. If necessary I can add the code to download them and get 
@@ -146,9 +184,11 @@ def get_classes_from_labelbox(data):
             if "objects" in record["Label"]:
                 label_objs = record["Label"]["objects"]
                 for obj in label_objs:
-                    # This version does only bounding boxes
-                    if obj.get("bbox"):
-                        labels_set.add(obj["value"])
+                    # # This version does only bounding boxes
+                    # if obj.get("bbox"):
+                    #     labels_set.add(obj["value"])
+                    # This version does them all
+                    labels_set.add(obj["value"])
     labels_list = list(labels_set)
     # Sort labels list so it's the same every time (at least until I add more classes)
     labels_list.sort()
@@ -303,6 +343,7 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
         outpath = tfrecord_folder + outfile
         with tf.io.TFRecordWriter(outpath) as writer:
             for record in records[split_start:split_end]:
+                # print(class_dict)
                 tf_example = create_tf_example(record, class_dict)
                 writer.write(tf_example.SerializeToString())
         print(f'Successfully created TFRecord file at: {outpath}')
@@ -327,7 +368,7 @@ def main():
     args = parser.parse_args()
 
     # Getting the secrets
-    yaml_path = Path.home() / '.credentials' / 'labelbox.yaml'
+    yaml_path = Path.home() / '.labelbox_credentials' / 'labelbox.yaml'
     labelbox_secrets = open_yaml(yaml_path)
     api_key = labelbox_secrets["api_key"]
     project_id = labelbox_secrets["project_id"]
