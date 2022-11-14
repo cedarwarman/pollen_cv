@@ -5,6 +5,7 @@
 # colab_tutorials/inference_tf2_colab.ipynb
 
 import io
+import os
 import pathlib
 import argparse
 import matplotlib
@@ -29,10 +30,11 @@ def dir_path(string):
         raise NotADirectoryError(string)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--checkpoint', type=dir_path, help = "Path to model checkpoint", required = True)
-parser.add_argument('--config', type=dir_path, help = "Path to model config file", required = True)
+parser.add_argument('--checkpoint', type=str, help = "Path to model checkpoint", required = True)
+parser.add_argument('--config', type=str, help = "Path to model config file", required = True)
+parser.add_argument('--map', type=str, help = "Path to the label map file", required = True)
 parser.add_argument('--images', type=dir_path, help = "Path to directory containing images to do inference on", required = True)
-parser.add_argument('--map', type=dir_path, help = "Path to the label map file", required = True)
+args = parser.parse_args()
 
 ### Functions
 def load_image_into_numpy_array(path):
@@ -67,9 +69,14 @@ def build_model(config_path, checkpoint_path):
     Returns:
         model detection function based on the config and checkpoint
     """
+
+    # Somehow this gets the right config
+    configs = config_util.get_configs_from_pipeline_file(config_path)
+    model_config = configs['model']
+
     # Load pipeline config and build a detection model
     detection_model = model_builder.build(
-          model_config = config_path, is_training = False)
+          model_config = model_config, is_training = False)
     
     # Restore checkpoint
     ckpt = tf.compat.v2.train.Checkpoint(model=detection_model)
@@ -124,22 +131,31 @@ def load_label_map(label_map_path):
 
     return label_map_dict, category_index
 
-def run_inference(args):
-    """Run inference on a single image.
-    
-    """
+#def run_inference(args):
+#    """Run inference on a single image.
+#    
+#    """
+#
+#def make_detections_image(args):
+#    """Make and save an image with bounding boxes.
+#
+#    """
+#
+#def save_detections(args):
+#    """Export a table of detections
+#
+#    """
 
-def make_detections_image(args):
-    """Make and save an image with bounding boxes.
-
-    """
-
-def save_detections(args):
-    """Export a table of detections
-
-    """
+def main():
+    print("Building model")
+    loaded_model = build_model(args.config, args.checkpoint)
+    print("Model built")
 
 
+
+
+if __name__ == "__main__":
+    main()
 
 
 
