@@ -6,6 +6,7 @@
 
 import io
 import os
+import glob
 import pathlib
 import argparse
 import matplotlib
@@ -43,6 +44,8 @@ def load_image_into_numpy_array(path):
     Puts image into numpy array to feed into tensorflow graph.
     Note that by convention we put it into a numpy array with shape
     (height, width, channels), where channels=3 for RGB.
+
+    CHANGED TO channels=1 FOR GRAYSCALE, CHECK TO SEE IF THIS BREAKS THINGS
   
     Args:
       path: the file path to the image
@@ -50,11 +53,19 @@ def load_image_into_numpy_array(path):
     Returns:
       uint8 numpy array with shape (img_height, img_width, 3)
     """
+
     img_data = tf.io.gfile.GFile(path, 'rb').read()
     image = Image.open(BytesIO(img_data))
     (im_width, im_height) = image.size
-    return np.array(image.getdata()).reshape(
-        (im_height, im_width, 3)).astype(np.uint8)
+    image_np = np.array(image.getdata()).reshape(
+        (im_height, im_width, 1)).astype(np.uint8)
+    # Copying channels to 3 so input matches (maybe fix this in the model 
+    # somewhere to make it faster?) Also make sure that this is what it 
+    # did during training. 
+    # image_np = np.tile(image_np, (1, 1, 3)).astype(np.uint8)
+    image_np = np.tile(image_np, (1, 1, 3))
+
+    return image_np
 
 def build_model(config_path, checkpoint_path):
     """Build a model for inference.
@@ -121,21 +132,40 @@ def load_label_map(label_map_path):
     Returns:
         a tuple containing a label map dictionary and a category index
     """
+
     label_map = label_map_util.load_labelmap(label_map_path)
     categories = label_map_util.convert_label_map_to_categories(
         label_map,
         max_num_classes=label_map_util.get_max_label_map_index(label_map),
         use_display_name=True)
+    # It looks like the plotting doesn't even use label_map_dict, so maybe 
+    # in the future.
     category_index = label_map_util.create_category_index(categories)
     label_map_dict = label_map_util.get_label_map_dict(label_map, use_display_name=True)
 
     return label_map_dict, category_index
 
-#def run_inference(args):
-#    """Run inference on a single image.
-#    
-#    """
-#
+def run_inference(loaded_model, image_path):
+    """Run inference on a single image.
+    
+    Opens an image, converts to numpy array, and runs inference to generate 
+    detections.
+
+    Args:
+        loaded_model: inference model, output of build_model function
+        image_path: path to image to perform inference on
+
+    Returns:
+        a tuple containing the image as an numpy array, ?detections?, ?predictions_dict?, ?shapes?
+    """
+
+    image_np = load_image_into_numpy_array(image_path)
+    input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
+    detections, predictions_dict, shapes = loaded_model(input_tensor)
+
+    # FINISH RETURNS
+    return detections
+
 #def make_detections_image(args):
 #    """Make and save an image with bounding boxes.
 #
@@ -150,6 +180,16 @@ def main():
     print("Building model")
     loaded_model = build_model(args.config, args.checkpoint)
     print("Model built")
+    
+    print("Loading label map")
+    label_map_dict, category_index = load_label_map(args.map)
+    print("Label map loaded")
+
+    print("Entering inference loop")
+    for image_path in pathlib.Path(args.images).glob('*.jpg'):
+        print("Running inference on", image_path.name)
+        detections = run_inference(loaded_model, image_path)
+        print("Detections:", detections)
 
 
 
