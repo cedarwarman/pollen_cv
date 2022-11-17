@@ -10,7 +10,7 @@ import glob
 import pathlib
 import argparse
 import matplotlib
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 #import scipy.misc
 import numpy as np
 from six import BytesIO # Part of io but uses six for Python compatibility
@@ -35,6 +35,7 @@ parser.add_argument('--checkpoint', type=str, help = "Path to model checkpoint",
 parser.add_argument('--config', type=str, help = "Path to model config file", required = True)
 parser.add_argument('--map', type=str, help = "Path to the label map file", required = True)
 parser.add_argument('--images', type=dir_path, help = "Path to directory containing images to do inference on", required = True)
+parser.add_argument('--output', type=dir_path, help = "Path to directory where output images will be save", required = True)
 args = parser.parse_args()
 
 ### Functions
@@ -161,18 +162,44 @@ def run_inference(loaded_model, image_path):
 
     image_np = load_image_into_numpy_array(image_path)
     input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
+    # Might not needs predictions_dict or shapes
     detections, predictions_dict, shapes = loaded_model(input_tensor)
 
-    # FINISH RETURNS
-    return detections
+    return image_np, detections
 
-#def make_detections_image(args):
-#    """Make and save an image with bounding boxes.
-#
-#    """
-#
-#def save_detections(args):
-#    """Export a table of detections
+def make_detections_image(image_np, detections, category_index):
+    """Make and save an image with bounding boxes.
+
+    Using an image and detections, plots detections on the image.
+
+    Args:
+        image_np: numpy array of image, output of run_inference
+        detections: bounding box output of run_inference
+
+    Returns:
+        PIL-formatted image 
+    """
+    label_id_offset = 1
+
+    # Edits image in place
+    viz_utils.visualize_boxes_and_labels_on_image_array(
+        image_np,
+        detections['detection_boxes'][0].numpy(),
+        (detections['detection_classes'][0].numpy() + label_id_offset).astype(int),
+        detections['detection_scores'][0].numpy(),
+        category_index,
+        use_normalized_coordinates=True,
+        max_boxes_to_draw=800,
+        min_score_thresh=.30,
+        agnostic_mode=False)
+
+    # Convert to PIL format for saving
+    output_image = Image.fromarray(image_np)
+
+    return output_image
+
+#def get_detections(args):
+#    """Makes a table of detections
 #
 #    """
 
@@ -188,8 +215,21 @@ def main():
     print("Entering inference loop")
     for image_path in pathlib.Path(args.images).glob('*.jpg'):
         print("Running inference on", image_path.name)
-        detections = run_inference(loaded_model, image_path)
-        print("Detections:", detections)
+        image_np, detections = run_inference(loaded_model, image_path)
+
+        print("Making image")
+        out_image = make_detections_image(image_np, detections, category_index)
+
+        print("Saving image")
+        out_image.save(pathlib.Path(args.output) / (str(image_path.stem) + '_inference.jpg'))
+
+        #print("Getting detections")
+        #get_detections(detections, category_index)
+        #
+        #print("Saving detections")
+        #code to write out detection data frame
+
+    #print("Finished")
 
 
 
