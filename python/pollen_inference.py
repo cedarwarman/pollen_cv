@@ -13,6 +13,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 #import scipy.misc
 import numpy as np
+import pandas as pd
 from six import BytesIO # Part of io but uses six for Python compatibility
 from PIL import Image, ImageDraw, ImageFont
 
@@ -198,10 +199,58 @@ def make_detections_image(image_np, detections, category_index):
 
     return output_image
 
-#def get_detections(args):
-#    """Makes a table of detections
-#
-#    """
+def get_detections(detections, category_index, image_name):
+    """Makes a table of detections
+
+    Reformats inference output into a usable structure for downstream object 
+    tracking.
+
+    Args:
+        detections: dictionary of predictions output from inference
+        category_index: links inference numbers to the actual object categories
+        image_name: name of the image for metadata
+
+    Returns:
+        Pandas data frame of all the detected objects in a single image
+    """
+
+    # Getting items out of the detections dictionary
+    detection_boxes = detections['detection_boxes'][0].numpy() # shape=(1, 350, 4) 
+    detection_scores = detections['detection_scores'][0].numpy() # shape=(1, 350)
+    detection_classes = detections['detection_classes'][0].numpy() # shape=(1, 350)
+
+    # Making the data frames (probably a more elegant way to do this)
+    df = pd.DataFrame({
+        'score':detection_scores,
+        'class':detection_classes})
+    box_df = pd.DataFrame(detection_boxes, columns = ['ymin', 'xmin', 'ymax', 'xmax'])
+    output_df = pd.concat([df, box_df], axis = 1)
+
+    # Replacing the class index with the class name. First I need to unnest the 
+    # cateogry_index dictionary. 
+    class_dict = {}
+    for key in category_index:
+        class_dict[category_index[key].get('id')] = category_index[key].get('name')
+
+    # Changing class to int and adding the label offset that object detection does
+    output_df['class'] = output_df['class'].astype(int)
+    output_df['class'] = output_df['class'] + 1
+
+    # Doing the replacement
+    output_df = output_df.replace({"class": class_dict})
+
+    # Adding some metadata
+    name_list = image_name.split('_')
+    output_df['date'] = name_list[0]
+    output_df['run'] = name_list[1][3:]
+    output_df['tempc'] = name_list[2][:-1]
+    output_df['well'] = name_list[3]
+    output_df['timepoint'] = name_list[4][1:]
+
+    output_df = output_df[['date', 'run', 'well', 'timepoint', 'tempc', 
+        'class', 'score', 'ymin', 'xmin', 'ymax', 'xmax']]
+
+    return output_df
 
 def main():
     print("Building model")
@@ -213,21 +262,24 @@ def main():
     print("Label map loaded")
 
     print("Entering inference loop")
-    for image_path in pathlib.Path(args.images).glob('*.jpg'):
+    final_df = pd.DataFrame()
+    final_df = pd.DataFrame()
+    for image_path in sorted(pathlib.Path(args.images).glob('*.jpg')):
         print("Running inference on", image_path.name)
         image_np, detections = run_inference(loaded_model, image_path)
 
         print("Making image")
         out_image = make_detections_image(image_np, detections, category_index)
 
-        print("Saving image")
-        out_image.save(pathlib.Path(args.output) / (str(image_path.stem) + '_inference.jpg'))
+#        print("Saving image")
+#        out_image.save(pathlib.Path(args.output) / (str(image_path.stem) + '_inference.jpg'))
 
-        #print("Getting detections")
-        #get_detections(detections, category_index)
-        #
-        #print("Saving detections")
-        #code to write out detection data frame
+        print("Extracting detections")
+        detections_table = get_detections(detections, category_index, image_path.stem)
+        final_df = pd.concat([final_df, detections_table]).reset_index(drop = True)
+
+    #print("Saving detections")
+    #code to write out detection data frame
 
     #print("Finished")
 
