@@ -368,7 +368,7 @@ def main():
     args = parser.parse_args()
 
     # Getting the secrets
-    yaml_path = Path.home() / '.labelbox_credentials' / 'labelbox.yaml'
+    yaml_path = Path.home() / '.credentials' / 'labelbox.yaml'
     labelbox_secrets = open_yaml(yaml_path)
     api_key = labelbox_secrets["api_key"]
     project_id = labelbox_secrets["project_id"]
