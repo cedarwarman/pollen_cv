@@ -263,7 +263,9 @@ def main():
 
     print("Entering inference loop")
     final_df = pd.DataFrame()
-    final_df = pd.DataFrame()
+    save_path = pathlib.Path(args.output) / pathlib.Path(args.images).parents[0].name
+    os.mkdir(save_path)
+
     for image_path in sorted(pathlib.Path(args.images).glob('*.jpg')):
         print("Running inference on", image_path.name)
         image_np, detections = run_inference(loaded_model, image_path)
@@ -271,17 +273,19 @@ def main():
         print("Making image")
         out_image = make_detections_image(image_np, detections, category_index)
 
-#        print("Saving image")
-#        out_image.save(pathlib.Path(args.output) / (str(image_path.stem) + '_inference.jpg'))
+        print("Saving image")
+        out_image.save(save_path / (str(image_path.stem) + '_inference.jpg'))
 
         print("Extracting detections")
         detections_table = get_detections(detections, category_index, image_path.stem)
         final_df = pd.concat([final_df, detections_table]).reset_index(drop = True)
 
-    #print("Saving detections")
-    #code to write out detection data frame
+    print("Saving detections")
+    final_df.to_csv(save_path / (str(image_path.stem) + '_predictions.tsv'),
+        index = False,
+        sep = '\t')
 
-    #print("Finished")
+    print("Finished")
 
 
 
