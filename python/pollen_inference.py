@@ -263,7 +263,8 @@ def main():
 
     print("Entering inference loop")
     final_df = pd.DataFrame()
-    save_path = pathlib.Path(args.output) / pathlib.Path(args.images).parents[0].name
+    save_path_dir_string = str(pathlib.Path(args.images).parents[0].name)[:-4] + str(pathlib.Path(args.images).name)[5:]
+    save_path = pathlib.Path(args.output) / save_path_dir_string
     os.mkdir(save_path)
 
     for image_path in sorted(pathlib.Path(args.images).glob('*.jpg')):
