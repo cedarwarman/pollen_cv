@@ -333,6 +333,83 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
     assert splits[-1] == len(records), f'{splits}, {len(records)}'
 
     random.shuffle(records)
+
+    # This section ensures images with multiple records in the same time series all
+    # end up in the training dataset to remove possible data leakage. If the training
+    # dataset doesn't not have possible data leakage then this section can be removed.
+    # It checks to see if images are part of a list of time series duplicates, and if 
+    # so, moves them tot he end of the records list, which will put them in the 
+    # largest split, which is the training set. If you are doing more than one split 
+    # the behavior could be not what you expect (tested with -splits 80 20).
+    image_duplicates = [
+        "2021-12-20_run1_26C_A3_t048_stab.jpg",
+        "2021-12-15_run1_34C_D4_t034_stab.jpg",
+        "2022-01-25_run2_34C_C1_t007_stab.jpg",
+        "2021-11-03_run1_34C_A3_t069_stab.jpg",
+        "2022-03-18_run1_34C_D6_t050_stab.jpg",
+        "2022-02-09_run1_26C_D2_t038_stab.jpg",
+        "2021-12-02_run2_34C_C5_t073_stab.jpg",
+        "2022-03-18_run1_34C_D6_t017_stab.jpg",
+        "2022-03-21_run2_26C_C4_t005_stab.jpg",
+        "2022-05-03_run2_34C_C4_t047_stab.jpg",
+        "2022-03-21_run2_26C_C4_t041_stab.jpg",
+        "2021-12-17_run2_34C_C2_t043_stab.jpg",
+        "2021-12-02_run2_34C_C5_t074_stab.jpg",
+        "2022-02-01_run1_34C_A5_t035_stab.jpg",
+        "2022-04-28_run2_34C_D2_t036_stab.jpg",
+        "2022-02-21_run1_26C_D4_t054_stab.jpg",
+        "2022-03-09_run2_26C_C1_t069_stab.jpg",
+        "2022-02-08_run1_34C_C6_t037_stab.jpg",
+        "2022-04-14_run1_26C_D4_t073_stab.jpg",
+        "2022-04-28_run2_34C_D2_t034_stab.jpg",
+        "2022-02-08_run1_34C_C6_t077_stab.jpg",
+        "2022-01-25_run2_34C_C1_t069_stab.jpg",
+        "2022-02-09_run1_26C_D2_t003_stab.jpg",
+        "2022-03-08_run1_34C_B3_t012_stab.jpg",
+        "2021-12-17_run2_34C_D2_t076_stab.jpg",
+        "2022-03-22_run1_34C_C3_t055_stab.jpg",
+        "2021-11-19_run2_34C_A6_t063_stab.jpg",
+        "2022-04-28_run2_34C_D2_t003_stab.jpg",
+        "2022-05-09_run1_26C_D4_t027_stab.jpg",
+        "2021-11-08_run1_34C_C1_t004_stab.jpg",
+        "2022-02-21_run1_26C_D4_t082_stab.jpg",
+        "2021-12-15_run1_34C_D4_t050_stab.jpg",
+        "2022-04-21_run2_34C_C2_t056_stab.jpg",
+        "2021-12-20_run1_26C_A3_t043_stab.jpg",
+        "2022-03-09_run2_26C_C1_t078_stab.jpg",
+        "2022-04-14_run1_26C_D4_t029_stab.jpg",
+        "2022-04-21_run2_34C_C2_t064_stab.jpg",
+        "2022-04-20_run2_26C_B6_t074_stab.jpg",
+        "2021-11-08_run1_34C_C1_t059_stab.jpg",
+        "2021-11-03_run1_34C_A3_t005_stab.jpg",
+        "2022-03-22_run1_34C_C3_t067_stab.jpg",
+        "2022-05-03_run2_34C_C4_t050_stab.jpg",
+        "2022-03-08_run1_34C_B3_t004_stab.jpg",
+        "2022-04-20_run2_26C_B6_t007_stab.jpg",
+        "2021-12-17_run2_34C_D2_t062_stab.jpg",
+        "2022-05-09_run1_26C_D4_t077_stab.jpg",
+        "2021-11-19_run2_34C_A6_t060_stab.jpg",
+        "2022-03-21_run1_26C_D4_t029_stab.jpg",
+        "2022-02-01_run1_34C_A5_t038_stab.jpg",
+        "2022-02-09_run2_26C_C1_t021_stab.jpg",
+        "2022-03-21_run1_26C_D4_t009_stab.jpg",
+        "2021-12-17_run2_34C_C2_t070_stab.jpg",
+        "2022-02-09_run2_26C_C1_t010_stab.jpg"]
+    record_index = 0
+    #list_index = 0 # Just for printing during troubleshooting
+    rearranged_records = records
+
+    for record in records:
+        if any(record.filename in x for x in image_duplicates):
+            #list_index += 1
+            #print(record.filename, "present in list, total =", list_index)
+
+            # Moves it to the end of the records list
+            rearranged_records.append(rearranged_records.pop(record_index))
+        record_index += 1
+    print(len(rearranged_records))
+    records = rearranged_records
+    print(len(records))
     
     # Making the tfrecord files
     split_start = 0
@@ -343,7 +420,7 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
         outpath = tfrecord_folder + outfile
         with tf.io.TFRecordWriter(outpath) as writer:
             for record in records[split_start:split_end]:
-                # print(class_dict)
+                print("Adding", record.filename, "to split ending in", split_end)
                 tf_example = create_tf_example(record, class_dict)
                 writer.write(tf_example.SerializeToString())
         print(f'Successfully created TFRecord file at: {outpath}')
