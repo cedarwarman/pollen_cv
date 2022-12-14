@@ -168,6 +168,60 @@ def run_inference(loaded_model, image_path):
 
     return image_np, detections
 
+def do_non_max_suppression(detections):
+    """Do non-max suppression
+
+    Performs the Tensorflow implementation of non-max suppression on inference 
+    output.
+
+    Args:
+        detections: inference output
+
+    Returns:
+        a subset of detections with overlapping boxes removed by non-max 
+        suppression
+    """
+    print(detections['detection_boxes'])
+    print(detections['detection_scores'])
+    print(detections['detection_classes'])
+    # nmsed_boxes, nmsed_scores, nmsed_classes = tf.image.combined_non_max_suppression(
+    #     tf.expand_dims(detections['detection_boxes'], 2),
+    #     detections['detection_scores'],
+    #     10000,
+    #     10000,
+    #     iou_threshold=0.5,
+    #     score_threshold=float('-inf')
+    # )
+
+    # print(nmsed_boxes)
+    # print(nmsed_scores)
+    # print(nmsed_classes)
+    # exit()
+
+    nms_vec = tf.image.non_max_suppression(
+        tf.squeeze(detections['detection_boxes']), # Wants rank 2 tensor, so removes all 1s
+        tf.squeeze(detections['detection_scores']), # Same
+        100000,
+        iou_threshold=0.5,
+        score_threshold=float('-inf'),
+        name=None)
+
+    # Indexing the input dictionary with the output of non_max_suppression,
+    # which is the list of boxes (and score, class) to keep.
+    print(nms_vec)
+    out_dic = detections.copy()
+
+    out_dic['detection_boxes'] = tf.gather(tf.squeeze(detections['detection_boxes']), nms_vec)
+    out_dic['detection_scores'] = tf.gather(tf.squeeze(detections['detection_scores']), nms_vec)
+    out_dic['detection_classes'] = tf.gather(tf.squeeze(detections['detection_classes']), nms_vec)
+    
+    print("Did nms")
+    print(out_dic['detection_boxes'])
+    print(out_dic['detection_scores'])
+    print(out_dic['detection_classes'])
+    
+    return(out_dic)
+
 def make_detections_image(image_np, detections, category_index):
     """Make and save an image with bounding boxes.
 
@@ -185,13 +239,13 @@ def make_detections_image(image_np, detections, category_index):
     # Edits image in place
     viz_utils.visualize_boxes_and_labels_on_image_array(
         image_np,
-        detections['detection_boxes'][0].numpy(),
-        (detections['detection_classes'][0].numpy() + label_id_offset).astype(int),
-        detections['detection_scores'][0].numpy(),
+        detections['detection_boxes'].numpy(),
+        (detections['detection_classes'].numpy() + label_id_offset).astype(int),
+        detections['detection_scores'].numpy(),
         category_index,
         use_normalized_coordinates=True,
         max_boxes_to_draw=800,
-        min_score_thresh=.30,
+        min_score_thresh=.05,
         agnostic_mode=False)
 
     # Convert to PIL format for saving
@@ -215,9 +269,9 @@ def get_detections(detections, category_index, image_name):
     """
 
     # Getting items out of the detections dictionary
-    detection_boxes = detections['detection_boxes'][0].numpy() # shape=(1, 350, 4) 
-    detection_scores = detections['detection_scores'][0].numpy() # shape=(1, 350)
-    detection_classes = detections['detection_classes'][0].numpy() # shape=(1, 350)
+    detection_boxes = detections['detection_boxes'].numpy() # shape=
+    detection_scores = detections['detection_scores'].numpy() # shape=
+    detection_classes = detections['detection_classes'].numpy() # shape=
 
     # Making the data frames (probably a more elegant way to do this)
     df = pd.DataFrame({
@@ -270,6 +324,9 @@ def main():
     for image_path in sorted(pathlib.Path(args.images).glob('*.jpg')):
         print("Running inference on", image_path.name)
         image_np, detections = run_inference(loaded_model, image_path)
+
+        print("Doing non-max suppression")
+        detections = do_non_max_suppression(detections)
 
         print("Making image")
         out_image = make_detections_image(image_np, detections, category_index)
