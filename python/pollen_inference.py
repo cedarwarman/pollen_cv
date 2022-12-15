@@ -181,22 +181,6 @@ def do_non_max_suppression(detections):
         a subset of detections with overlapping boxes removed by non-max 
         suppression
     """
-    print(detections['detection_boxes'])
-    print(detections['detection_scores'])
-    print(detections['detection_classes'])
-    # nmsed_boxes, nmsed_scores, nmsed_classes = tf.image.combined_non_max_suppression(
-    #     tf.expand_dims(detections['detection_boxes'], 2),
-    #     detections['detection_scores'],
-    #     10000,
-    #     10000,
-    #     iou_threshold=0.5,
-    #     score_threshold=float('-inf')
-    # )
-
-    # print(nmsed_boxes)
-    # print(nmsed_scores)
-    # print(nmsed_classes)
-    # exit()
 
     nms_vec = tf.image.non_max_suppression(
         tf.squeeze(detections['detection_boxes']), # Wants rank 2 tensor, so removes all 1s
@@ -214,11 +198,6 @@ def do_non_max_suppression(detections):
     out_dic['detection_boxes'] = tf.gather(tf.squeeze(detections['detection_boxes']), nms_vec)
     out_dic['detection_scores'] = tf.gather(tf.squeeze(detections['detection_scores']), nms_vec)
     out_dic['detection_classes'] = tf.gather(tf.squeeze(detections['detection_classes']), nms_vec)
-    
-    print("Did nms")
-    print(out_dic['detection_boxes'])
-    print(out_dic['detection_scores'])
-    print(out_dic['detection_classes'])
     
     return(out_dic)
 
@@ -245,7 +224,7 @@ def make_detections_image(image_np, detections, category_index):
         category_index,
         use_normalized_coordinates=True,
         max_boxes_to_draw=800,
-        min_score_thresh=.05,
+        min_score_thresh=.18,
         agnostic_mode=False)
 
     # Convert to PIL format for saving
