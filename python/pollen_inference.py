@@ -215,6 +215,10 @@ def make_detections_image(image_np, detections, category_index):
     """
     label_id_offset = 1
 
+    # Add track_ids to do custom colors:
+    # https://github.com/tensorflow/models/blob/cb9b5a1d91d4a6d63881d232721860b3a3f17c43/research/object_detection/utils/visualization_utils.py#L1151
+    # https://stackoverflow.com/a/56937982/12312789
+
     # Edits image in place
     viz_utils.visualize_boxes_and_labels_on_image_array(
         image_np,
