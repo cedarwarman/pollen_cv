@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: tensorflow/tensorflow:2.10.1-gpu
+From: tensorflow/tensorflow:latest-gpu
 
 %post
     export DEBIAN_FRONTEND=noninteractive
@@ -15,12 +15,12 @@ From: tensorflow/tensorflow:2.10.1-gpu
     python3-tk \
     wget 
 
-    # Install gcloud and gsutil commands
-    # https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu
-    export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
-    echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
-    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
-    apt-get update -y && apt-get install google-cloud-sdk -y
+#     # Install gcloud and gsutil commands
+#     # https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu
+#     export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
+#     echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+#     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
+#     apt-get update -y && apt-get install google-cloud-sdk -y
 
     # Download the git version of the model garden
     cd /opt
