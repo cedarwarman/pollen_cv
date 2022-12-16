@@ -192,7 +192,7 @@ def do_non_max_suppression(detections):
 
     # Indexing the input dictionary with the output of non_max_suppression,
     # which is the list of boxes (and score, class) to keep.
-    print(nms_vec)
+    # print(nms_vec)
     out_dic = detections.copy()
 
     out_dic['detection_boxes'] = tf.gather(tf.squeeze(detections['detection_boxes']), nms_vec)
