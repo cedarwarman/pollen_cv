@@ -237,7 +237,7 @@ def get_colors_from_category_index(category_index):
         "aborted" : 65, #
         "burst" : 22, #
         "germinated" : 5, #
-        "tube_tip" : 32, #
+        "tube_tip" : 32, # 33
         "tube_tip_bulging" : 34, # 
         "tube_tip_burst" : 3, #
         "ungerminated" : 11, #
