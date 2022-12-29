@@ -199,7 +199,59 @@ def do_non_max_suppression(detections):
     out_dic['detection_scores'] = tf.gather(tf.squeeze(detections['detection_scores']), nms_vec)
     out_dic['detection_classes'] = tf.gather(tf.squeeze(detections['detection_classes']), nms_vec)
     
-    return(out_dic)
+    return out_dic
+
+def get_colors_from_category_index(category_index):
+    """Pull out categories and colors 
+
+    Using a category index, get the right indices for colors for the 
+    viz.utils.visualize_boxes_and_labels_on_image_array() function. They will
+    be used to make the right track_ids argument.
+
+    Args:
+        category_index: output
+
+    Returns:
+        dictionary of which category index gets which color
+    """
+
+    # First unnesting the dictionary, not sure why they even made it like this,
+    # seems unnecessary.
+    category_index_unnested = {}
+
+    for key in category_index.keys():
+        category_index_unnested[key] = category_index[key]['name']
+
+    # Next I'll make a dict with with which color index each class gets:
+   #  color_index_dict = {
+   #      "aborted" : 110, # SlateGray
+   #      "burst" : 28, # DeepPink
+   #      "germinated" : 65, # Lime
+   #      "tube_tip" : 3, # Aquamarine
+   #      "tube_tip_bulging" : 124, # Yellow
+   #      "tube_tip_burst" : 120, # Violet
+   #      "ungerminated" : 17, # Cyan
+   #      "unknown_germinated" : 22} # DarkOrange
+    # Somethings not working properly, just going to try to figure it out for the talk
+    color_index_dict = {
+        "aborted" : 65, #
+        "burst" : 22, #
+        "germinated" : 5, #
+        "tube_tip" : 32, #
+        "tube_tip_bulging" : 34, # 
+        "tube_tip_burst" : 3, #
+        "ungerminated" : 11, #
+        "unknown_germinated" : 15} # 
+
+    # Finally I'll change the class name to the color index:
+    for key in category_index_unnested.keys():
+        category_index_unnested[key] = color_index_dict[category_index_unnested[key]]
+
+    print(category_index)
+    print(category_index_unnested)
+
+    return category_index_unnested
+
 
 def make_detections_image(image_np, detections, category_index):
     """Make and save an image with bounding boxes.
@@ -219,17 +271,34 @@ def make_detections_image(image_np, detections, category_index):
     # https://github.com/tensorflow/models/blob/cb9b5a1d91d4a6d63881d232721860b3a3f17c43/research/object_detection/utils/visualization_utils.py#L1151
     # https://stackoverflow.com/a/56937982/12312789
 
+    # Getting a dict with the right colors from the category_index:
+    color_dict = get_colors_from_category_index(category_index)
+
+    # Makeing the track_id with the color_dict
+    track_ids = []
+    for detection in (detections["detection_classes"].numpy() + label_id_offset):
+        # print(detection)
+        # print(color_dict[detection])
+        track_ids.append(color_dict[detection])
+
+    # Getting boolean array to remove tube_tip_burst (6, automate this at at some point)
+    boolean_array = (detections['detection_classes'].numpy() + label_id_offset).astype(int)
+    boolean_array = boolean_array != 6
+
     # Edits image in place
     viz_utils.visualize_boxes_and_labels_on_image_array(
         image_np,
-        detections['detection_boxes'].numpy(),
-        (detections['detection_classes'].numpy() + label_id_offset).astype(int),
-        detections['detection_scores'].numpy(),
+        detections['detection_boxes'].numpy()[boolean_array],
+        (detections['detection_classes'].numpy() + label_id_offset).astype(int)[boolean_array],
+        detections['detection_scores'].numpy()[boolean_array],
         category_index,
         use_normalized_coordinates=True,
         max_boxes_to_draw=800,
-        min_score_thresh=.18,
-        agnostic_mode=False)
+        min_score_thresh=.35,
+        agnostic_mode=False,
+        track_ids=np.array(track_ids)[boolean_array],
+        skip_track_ids=True,
+        line_thickness=6)
 
     # Convert to PIL format for saving
     output_image = Image.fromarray(image_np)
