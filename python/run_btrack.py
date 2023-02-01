@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-
+import btrack.btypes
 # Trying out btrack for tracking pollen tubes.
 # https://github.com/quantumjot/BayesianTracker
 
 import pandas as pd
 from pathlib import Path
-import btrack
+# import btrack
+from btrack.btypes import PyTrackObject
 
 
 def load_tsv(file_name: str) -> pd.DataFrame:
@@ -83,14 +84,13 @@ def calculate_centroid(df: pd.DataFrame) -> pd.DataFrame:
 
 #def add_rows_to_btrack(df: pd.DataFrame) -> list[PyTrackObject]:
 def add_rows_to_btrack(df: pd.DataFrame) -> list:
-
     """
     Create btrack PyTrackObjects from a Pandas DataFrame.
 
     Parameters
     ----------
     df : pd.DataFrame
-        Input dataframe with calculated centroids and confidence score cutoffs
+        input dataframe with calculated centroids and confidence score cutoffs
 
     Returns
     -------
@@ -112,21 +112,65 @@ def add_rows_to_btrack(df: pd.DataFrame) -> list:
         #row_dict['rpn_obj_type'] =
         #row_dict['rpn_box'] =
 
-        btrack_objects.append(row_dict)
+        obj = PyTrackObject.from_dict(row_dict)
+        btrack_objects.append(obj)
         id_counter += 1
 
     return btrack_objects
 
+def run_tracking(btrack_objects: btrack.btypes.PyTrackObject) -> list:
+    """
+    Run btrack on a list of btrack objects (PyTrackObject).
+
+    Parameters
+    ----------
+    btrack_objects : list[PyTrackObjects]
+        a list of PyTrackObjects made with the add_rows_to_btrack function
+
+    Returns
+    -------
+    data :
+
+    properties :
+
+    graph :
+
+    """
+
+    with btrack.BayesianTracker() as tracker:
+        tracker.max_search_radius = 50
+        # tracker.tracking_updates = ["MOTION", "VISUAL"]
+        # tracker.features = FEATURES
+        tracker.tracking_updates = ["MOTION"]
+
+        # configure the tracker using a config file
+        # tracker.configure(CONFIG_FILE)
+
+        # append the objects to be tracked
+        tracker.append(btrack_objects)
+
+        # set the tracking volume
+        tracker.volume = ((0, 0), (1, 1))
+
+        # track them (in interactive mode)
+        # tracker.track(step_size=100)
+
+        # generate hypotheses and run the global optimizer
+        tracker.optimize()
+
+        # get the tracks in a format for napari visualization
+        data, properties, graph = tracker.to_napari()
+
+        return data, properties, graph
+
 
 def main():
     df = load_tsv("2022-01-05_run1_26C_D2_t082_stab_predictions.tsv")
-    print(df)
     df = subset_by_confidence_score(df, 0.35)
-    print(df)
     df = calculate_centroid(df)
-    print(df)
     btrack_objects = add_rows_to_btrack(df)
-    print(btrack_objects)
+    print(btrack_objects[0])
+    data, properties, graph = run_tracking(btrack_objects)
 
 
 if __name__ == "__main__":
