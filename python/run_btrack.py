@@ -49,9 +49,9 @@ def load_tsv(file_name: str) -> pd.DataFrame:
     return df
 
 
-def subset_by_confidence_score(df: pd.DataFrame, confidence_score: float) -> pd.DataFrame:
+def subset_df(df: pd.DataFrame, confidence_score: float) -> pd.DataFrame:
     """
-    Subset a dataframe based on a confidence score.
+    Subset a dataframe based on a confidence score and class.
 
     Parameters:
     ----------
@@ -65,7 +65,7 @@ def subset_by_confidence_score(df: pd.DataFrame, confidence_score: float) -> pd.
     pd.DataFrame
         subsetted dataframe
     """
-    subset_df = df[df["score"] >= confidence_score]
+    subset_df = df[(df["score"] >= confidence_score) & (df["class"] == "tube_tip")]
     return subset_df
 
 
@@ -84,8 +84,13 @@ def calculate_centroid(df: pd.DataFrame) -> pd.DataFrame:
     pd.DataFrame
         dataframe with added columns 'centroid_x' and 'centroid_y'
     """
-    df["centroid_x"] = df.apply(lambda row: (row["xmin"] + row["xmax"]) / 2, axis=1)
-    df["centroid_y"] = df.apply(lambda row: (row["ymin"] + row["ymax"]) / 2, axis=1)
+
+    # Coordinates are scaled. Returning to the original dimensions here.
+    original_x = 2048
+    original_y = 2048
+
+    df["centroid_x"] = df.apply(lambda row: (row["xmin"] + row["xmax"]) / 2 * original_x, axis=1)
+    df["centroid_y"] = df.apply(lambda row: (row["ymin"] + row["ymax"]) / 2 * original_y, axis=1)
     return df
 
 #def add_rows_to_btrack(df: pd.DataFrame) -> list[PyTrackObject]:
@@ -144,7 +149,7 @@ def run_tracking(btrack_objects: btrack.btypes.PyTrackObject) -> list:
     """
 
     with btrack.BayesianTracker() as tracker:
-        tracker.max_search_radius = 0.001
+        tracker.max_search_radius = 100
         tracker.tracking_updates = ["MOTION"]
 
         # configure the tracker using a config file
@@ -170,10 +175,10 @@ def run_tracking(btrack_objects: btrack.btypes.PyTrackObject) -> list:
 
 def main():
     df = load_tsv("2022-01-05_run1_26C_D2_t082_stab_predictions.tsv")
-    df = subset_by_confidence_score(df, 0.35)
+    df = subset_df(df, 0.35)
     df = calculate_centroid(df)
     pd.set_option('display.max_columns', None)
-    # print(df.head(n=5))
+    print(df.head(n=5))
     btrack_objects = add_rows_to_btrack(df)
     # print(btrack_objects[0])
     data, properties, graph = run_tracking(btrack_objects)
@@ -198,9 +203,12 @@ def main():
         properties=properties,
         graph=graph,
         name="Tracks",
-        blending="opaque",
-        visible=True,
-        scale=(2000, 2000)
+        tail_width=5,
+        tail_length=1000,
+        colormap="hsv",
+        blending="Translucent",
+        opacity=0.7,
+        visible=True
     )
 
     napari.run()
