@@ -5,7 +5,11 @@ import btrack.btypes
 
 from typing import List
 import pandas as pd
+import numpy as np
+from skimage.io import imread
 from pathlib import Path
+import glob
+import os
 # import btrack
 from btrack.btypes import PyTrackObject
 import napari
@@ -140,7 +144,7 @@ def run_tracking(btrack_objects: btrack.btypes.PyTrackObject) -> list:
     """
 
     with btrack.BayesianTracker() as tracker:
-        tracker.max_search_radius = 0.01
+        tracker.max_search_radius = 0.001
         tracker.tracking_updates = ["MOTION"]
 
         # configure the tracker using a config file
@@ -169,14 +173,25 @@ def main():
     df = subset_by_confidence_score(df, 0.35)
     df = calculate_centroid(df)
     pd.set_option('display.max_columns', None)
-    print(df.head(n=5))
+    # print(df.head(n=5))
     btrack_objects = add_rows_to_btrack(df)
-    print(btrack_objects[0])
+    # print(btrack_objects[0])
     data, properties, graph = run_tracking(btrack_objects)
 
     # Viewing with Napari
     print("Opening Napari viewer")
     viewer = napari.Viewer()
+
+    print("Adding images")
+    image_series = []
+    # for image in os.listdir("/Users/cedar/Desktop/well_D2"):
+    for image_path in sorted(glob.glob("/Users/cedar/Desktop/well_D2/*.jpg")):
+        image = imread(image_path)
+        image_array = np.asarray(image)
+        image_series.append(image_array)
+    viewer_array = np.asarray(image_series)
+    viewer.add_image(viewer_array, scale=(1.0, 1.0, 1.0), name='images')
+
     print("Adding tracks")
     viewer.add_tracks(
         data,
@@ -185,7 +200,9 @@ def main():
         name="Tracks",
         blending="opaque",
         visible=True,
+        scale=(2000, 2000)
     )
+
     napari.run()
     print("Done")
 
