@@ -149,11 +149,12 @@ def run_tracking(btrack_objects: btrack.btypes.PyTrackObject) -> list:
     """
 
     with btrack.BayesianTracker() as tracker:
-        tracker.max_search_radius = 100
+        tracker.max_search_radius = 200
         tracker.tracking_updates = ["MOTION"]
 
         # configure the tracker using a config file
-        tracker.configure("./config/btrack_config.json")
+        # tracker.configure("./config/btrack_config.json")
+        tracker.configure("./config/cell_config.json")
 
         # append the objects to be tracked
         tracker.append(btrack_objects)
