@@ -10,7 +10,7 @@ from skimage.io import imread
 from pathlib import Path
 import glob
 import os
-# import btrack
+import btrack
 from btrack.btypes import PyTrackObject
 import napari
 
@@ -159,7 +159,7 @@ def run_tracking(btrack_objects: btrack.btypes.PyTrackObject) -> list:
         tracker.append(btrack_objects)
 
         # set the tracking volume
-        tracker.volume = ((0, 0), (1, 1))
+        tracker.volume = ((0, 2048), (0, 2048))
 
         # track them (in interactive mode)
         tracker.track(step_size=100)
@@ -190,7 +190,8 @@ def main():
     print("Adding images")
     image_series = []
     # for image in os.listdir("/Users/cedar/Desktop/well_D2"):
-    for image_path in sorted(glob.glob("/Users/cedar/Desktop/well_D2/*.jpg")):
+    #for image_path in sorted(glob.glob("/Users/cedar/Desktop/well_D2/*.jpg")):
+    for image_path in sorted(glob.glob("/Users/warman/Desktop/well_D2/*.jpg")):
         image = imread(image_path)
         image_array = np.asarray(image)
         image_series.append(image_array)
@@ -203,11 +204,11 @@ def main():
         properties=properties,
         graph=graph,
         name="Tracks",
-        tail_width=5,
+        tail_width=4,
         tail_length=1000,
         colormap="hsv",
         blending="Translucent",
-        opacity=0.7,
+        opacity=0.5,
         visible=True
     )
 
