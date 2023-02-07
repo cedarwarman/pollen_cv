@@ -9,7 +9,6 @@ import numpy as np
 from skimage.io import imread
 from pathlib import Path
 import glob
-import os
 import btrack
 from btrack.btypes import PyTrackObject
 import napari
@@ -93,7 +92,7 @@ def calculate_centroid(df: pd.DataFrame) -> pd.DataFrame:
     df["centroid_y"] = df.apply(lambda row: (row["ymin"] + row["ymax"]) / 2 * original_y, axis=1)
     return df
 
-#def add_rows_to_btrack(df: pd.DataFrame) -> list[PyTrackObject]:
+
 def add_rows_to_btrack(df: pd.DataFrame) -> List[PyTrackObject]:
     """
     Create btrack PyTrackObjects from a Pandas DataFrame.
@@ -119,15 +118,16 @@ def add_rows_to_btrack(df: pd.DataFrame) -> List[PyTrackObject]:
         row_dict['x'] = getattr(row, "centroid_x")
         row_dict['y'] = getattr(row, "centroid_y")
         row_dict['z'] = 0.
-        #row_dict['rpn_score'] =
-        #row_dict['rpn_obj_type'] =
-        #row_dict['rpn_box'] =
+        # row_dict['rpn_score'] =
+        # row_dict['rpn_obj_type'] =
+        # row_dict['rpn_box'] =
 
         obj = PyTrackObject.from_dict(row_dict)
         btrack_objects.append(obj)
         id_counter += 1
 
     return btrack_objects
+
 
 def run_tracking(btrack_objects: btrack.btypes.PyTrackObject) -> list:
     """
@@ -175,10 +175,20 @@ def run_tracking(btrack_objects: btrack.btypes.PyTrackObject) -> list:
 
 
 def main():
-    df = load_tsv("2022-01-05_run1_26C_D2_t082_stab_predictions.tsv")
+    pd.set_option('display.max_columns', None)
+    # Original image sequence
+    # df = load_tsv("2022-01-05_run1_26C_D2_t082_stab_predictions.tsv")
+
+    # Image sequences for NAPPN poster
+    df = load_tsv("2022-03-03_run1_26C_C2_t082_stab_predictions.tsv")
+    # df = load_tsv("2022-03-07_run1_26C_B5_t082_stab_predictions.tsv")
+    # df = load_tsv("2022-03-07_run1_26C_C2_t082_stab_predictions.tsv")
+
+    print("DF is: ")
+    print(df)
+
     df = subset_df(df, 0.35)
     df = calculate_centroid(df)
-    pd.set_option('display.max_columns', None)
     print(df.head(n=5))
     btrack_objects = add_rows_to_btrack(df)
     # print(btrack_objects[0])
@@ -190,9 +200,22 @@ def main():
 
     print("Adding images")
     image_series = []
-    # for image in os.listdir("/Users/cedar/Desktop/well_D2"):
-    #for image_path in sorted(glob.glob("/Users/cedar/Desktop/well_D2/*.jpg")):
-    for image_path in sorted(glob.glob("/Users/warman/Desktop/well_D2/*.jpg")):
+
+    # Original image series
+    # image_dir = "/Users/cedar/Desktop/well_D2/*.jpg"
+
+    # Image series for NAPPN
+    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-03_run1_26C_C2_inference/*.jpg" # Sort of awesome with the boxes, but chaotic
+    image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-03_run1_26C_C2_stab/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
+
+    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_B5_inference/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
+    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_B5_stab/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
+
+    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_C2_inference/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
+    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_C2_stab/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
+
+
+    for image_path in sorted(glob.glob(image_dir)):
         image = imread(image_path)
         image_array = np.asarray(image)
         image_series.append(image_array)
