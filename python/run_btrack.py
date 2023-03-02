@@ -173,6 +173,54 @@ def run_tracking(btrack_objects: btrack.btypes.PyTrackObject) -> list:
 
         return data, properties, graph
 
+def visualize_tracks(track_data, track_properties, track_graph, background_images):
+    """
+    Visualize btrack output with source images as background.
+
+    Parameters
+    ----------
+    track_data :
+        output from run_tracking
+    track_properties :
+        output from run_tracking
+    track_graph :
+        output from run_tracking
+    background_images :
+        path to images for the background
+
+    Returns:
+
+    """
+
+    print("Opening Napari viewer")
+    viewer = napari.Viewer()
+
+    print("Adding images")
+    image_series = []
+
+    for image_path in sorted(glob.glob(background_images)):
+        image = imread(image_path)
+        image_array = np.asarray(image)
+        image_series.append(image_array)
+    viewer_array = np.asarray(image_series)
+    viewer.add_image(viewer_array, scale=(1.0, 1.0, 1.0), name='images')
+
+    print("Adding tracks")
+    viewer.add_tracks(
+        track_data,
+        properties=track_properties,
+        graph=track_graph,
+        name="Tracks",
+        tail_width=4,
+        tail_length=1000,
+        colormap="hsv",
+        blending="Translucent",
+        opacity=0.5,
+        visible=True
+    )
+
+    napari.run()
+
 
 def main():
     pd.set_option('display.max_columns', None)
@@ -194,49 +242,19 @@ def main():
     # print(btrack_objects[0])
     data, properties, graph = run_tracking(btrack_objects)
 
-    # Viewing with Napari
-    print("Opening Napari viewer")
-    viewer = napari.Viewer()
-
-    print("Adding images")
-    image_series = []
-
-    # Original image series
-    # image_dir = "/Users/cedar/Desktop/well_D2/*.jpg"
-
     # Image series for NAPPN
-    image_dir = "/Users/warman/git/pollen_cv/data/btrack_visualization_images/2022-03-03_run1_26C_C2_inference/*.jpg" # Sort of awesome with the boxes, but chaotic
-    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-03_run1_26C_C2_stab/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
+    image_dir = "/Users/warman/git/pollen_cv/data/btrack_visualization_images/2022-03-03_run1_26C_C2_inference/*.jpg"
+    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-03_run1_26C_C2_stab/*.jpg"
 
-    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_B5_inference/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
-    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_B5_stab/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
+    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_B5_inference/*.jpg"
+    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_B5_stab/*.jpg"
 
-    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_C2_inference/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
-    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_C2_stab/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
+    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_C2_inference/*.jpg"
+    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_C2_stab/*.jpg"
 
+    # Viewing with Napari
+    visualize_tracks(data, properties, graph, image_dir)
 
-    for image_path in sorted(glob.glob(image_dir)):
-        image = imread(image_path)
-        image_array = np.asarray(image)
-        image_series.append(image_array)
-    viewer_array = np.asarray(image_series)
-    viewer.add_image(viewer_array, scale=(1.0, 1.0, 1.0), name='images')
-
-    print("Adding tracks")
-    viewer.add_tracks(
-        data,
-        properties=properties,
-        graph=graph,
-        name="Tracks",
-        tail_width=4,
-        tail_length=1000,
-        colormap="hsv",
-        blending="Translucent",
-        opacity=0.5,
-        visible=True
-    )
-
-    napari.run()
     print("Done")
 
 
