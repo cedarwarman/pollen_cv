@@ -37,7 +37,7 @@ def load_tsv(file_name: str) -> pd.DataFrame:
     parent_dir = current_script_path.parent.parent
 
     # Navigate to the data directory
-    data_dir = parent_dir / "data"
+    data_dir = parent_dir / "data" / "btrack_inference"
 
     # Get the path of the tsv file
     tsv_file = data_dir / file_name
@@ -205,8 +205,8 @@ def main():
     # image_dir = "/Users/cedar/Desktop/well_D2/*.jpg"
 
     # Image series for NAPPN
-    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-03_run1_26C_C2_inference/*.jpg" # Sort of awesome with the boxes, but chaotic
-    image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-03_run1_26C_C2_stab/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
+    image_dir = "/Users/warman/git/pollen_cv/data/btrack_visualization_images/2022-03-03_run1_26C_C2_inference/*.jpg" # Sort of awesome with the boxes, but chaotic
+    # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-03_run1_26C_C2_stab/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
 
     # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_B5_inference/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
     # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_B5_stab/*.jpg" # No boxes. Not bad, maybe not for the poster, but for lab meeting?
