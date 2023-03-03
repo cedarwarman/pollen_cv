@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import btrack.btypes
+
 # Trying out btrack for tracking pollen tubes.
 # https://github.com/quantumjot/BayesianTracker
 
-from typing import List
+from typing import List, Tuple, Union
 import pandas as pd
 import numpy as np
 from skimage.io import imread
@@ -14,21 +15,24 @@ from btrack.btypes import PyTrackObject
 import napari
 
 
-def load_tsv(file_name: str) -> pd.DataFrame:
-    """
-    Load a tsv file into a pandas dataframe, based on the location of the 
-    python script. The tsv is in a directory called data that is in the same 
-    location as the python script.
+def load_tsv(
+    file_name: str
+) -> pd.DataFrame:
+    """Load a tsv file into a pandas dataframe.
+
+    This function uses the location of the python script. The tsv must be in a
+    directory called "data" that is in the same location as the python script.
 
     Parameters:
     ----------
     file_name : str
-        tsv file name
+        The name of the tsv file.
 
     Returns:
     -------
-    pd.DataFrame
-        tsv file loaded into a pandas dataframe
+    df : pd.DataFrame
+        The tsv file loaded into a pandas dataframe.
+
     """
     # Get the path of the current script
     current_script_path = Path(__file__).resolve()
@@ -48,40 +52,46 @@ def load_tsv(file_name: str) -> pd.DataFrame:
     return df
 
 
-def subset_df(df: pd.DataFrame, confidence_score: float) -> pd.DataFrame:
-    """
-    Subset a dataframe based on a confidence score and class.
+def subset_df(
+    df: pd.DataFrame,
+    confidence_score: float
+) -> pd.DataFrame:
+    """Subset a dataframe based on a confidence score and class.
 
     Parameters:
     ----------
     df : pd.DataFrame
-        input dataframe
+        Input dataframe.
     confidence_score : float
-        minimum score to filter the dataframe
+        Minimum score to filter the dataframe.
 
     Returns:
     -------
-    pd.DataFrame
-        subsetted dataframe
+    subsetted_df : pd.DataFrame
+
     """
-    subset_df = df[(df["score"] >= confidence_score) & (df["class"] == "tube_tip")]
-    return subset_df
+    subsetted_df = df[(df["score"] >= confidence_score) & (df["class"] == "tube_tip")]
+
+    return subsetted_df
 
 
-def calculate_centroid(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Calculate the centroid value for each row of a dataframe with columns 
-    titled "ymin", "xmin", "ymax", "xmax".
+def calculate_centroid(
+    df: pd.DataFrame
+) -> pd.DataFrame:
+    """Calculate the centroid value for each row of a dataframe.
+
+    The dataframe should have columns titled "ymin", "xmin", "ymax", "xmax".
 
     Parameters:
     ----------
     df : pd.DataFrame
-        input dataframe
+        Input dataframe.
 
     Returns:
     -------
-    pd.DataFrame
-        dataframe with added columns 'centroid_x' and 'centroid_y'
+    df : pd.DataFrame
+        Dataframe with added columns "centroid_x" and "centroid_y".
+
     """
 
     # Coordinates are scaled. Returning to the original dimensions here.
@@ -90,34 +100,37 @@ def calculate_centroid(df: pd.DataFrame) -> pd.DataFrame:
 
     df["centroid_x"] = df.apply(lambda row: (row["xmin"] + row["xmax"]) / 2 * original_x, axis=1)
     df["centroid_y"] = df.apply(lambda row: (row["ymin"] + row["ymax"]) / 2 * original_y, axis=1)
+
     return df
 
 
-def add_rows_to_btrack(df: pd.DataFrame) -> List[PyTrackObject]:
-    """
-    Create btrack PyTrackObjects from a Pandas DataFrame.
+def add_rows_to_btrack(
+    df: pd.DataFrame
+) -> List[PyTrackObject]:
+    """Create btrack PyTrackObjects from a Pandas DataFrame.
 
     Parameters
     ----------
     df : pd.DataFrame
-        input dataframe with calculated centroids and confidence score cutoffs
+        Input dataframe with calculated centroids and confidence score cutoffs.
 
     Returns
     -------
-    list
-        list of PyTrackObjects, one for each row of the input DataFrame
+    btrack_objects: List[PyTrackObject]
+        List of PyTrackObjects, one for each row of the input DataFrame.
+
     """
 
     btrack_objects = []
     id_counter = 0
 
     for row in df.itertuples(index=False):
-        row_dict = {}
-        row_dict['ID'] = id_counter
-        row_dict['t'] = getattr(row, "timepoint")
-        row_dict['x'] = getattr(row, "centroid_x")
-        row_dict['y'] = getattr(row, "centroid_y")
-        row_dict['z'] = 0.
+        row_dict = {'ID': id_counter,
+                    't': getattr(row, "timepoint"),
+                    'x': getattr(row, "centroid_x"),
+                    'y': getattr(row, "centroid_y"),
+                    'z': 0.}
+
         # row_dict['rpn_score'] =
         # row_dict['rpn_obj_type'] =
         # row_dict['rpn_box'] =
@@ -129,22 +142,24 @@ def add_rows_to_btrack(df: pd.DataFrame) -> List[PyTrackObject]:
     return btrack_objects
 
 
-def run_tracking(btrack_objects: btrack.btypes.PyTrackObject) -> list:
-    """
-    Run btrack on a list of btrack objects (PyTrackObject).
+def run_tracking(
+    btrack_objects: Union[List[PyTrackObject], np.ndarray]
+) -> Tuple[np.ndarray, dict, dict]:
+    """Run the btrack tracking algorithm on a list of PyTrackObjects.
 
     Parameters
     ----------
-    btrack_objects : list[PyTrackObject]
-        a list of PyTrackObjects made with the add_rows_to_btrack function
+    btrack_objects : Union[List[PyTrackObject], np.ndarray]
+        A list of PyTrackObjects created with the add_rows_to_btrack function.
 
     Returns
     -------
-    data :
-
-    properties :
-
-    graph :
+    data : numpy.ndarray
+        The track data in a format for napari visualization.
+    properties : dict
+        The properties of the tracks in a dictionary format.
+    graph : dict
+        The track graph in a dictionary format.
 
     """
 
@@ -173,22 +188,29 @@ def run_tracking(btrack_objects: btrack.btypes.PyTrackObject) -> list:
 
         return data, properties, graph
 
-def visualize_tracks(track_data, track_properties, track_graph, background_images):
-    """
-    Visualize btrack output with source images as background.
+
+def visualize_tracks(
+        track_data: np.ndarray,
+        track_properties: dict,
+        track_graph: dict,
+        background_images: Union[str, Path]
+) -> None:
+    """Visualize btrack output with source images as background.
 
     Parameters
     ----------
-    track_data :
-        output from run_tracking
-    track_properties :
-        output from run_tracking
-    track_graph :
-        output from run_tracking
-    background_images :
-        path to images for the background
+    track_data : np.ndarray
+        Output from the run_tracking function.
+    track_properties : dict
+        Output from the run_tracking function.
+    track_graph : dict
+        Output from the run_tracking function.
+    background_images : Union[str, Path]
+        Path to the images used for the background.
 
-    Returns:
+    Returns
+    -------
+    None
 
     """
 
@@ -224,10 +246,8 @@ def visualize_tracks(track_data, track_properties, track_graph, background_image
 
 def main():
     pd.set_option('display.max_columns', None)
-    # Original image sequence
-    # df = load_tsv("2022-01-05_run1_26C_D2_t082_stab_predictions.tsv")
 
-    # Image sequences for NAPPN poster
+    # Some example image sequence inference files
     df = load_tsv("2022-03-03_run1_26C_C2_t082_stab_predictions.tsv")
     # df = load_tsv("2022-03-07_run1_26C_B5_t082_stab_predictions.tsv")
     # df = load_tsv("2022-03-07_run1_26C_C2_t082_stab_predictions.tsv")
@@ -242,7 +262,7 @@ def main():
     # print(btrack_objects[0])
     data, properties, graph = run_tracking(btrack_objects)
 
-    # Image series for NAPPN
+    # Image sequences to go along with the inference, for visualization.
     image_dir = "/Users/warman/git/pollen_cv/data/btrack_visualization_images/2022-03-03_run1_26C_C2_inference/*.jpg"
     # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-03_run1_26C_C2_stab/*.jpg"
 
@@ -252,10 +272,10 @@ def main():
     # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_C2_inference/*.jpg"
     # image_dir = "/Users/warman/Desktop/Science/computer_vision/btrack/2022-03-07_run1_26C_C2_stab/*.jpg"
 
-    # Viewing with Napari
+    # Viewing tracks and images with Napari
     visualize_tracks(data, properties, graph, image_dir)
 
-    print("Done")
+    print("All done")
 
 
 if __name__ == "__main__":
