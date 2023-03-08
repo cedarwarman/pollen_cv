@@ -56,12 +56,16 @@ def load_tsv(
     # Load the tsv file into a Pandas DataFrame
     df = pd.read_csv(tsv_file, sep='\t')
 
+    # Fix a bad column name
+    df = df.rename(columns={'class': 'class_label'})
+
     return df
 
 
 def subset_df(
     df: pd.DataFrame,
-    confidence_score: float
+    confidence_score: float,
+    class_string: str
 ) -> pd.DataFrame:
     """Subset a dataframe based on a confidence score and class.
 
@@ -71,13 +75,25 @@ def subset_df(
         Input dataframe.
     confidence_score : float
         Minimum score to filter the dataframe.
+    class_string : str
+        Class for subsetting the dataframe. Either "tip" or "pollen"
 
     Returns:
     -------
     subsetted_df : pd.DataFrame
 
     """
-    subsetted_df = df[(df["score"] >= confidence_score) & (df["class"] == "tube_tip")]
+
+    if class_string == "tip":
+        subsetted_df = df[(df["score"] >= confidence_score) & (df["class_label"] == "tube_tip")]
+
+    else:
+        subsetted_df = df[(df["score"] >= confidence_score) &
+                          (df["class_label"].isin(["germinated",
+                                                   "ungerminated",
+                                                   "burst",
+                                                   "unknown_germinated",
+                                                   "aborted"]))]
 
     return subsetted_df
 
@@ -131,16 +147,14 @@ def add_rows_to_btrack(
     btrack_objects = []
     id_counter = 0
 
+    print(df)
+
     for row in df.itertuples(index=False):
         row_dict = {'ID': id_counter,
                     't': getattr(row, "timepoint"),
                     'x': getattr(row, "centroid_x"),
                     'y': getattr(row, "centroid_y"),
                     'z': 0.}
-
-        # row_dict['rpn_score'] =
-        # row_dict['rpn_obj_type'] =
-        # row_dict['rpn_box'] =
 
         obj = btrack.btypes.PyTrackObject.from_dict(row_dict)
         btrack_objects.append(obj)
@@ -273,21 +287,34 @@ def main():
     pd.set_option('display.max_columns', None)
 
     # Some example image sequence inference files
-    image_seq_name = "2022-03-03_run1_26C_C2"
-    # image_seq_name = "2022-03-07_run1_26C_B5"
+    # image_seq_name = "2022-03-03_run1_26C_C2"
+    image_seq_name = "2022-03-07_run1_26C_B5"
     # image_seq_name = "2022-03-07_run1_26C_C2"
 
     # Loading and processing the dataframe
     df = load_tsv(image_seq_name)
-    df = subset_df(df, 0.35)
-    df = calculate_centroid(df)
+    subsetted_df = subset_df(df, 0.35, "tip")
+    subsetted_df = calculate_centroid(subsetted_df)
 
     # Adding to btrack and calculating tracks
-    btrack_objects = add_rows_to_btrack(df)
+    btrack_objects = add_rows_to_btrack(subsetted_df)
     data, properties, graph = run_tracking(btrack_objects)
 
     # Viewing tracks and images with Napari
     visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
+
+#     ####### EXPERIMENTAL #######
+#
+#     # Repeating for pollen classes
+#     subsetted_df = subset_df(df, 0.35, "pollen")
+#     subsetted_df = calculate_centroid(subsetted_df)
+#
+#     # Adding to btrack and calculating tracks
+#     btrack_objects = add_rows_to_btrack(subsetted_df)
+#     data, properties, graph = run_tracking(btrack_objects)
+#
+#     # Viewing tracks and images with Napari
+#     visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
 
     print("All done")
 
