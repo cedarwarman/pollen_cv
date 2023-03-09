@@ -154,7 +154,8 @@ def add_rows_to_btrack(
                     't': getattr(row, "timepoint"),
                     'x': getattr(row, "centroid_x"),
                     'y': getattr(row, "centroid_y"),
-                    'z': 0.}
+                    'z': 0.,
+                    'object_class': getattr(row, "class_label")}
 
         obj = btrack.btypes.PyTrackObject.from_dict(row_dict)
         btrack_objects.append(obj)
@@ -204,8 +205,9 @@ def run_tracking(
         # generate hypotheses and run the global optimizer
         tracker.optimize()
 
-        # get the tracks in a format for napari visualization
-        data, properties, graph = tracker.to_napari()
+        # get the tracks in a format for napari visualization. Adding
+        # replace_na=False fixed a problem with adding class to PyTrackObjects.
+        data, properties, graph = tracker.to_napari(replace_nan=False)
 
         return data, properties, graph
 
@@ -305,16 +307,28 @@ def main():
 
 #     ####### EXPERIMENTAL #######
 #
-#     # Repeating for pollen classes
-#     subsetted_df = subset_df(df, 0.35, "pollen")
-#     subsetted_df = calculate_centroid(subsetted_df)
+#    # Repeating for pollen classes
+#    subsetted_df = subset_df(df, 0.35, "pollen")
+#    subsetted_df = calculate_centroid(subsetted_df)
 #
-#     # Adding to btrack and calculating tracks
-#     btrack_objects = add_rows_to_btrack(subsetted_df)
-#     data, properties, graph = run_tracking(btrack_objects)
+#    # Adding to btrack and calculating tracks
+#    btrack_objects = add_rows_to_btrack(subsetted_df)
+#    print("objects")
+#    print(btrack_objects[0])
 #
-#     # Viewing tracks and images with Napari
-#     visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
+#    data, properties, graph = run_tracking(btrack_objects)
+#    print("data")
+#    print(data)
+#
+#    print("properties")
+#    print(properties)
+#    print(type(properties))
+#    print(properties["object_class"])
+#    print(len(properties["object_class"]))
+#
+#    # Viewing tracks and images with Napari
+#    print("visualizing")
+#    visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
 
     print("All done")
 
