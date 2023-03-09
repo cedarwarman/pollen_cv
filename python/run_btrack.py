@@ -209,6 +209,9 @@ def run_tracking(
         # replace_na=False fixed a problem with adding class to PyTrackObjects.
         data, properties, graph = tracker.to_napari(replace_nan=False)
 
+        # get the tracks in their native format (removed because redundant)
+        # tracks = tracker.tracks
+
         return data, properties, graph
 
 
@@ -285,12 +288,39 @@ def visualize_tracks(
     napari.run()
 
 
+def make_output_df(
+    track_data: np.ndarray,
+    track_properties: dict
+) -> pd.DataFrame:
+    """Visualize btrack output with source images as background.
+
+    Parameters
+    ----------
+    track_data : np.ndarray
+        Output from the run_tracking function.
+    track_properties : dict
+        Output from the run_tracking function.
+
+    Returns
+    -------
+    output_df : pd.DataFrame
+        Dataframe that summarizes all the track and class information
+
+    """
+    properties_df = pd.DataFrame(track_properties)
+    track_data_df = pd.DataFrame(track_data, columns=['root', 'time', 'y', 'x'])
+
+    output_df = pd.concat([properties_df, track_data_df], axis=1)
+
+    return output_df
+
+
 def main():
     pd.set_option('display.max_columns', None)
 
     # Some example image sequence inference files
-    # image_seq_name = "2022-03-03_run1_26C_C2"
-    image_seq_name = "2022-03-07_run1_26C_B5"
+    image_seq_name = "2022-03-03_run1_26C_C2"
+    # image_seq_name = "2022-03-07_run1_26C_B5"
     # image_seq_name = "2022-03-07_run1_26C_C2"
 
     # Loading and processing the dataframe
@@ -305,30 +335,24 @@ def main():
     # Viewing tracks and images with Napari
     visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
 
-#     ####### EXPERIMENTAL #######
-#
-#    # Repeating for pollen classes
-#    subsetted_df = subset_df(df, 0.35, "pollen")
-#    subsetted_df = calculate_centroid(subsetted_df)
-#
-#    # Adding to btrack and calculating tracks
-#    btrack_objects = add_rows_to_btrack(subsetted_df)
-#    print("objects")
-#    print(btrack_objects[0])
-#
-#    data, properties, graph = run_tracking(btrack_objects)
-#    print("data")
-#    print(data)
-#
-#    print("properties")
-#    print(properties)
-#    print(type(properties))
-#    print(properties["object_class"])
-#    print(len(properties["object_class"]))
-#
-#    # Viewing tracks and images with Napari
-#    print("visualizing")
-#    visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
+    ####### EXPERIMENTAL #######
+
+    # Repeating for pollen classes
+    subsetted_df = subset_df(df, 0.35, "pollen")
+    subsetted_df = calculate_centroid(subsetted_df)
+
+    # Adding to btrack and calculating tracks
+    btrack_objects = add_rows_to_btrack(subsetted_df)
+    data, properties, graph = run_tracking(btrack_objects)
+
+    # Viewing tracks and images with Napari
+    print("visualizing")
+    visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
+
+    # Making a dataframe with all the track and class info
+    print("Making dataframe")
+    track_df = make_output_df(data, properties)
+    # Checking to make sure the roots line up (these are the track ids)
 
     print("All done")
 
