@@ -153,7 +153,7 @@ class TFRecordInfo:
         return "TFRecordInfo({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8})".format(self.height, self.width, self.filename, self.source_id, type(self.encoded), self.format, self.sha_key, self.labelbox_rowid, self.labels)
 
 # Parsing the labels 
-def parse_labelbox_data(data):
+def parse_labelbox_data(data, label_arg):
     records = list()
     image_format = b'jpg'
 
@@ -186,17 +186,30 @@ def parse_labelbox_data(data):
 
         # Adding them to a nice list using the "label" class defined above.
         # For now I'm only including bounding boxes, so just pollen no tube tips.
-        for l in label_objs:
-            if l.get("bbox"):
-                # print(l.get("bbox"))
-                labels.append(label_from_labelbox_obj(l))
-            else:
-                # Makes bounding box from point. Change the bounding bix size 
-                # inside the fuction.
-                # print("Test print in tube else: ")
-                # print(l.get("point"))
-                #labels.append(tube_tip_label_from_labelbox_obj(l)) 
-                pass
+        if label_arg == "all":
+           for l in label_objs:
+               if l.get("bbox"):
+                   # print(l.get("bbox"))
+                   labels.append(label_from_labelbox_obj(l))
+               else:
+                   # Makes bounding box from point. Change the bounding bix size
+                   # inside the function.
+                   labels.append(tube_tip_label_from_labelbox_obj(l))
+        elif label_arg == "pollen":
+            for l in label_objs:
+                if l.get("bbox"):
+                    # print(l.get("bbox"))
+                    labels.append(label_from_labelbox_obj(l))
+                else:
+                    pass
+        else: # label_arg == "tube_tip"
+            for l in label_objs:
+                if l.get("bbox"):
+                    pass
+                else:
+                    # Makes bounding box from point. Change the bounding bix size
+                    # inside the fuction.
+                    labels.append(tube_tip_label_from_labelbox_obj(l))
 
         # All images uploaded to Labelbox are 2048 by 2048 until further 
         # notice. If necessary I can add the code to download them and get 
@@ -209,18 +222,23 @@ def parse_labelbox_data(data):
     return data, records
 
 # Getting classes.
-def get_classes_from_labelbox(data):
+def get_classes_from_labelbox(data, label_arg):
     labels_set = set()
     for record in data:
         if isinstance(record, dict):
             if "objects" in record["Label"]:
                 label_objs = record["Label"]["objects"]
                 for obj in label_objs:
-                    # # This version does only bounding boxes
-                    if obj.get("bbox"):
+                    if label_arg == "all":
                         labels_set.add(obj["value"])
-                    # This version does them all
-                    # labels_set.add(obj["value"])
+                    elif label_arg == "pollen":
+                        if obj.get("bbox"):
+                            labels_set.add(obj["value"])
+                    else: # Tube tip classes
+                        if obj.get("bbox"):
+                            pass # Ignore pollen classes
+                        else:
+                            labels_set.add(obj["value"])
     labels_list = list(labels_set)
     # Sort labels list so it's the same every time (at least until I add more classes)
     labels_list.sort()
@@ -484,8 +502,10 @@ def main():
         "output into multiple TFRecord files instead of one. Sum of values should be <=100. " +
         "Example: '--splits 10 70' will write 3 files with 10%%, 70%%, and 20%% of the data, respectively",
         nargs='+',
-        type=int,
-    )
+        type=int)
+    parser.add_argument('--label_type',
+        choices=["all", "pollen", "tube_tip"], help="Which labels to import",
+        default="all")
     args = parser.parse_args()
 
     # Getting the secrets
@@ -498,15 +518,15 @@ def main():
     labels = download_labels(api_key, project_id)
 
     # Parsing the labels
-    data, records = parse_labelbox_data(labels)
+    data, records = parse_labelbox_data(labels, args.label_type)
 
     # Getting the different classes present
-    class_dict = get_classes_from_labelbox(data)
+    class_dict = get_classes_from_labelbox(data, args.label_type)
 
     splits = validate_splits(args.splits)
 
     # Making the tfrecords
-    generate_tfrecords("add_image_path", args.tfrecord_dest, args.splits, data, records, class_dict)
+    generate_tfrecords("add_image_path", args.tfrecord_dest, splits, data, records, class_dict)
 
 if __name__ == "__main__":
     main()
