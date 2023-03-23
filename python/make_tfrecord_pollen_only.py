@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Testing remote development
 
 # Largely based off of https://github.com/caseydaly/LabelboxToTFRecord/
 
@@ -18,30 +19,61 @@ from object_detection.utils import dataset_util
 from object_detection.protos import string_int_label_map_pb2
 from google.protobuf import text_format
 
-# Opening the Labelbox secrets
-def open_yaml(yaml_path):
+def open_yaml(
+    yaml_path: str
+) -> dict:
+    """Open Labelbox secrets.
+    Open Labelbox secrets YAML file and load it as a dictionary.
+
+    Parameters
+    ----------
+    yaml_path : str
+        The path to the YAML file.
+
+    Returns
+    -------
+    yaml_dict : dict
+        The dictionary containing the YAML data.
+
+    """
+
     with open(yaml_path) as file:
         yaml_dict = yaml.safe_load(file)
     return yaml_dict
 
+
 # Downloading the labels
-def download_labels(api_key, project_id):
-    # Enter your Labelbox API key here
-    LB_API_KEY = api_key
+def download_labels(
+    api_key: dict,
+    project_id: str
+) -> dict:
+    """Download the labels from a Labelbox project.
+
+    Parameters
+    ----------
+    api_key : str
+        The Labelbox API key.
+    project_id : str
+        The ID of the Labelbox project.
+
+    Returns
+    -------
+    labels : dict
+        The labels downloaded from the Labelbox project.
+
+    """
 
     # Create Labelbox client
-    lb = labelbox.Client(api_key=LB_API_KEY)
+    lb = labelbox.Client(api_key=api_key)
 
     # Get project by ID
     project = lb.get_project(project_id)
 
-    # Export image and text data as an annotation generator:
-    labels = project.label_generator()
-    
     # Export labels created in the selected date range as a json file:
-    labels = project.export_labels(download = True) 
+    labels = project.export_labels(download=True)
 
     return labels
+
 
 # Making a "label" class to store annotations and info for a single image
 class Label:
