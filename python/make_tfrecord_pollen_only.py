@@ -20,7 +20,7 @@ from object_detection.protos import string_int_label_map_pb2
 from google.protobuf import text_format
 
 def open_yaml(
-    yaml_path: str
+    yaml_path: Path
 ) -> dict:
     """Open Labelbox secrets.
     Open Labelbox secrets YAML file and load it as a dictionary.
@@ -211,11 +211,20 @@ def parse_labelbox_data(data, label_arg):
                     # inside the fuction.
                     labels.append(tube_tip_label_from_labelbox_obj(l))
 
-        # All images uploaded to Labelbox are 2048 by 2048 until further 
-        # notice. If necessary I can add the code to download them and get 
-        # the actual dimensions be seems like a lot of unnecessary IO for now.
-        # I will add the other things as I need them.
-        records.append(TFRecordInfo(2048, 2048, image_name, "empty", encoded_jpg, image_format, "empty", "empty", "empty", labels))
+        # Checks the image name to see what camera they came from. If they're from the first camera they get
+        # 2048x2048, if they're from the second camera they get 1600x1200
+        filename = record['External ID']
+        split_string = filename.split("_")
+        image_date = datetime.strptime(split_string[0], "%Y-%m-%d")
+
+        if image_date <= datetime(2022, 5, 27):
+            records.append(
+                TFRecordInfo(2048, 2048, image_name, "empty", encoded_jpg,
+                             image_format, "empty", "empty", "empty", labels))
+        else:
+            records.append(
+                TFRecordInfo(1600, 1200, image_name, "empty", encoded_jpg,
+                             image_format, "empty", "empty", "empty", labels))
 
     print(f"{len(data)} labeled images parsed")
     
@@ -247,7 +256,9 @@ def get_classes_from_labelbox(data, label_arg):
         labels[labels_list[i]] = i
     return labels
 
-def validate_splits(args_splits):
+def validate_splits(args_splits, parser):
+    splits = []
+
     if not args_splits:
         splits = [100]
     else:
@@ -523,7 +534,7 @@ def main():
     # Getting the different classes present
     class_dict = get_classes_from_labelbox(data, args.label_type)
 
-    splits = validate_splits(args.splits)
+    splits = validate_splits(args, parser)
 
     # Making the tfrecords
     generate_tfrecords("add_image_path", args.tfrecord_dest, splits, data, records, class_dict)
