@@ -275,10 +275,22 @@ def splits_to_record_indices(splits, num_records):
 # Get path from filename (for loading images locally according to my directory structure)
 def path_from_filename(filename):
     split_string = filename.split("_")
-    dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_stab" 
-    # Will change, consider arg later
-    path_base = Path('/media/volume/sdb/jpgs')
-    out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
+
+    # Checking to see if it's from the first or second camera
+    image_date = datetime.strptime(split_string[0], "%Y-%m-%d")
+
+    if image_date <= datetime(2022, 5, 27):
+        print("First camera")
+        dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_stab"
+        path_base = Path('/media/volume/sdb/jpgs')
+        out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
+    else:
+        print("Second camera")
+        dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_normalized_stabilized"
+        path_base = Path('/media/volume/sdb/norm_stab_jpgs')
+        out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
+        print(out_path)
+        exit()
     
     return out_path
 
