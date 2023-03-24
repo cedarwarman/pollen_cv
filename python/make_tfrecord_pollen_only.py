@@ -97,37 +97,29 @@ def label_from_labelbox_obj(lbl_box_obj):
     xmax = xmin + lbl_box_obj["bbox"]["width"]
     return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
 
-def tube_tip_label_from_labelbox_obj(lbl_box_obj):
-    # The length of the edge of the box in pixels. For a 2048x2048 image.
-    # I will try 35x35 to start.
-    image_w = 2048
-    image_h = 2048
-    box_edge_len = 35
+def tube_tip_label_from_labelbox_obj(lbl_box_obj, image_date):
+    # Camera switch date
+    camera_switch_date = datetime(2022, 5, 27)
+
+    # Image dimensions
+    image_w = 2048 if image_date <= camera_switch_date else 1600
+    image_h = 2048 if image_date <= camera_switch_date else 1200
+
+    # The length of the edge of the box in pixels.
+    # Used 35x35 for a 2048x2048 image
+    # Used nnxnn for a 1600x1200 image
+    box_edge_len = 35 if image_date <= camera_switch_date else 18
 
     point_x = lbl_box_obj["point"]["x"]
     point_y = lbl_box_obj["point"]["y"]
 
-    # Doing the x first
-    if (point_x - (0.5 * box_edge_len)) >= 0 and (point_x + (0.5 * box_edge_len)) <= image_w:
-        xmin = point_x - (0.5 * box_edge_len)  
-        xmax = point_x + (0.5 * box_edge_len)
-    elif (point_x - (0.5 * box_edge_len)) < 0:
-        xmin = 0
-        xmax = point_x + (0.5 * box_edge_len)
-    else:
-        xmin = point_x - (0.5 * box_edge_len)
-        xmax = image_w
+    # Calculate xmin and xmax
+    xmin = max(0, point_x - 0.5 * box_edge_len)
+    xmax = min(image_w, point_x + 0.5 * box_edge_len)
 
-    # Now the y
-    if (point_y - (0.5 * box_edge_len)) >= 0 and (point_y + (0.5 * box_edge_len)) <= image_h:
-        ymin = point_y - (0.5 * box_edge_len)  
-        ymax = point_y + (0.5 * box_edge_len)
-    elif (point_y - (0.5 * box_edge_len)) < 0:
-        ymin = 0
-        ymax = point_y + (0.5 * box_edge_len)
-    else:
-        ymin = point_y - (0.5 * box_edge_len)
-        ymax = image_h
+    # Calculate ymin and ymax
+    ymin = max(0, point_y - 0.5 * box_edge_len)
+    ymax = min(image_h, point_y + 0.5 * box_edge_len)
 
     return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
 
@@ -162,6 +154,9 @@ def parse_labelbox_data(data, label_arg):
 
         image_name = record['External ID']
 
+        split_string = image_name.split("_")
+        image_date = datetime.strptime(split_string[0], "%Y-%m-%d")
+
         # Reading in the image from the disk
         # Getting the correct filename. In the future make the image base path an arg
         #filename = record_obj.filename.encode('utf8')
@@ -189,16 +184,14 @@ def parse_labelbox_data(data, label_arg):
         if label_arg == "all":
            for l in label_objs:
                if l.get("bbox"):
-                   # print(l.get("bbox"))
                    labels.append(label_from_labelbox_obj(l))
                else:
                    # Makes bounding box from point. Change the bounding bix size
                    # inside the function.
-                   labels.append(tube_tip_label_from_labelbox_obj(l))
+                   labels.append(tube_tip_label_from_labelbox_obj(l, image_date))
         elif label_arg == "pollen":
             for l in label_objs:
                 if l.get("bbox"):
-                    # print(l.get("bbox"))
                     labels.append(label_from_labelbox_obj(l))
                 else:
                     pass
@@ -209,13 +202,10 @@ def parse_labelbox_data(data, label_arg):
                 else:
                     # Makes bounding box from point. Change the bounding bix size
                     # inside the fuction.
-                    labels.append(tube_tip_label_from_labelbox_obj(l))
+                    labels.append(tube_tip_label_from_labelbox_obj(l, image_date))
 
         # Checks the image name to see what camera they came from. If they're from the first camera they get
         # 2048x2048, if they're from the second camera they get 1600x1200
-        filename = record['External ID']
-        split_string = filename.split("_")
-        image_date = datetime.strptime(split_string[0], "%Y-%m-%d")
 
         if image_date <= datetime(2022, 5, 27):
             records.append(
@@ -223,7 +213,7 @@ def parse_labelbox_data(data, label_arg):
                              image_format, "empty", "empty", "empty", labels))
         else:
             records.append(
-                TFRecordInfo(1600, 1200, image_name, "empty", encoded_jpg,
+                TFRecordInfo(1200, 1600, image_name, "empty", encoded_jpg,
                              image_format, "empty", "empty", "empty", labels))
 
     print(f"{len(data)} labeled images parsed")
