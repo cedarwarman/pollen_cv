@@ -318,8 +318,6 @@ def path_from_filename(filename):
         dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_normalized_stabilized"
         path_base = Path('/media/volume/sdb/norm_stab_jpgs')
         out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
-        print(out_path)
-        exit()
     
     return out_path
 
@@ -534,7 +532,7 @@ def main():
     # Getting the different classes present
     class_dict = get_classes_from_labelbox(data, args.label_type)
 
-    splits = validate_splits(args, parser)
+    splits = validate_splits(args.splits, parser)
 
     # Making the tfrecords
     generate_tfrecords("add_image_path", args.tfrecord_dest, splits, data, records, class_dict)
