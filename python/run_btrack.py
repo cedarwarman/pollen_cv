@@ -190,8 +190,8 @@ def run_tracking(
         tracker.tracking_updates = ["MOTION"]
 
         # configure the tracker using a config file
-        # tracker.configure("./config/btrack_config.json")
-        tracker.configure("./config/cell_config.json")
+        # tracker.configure("../config/btrack/btrack_config.json")
+        tracker.configure("../config/btrack/cell_config.json")
 
         # append the objects to be tracked
         tracker.append(btrack_objects)

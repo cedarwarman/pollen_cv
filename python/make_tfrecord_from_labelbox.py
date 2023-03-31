@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Testing remote development
 
 # Largely based off of https://github.com/caseydaly/LabelboxToTFRecord/
 
@@ -18,30 +19,61 @@ from object_detection.utils import dataset_util
 from object_detection.protos import string_int_label_map_pb2
 from google.protobuf import text_format
 
-# Opening the Labelbox secrets
-def open_yaml(yaml_path):
+def open_yaml(
+    yaml_path: Path
+) -> dict:
+    """Open Labelbox secrets.
+    Open Labelbox secrets YAML file and load it as a dictionary.
+
+    Parameters
+    ----------
+    yaml_path : str
+        The path to the YAML file.
+
+    Returns
+    -------
+    yaml_dict : dict
+        The dictionary containing the YAML data.
+
+    """
+
     with open(yaml_path) as file:
         yaml_dict = yaml.safe_load(file)
     return yaml_dict
 
+
 # Downloading the labels
-def download_labels(api_key, project_id):
-    # Enter your Labelbox API key here
-    LB_API_KEY = api_key
+def download_labels(
+    api_key: dict,
+    project_id: str
+) -> dict:
+    """Download the labels from a Labelbox project.
+
+    Parameters
+    ----------
+    api_key : str
+        The Labelbox API key.
+    project_id : str
+        The ID of the Labelbox project.
+
+    Returns
+    -------
+    labels : dict
+        The labels downloaded from the Labelbox project.
+
+    """
 
     # Create Labelbox client
-    lb = labelbox.Client(api_key=LB_API_KEY)
+    lb = labelbox.Client(api_key=api_key)
 
     # Get project by ID
     project = lb.get_project(project_id)
 
-    # Export image and text data as an annotation generator:
-    labels = project.label_generator()
-    
     # Export labels created in the selected date range as a json file:
-    labels = project.export_labels(download = True) 
+    labels = project.export_labels(download=True)
 
     return labels
+
 
 # Making a "label" class to store annotations and info for a single image
 class Label:
@@ -65,37 +97,29 @@ def label_from_labelbox_obj(lbl_box_obj):
     xmax = xmin + lbl_box_obj["bbox"]["width"]
     return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
 
-def tube_tip_label_from_labelbox_obj(lbl_box_obj):
-    # The length of the edge of the box in pixels. For a 2048x2048 image.
-    # I will try 35x35 to start.
-    image_w = 2048
-    image_h = 2048
-    box_edge_len = 35
+def tube_tip_label_from_labelbox_obj(lbl_box_obj, image_date):
+    # Camera switch date
+    camera_switch_date = datetime(2022, 5, 27)
+
+    # Image dimensions
+    image_w = 2048 if image_date <= camera_switch_date else 1600
+    image_h = 2048 if image_date <= camera_switch_date else 1200
+
+    # The length of the edge of the box in pixels.
+    # Used 35x35 for a 2048x2048 image
+    # Used nnxnn for a 1600x1200 image
+    box_edge_len = 35 if image_date <= camera_switch_date else 18
 
     point_x = lbl_box_obj["point"]["x"]
     point_y = lbl_box_obj["point"]["y"]
 
-    # Doing the x first
-    if (point_x - (0.5 * box_edge_len)) >= 0 and (point_x + (0.5 * box_edge_len)) <= image_w:
-        xmin = point_x - (0.5 * box_edge_len)  
-        xmax = point_x + (0.5 * box_edge_len)
-    elif (point_x - (0.5 * box_edge_len)) < 0:
-        xmin = 0
-        xmax = point_x + (0.5 * box_edge_len)
-    else:
-        xmin = point_x - (0.5 * box_edge_len)
-        xmax = image_w
+    # Calculate xmin and xmax
+    xmin = max(0, point_x - 0.5 * box_edge_len)
+    xmax = min(image_w, point_x + 0.5 * box_edge_len)
 
-    # Now the y
-    if (point_y - (0.5 * box_edge_len)) >= 0 and (point_y + (0.5 * box_edge_len)) <= image_h:
-        ymin = point_y - (0.5 * box_edge_len)  
-        ymax = point_y + (0.5 * box_edge_len)
-    elif (point_y - (0.5 * box_edge_len)) < 0:
-        ymin = 0
-        ymax = point_y + (0.5 * box_edge_len)
-    else:
-        ymin = point_y - (0.5 * box_edge_len)
-        ymax = image_h
+    # Calculate ymin and ymax
+    ymin = max(0, point_y - 0.5 * box_edge_len)
+    ymax = min(image_h, point_y + 0.5 * box_edge_len)
 
     return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
 
@@ -121,7 +145,7 @@ class TFRecordInfo:
         return "TFRecordInfo({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8})".format(self.height, self.width, self.filename, self.source_id, type(self.encoded), self.format, self.sha_key, self.labelbox_rowid, self.labels)
 
 # Parsing the labels 
-def parse_labelbox_data(data):
+def parse_labelbox_data(data, label_arg):
     records = list()
     image_format = b'jpg'
 
@@ -129,6 +153,9 @@ def parse_labelbox_data(data):
         record = data[i]
 
         image_name = record['External ID']
+
+        split_string = image_name.split("_")
+        image_date = datetime.strptime(split_string[0], "%Y-%m-%d")
 
         # Reading in the image from the disk
         # Getting the correct filename. In the future make the image base path an arg
@@ -154,41 +181,63 @@ def parse_labelbox_data(data):
 
         # Adding them to a nice list using the "label" class defined above.
         # For now I'm only including bounding boxes, so just pollen no tube tips.
-        for l in label_objs:
-            if l.get("bbox"):
-                # print(l.get("bbox"))
-                labels.append(label_from_labelbox_obj(l))
-            else:
-                # Makes bounding box from point. Change the bounding bix size 
-                # inside the fuction.
-                # print("Test print in tube else: ")
-                # print(l.get("point"))
-                labels.append(tube_tip_label_from_labelbox_obj(l)) 
-                # pass
+        if label_arg == "all":
+           for l in label_objs:
+               if l.get("bbox"):
+                   labels.append(label_from_labelbox_obj(l))
+               else:
+                   # Makes bounding box from point. Change the bounding bix size
+                   # inside the function.
+                   labels.append(tube_tip_label_from_labelbox_obj(l, image_date))
+        elif label_arg == "pollen":
+            for l in label_objs:
+                if l.get("bbox"):
+                    labels.append(label_from_labelbox_obj(l))
+                else:
+                    pass
+        else: # label_arg == "tube_tip"
+            for l in label_objs:
+                if l.get("bbox"):
+                    pass
+                else:
+                    # Makes bounding box from point. Change the bounding bix size
+                    # inside the fuction.
+                    labels.append(tube_tip_label_from_labelbox_obj(l, image_date))
 
-        # All images uploaded to Labelbox are 2048 by 2048 until further 
-        # notice. If necessary I can add the code to download them and get 
-        # the actual dimensions be seems like a lot of unnecessary IO for now.
-        # I will add the other things as I need them.
-        records.append(TFRecordInfo(2048, 2048, image_name, "empty", encoded_jpg, image_format, "empty", "empty", "empty", labels))
+        # Checks the image name to see what camera they came from. If they're from the first camera they get
+        # 2048x2048, if they're from the second camera they get 1600x1200
+
+        if image_date <= datetime(2022, 5, 27):
+            records.append(
+                TFRecordInfo(2048, 2048, image_name, "empty", encoded_jpg,
+                             image_format, "empty", "empty", "empty", labels))
+        else:
+            records.append(
+                TFRecordInfo(1200, 1600, image_name, "empty", encoded_jpg,
+                             image_format, "empty", "empty", "empty", labels))
 
     print(f"{len(data)} labeled images parsed")
     
     return data, records
 
 # Getting classes.
-def get_classes_from_labelbox(data):
+def get_classes_from_labelbox(data, label_arg):
     labels_set = set()
     for record in data:
         if isinstance(record, dict):
             if "objects" in record["Label"]:
                 label_objs = record["Label"]["objects"]
                 for obj in label_objs:
-                    # # This version does only bounding boxes
-                    # if obj.get("bbox"):
-                    #     labels_set.add(obj["value"])
-                    # This version does them all
-                    labels_set.add(obj["value"])
+                    if label_arg == "all":
+                        labels_set.add(obj["value"])
+                    elif label_arg == "pollen":
+                        if obj.get("bbox"):
+                            labels_set.add(obj["value"])
+                    else: # Tube tip classes
+                        if obj.get("bbox"):
+                            pass # Ignore pollen classes
+                        else:
+                            labels_set.add(obj["value"])
     labels_list = list(labels_set)
     # Sort labels list so it's the same every time (at least until I add more classes)
     labels_list.sort()
@@ -197,7 +246,9 @@ def get_classes_from_labelbox(data):
         labels[labels_list[i]] = i
     return labels
 
-def validate_splits(args_splits):
+def validate_splits(args_splits, parser):
+    splits = []
+
     if not args_splits:
         splits = [100]
     else:
@@ -243,10 +294,20 @@ def splits_to_record_indices(splits, num_records):
 # Get path from filename (for loading images locally according to my directory structure)
 def path_from_filename(filename):
     split_string = filename.split("_")
-    dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_stab" 
-    # Will change, consider arg later
-    path_base = Path('/media/volume/sdb/jpgs')
-    out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
+
+    # Checking to see if it's from the first or second camera
+    image_date = datetime.strptime(split_string[0], "%Y-%m-%d")
+
+    if image_date <= datetime(2022, 5, 27):
+        print("First camera")
+        dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_stab"
+        path_base = Path('/media/volume/sdb/jpgs')
+        out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
+    else:
+        print("Second camera")
+        dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_normalized_stabilized"
+        path_base = Path('/media/volume/sdb/norm_stab_jpgs')
+        out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
     
     return out_path
 
@@ -440,8 +501,10 @@ def main():
         "output into multiple TFRecord files instead of one. Sum of values should be <=100. " +
         "Example: '--splits 10 70' will write 3 files with 10%%, 70%%, and 20%% of the data, respectively",
         nargs='+',
-        type=int,
-    )
+        type=int)
+    parser.add_argument('--label_type',
+        choices=["all", "pollen", "tube_tip"], help="Which labels to import",
+        default="all")
     args = parser.parse_args()
 
     # Getting the secrets
@@ -454,15 +517,15 @@ def main():
     labels = download_labels(api_key, project_id)
 
     # Parsing the labels
-    data, records = parse_labelbox_data(labels)
+    data, records = parse_labelbox_data(labels, args.label_type)
 
     # Getting the different classes present
-    class_dict = get_classes_from_labelbox(data)
+    class_dict = get_classes_from_labelbox(data, args.label_type)
 
-    splits = validate_splits(args.splits)
+    splits = validate_splits(args.splits, parser)
 
     # Making the tfrecords
-    generate_tfrecords("add_image_path", args.tfrecord_dest, args.splits, data, records, class_dict)
+    generate_tfrecords("add_image_path", args.tfrecord_dest, splits, data, records, class_dict)
 
 if __name__ == "__main__":
     main()
