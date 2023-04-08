@@ -21,8 +21,8 @@ from google.protobuf import text_format
 
 
 class Label:
-    """
-    A class representing bounding box coordinates and labels for an annotation.
+    """A class representing annotations.
+    Includes bounding boxes and labels.
 
     Attributes
     ----------
@@ -43,7 +43,7 @@ class Label:
         Returns a string representation of the Label object.
     """
 
-    def __init__(self, xmin, xmax, ymin, ymax, label, text=""):
+    def __init__(self, xmin, xmax, ymin, ymax, label):
         self.xmin = xmin
         self.xmax = xmax
         self.ymin = ymin
@@ -54,26 +54,45 @@ class Label:
         return "Label({0}, {1}, {2}, {3}, {4}, {5})".format(self.xmin, self.xmax, self.ymin, self.ymax, self.label)
 
 
-# Making a "TFRecordInfo" class to store multiple label classes and some
-# metadata. Since I'm not downloading the images I don't need a lot of these
-# things so I might end up getting rid of this one and pulling the metadata
-# from the local images.
 class TFRecordInfo:
+    """A class to store multiple Label classes
+    Stores multiple Label classes and some metadata. Becomes the tfrecord.
 
-    def __init__(self, height, width, filename, source_id, encoded, format, sha_key, labelbox_rowid, labelbox_url, labels):
+    Attributes
+    ----------
+    height : int
+        The height of the image.
+    width : int
+        The width of the image.
+    filename : str
+        The filename of the image.
+    encoded : bytes
+        The encoded image data.
+    format : str
+        The image format (e.g., 'jpg').
+    labels : list
+        A list of label objects associated with the image.
+
+    Methods
+    -------
+    __repr__():
+        Returns a string representation of the TFRecordInfo object.
+    """
+
+    def __init__(self, height, width, filename, encoded, format, labels):
         self.height = height
         self.width = width
         self.filename = filename
-        self.source_id = source_id
         self.encoded = encoded
         self.format = format
-        self.sha_key = sha_key
-        self.labelbox_rowid = labelbox_rowid
-        self.labelbox_url = labelbox_url
         self.labels = labels
 
     def __repr__(self):
-        return "TFRecordInfo({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8})".format(self.height, self.width, self.filename, self.source_id, type(self.encoded), self.format, self.sha_key, self.labelbox_rowid, self.labels)
+        return (
+            "TFRecordInfo({0}, {1}, {2}, {3}, {4}, {5})"
+            .format(self.height, self.width, self.filename,
+                    type(self.encoded), self.format, self.labels)
+        )
 
 
 def open_yaml(
@@ -253,12 +272,10 @@ def parse_labelbox_data(data, label_arg):
 
         if image_date <= datetime(2022, 5, 27):
             records.append(
-                TFRecordInfo(2048, 2048, image_name, "empty", encoded_jpg,
-                             image_format, "empty", "empty", "empty", labels))
+                TFRecordInfo(2048, 2048, image_name, encoded_jpg, image_format, labels))
         else:
             records.append(
-                TFRecordInfo(1200, 1600, image_name, "empty", encoded_jpg,
-                             image_format, "empty", "empty", "empty", labels))
+                TFRecordInfo(1200, 1600, image_name, encoded_jpg, image_format, labels))
 
     print(f"{len(data)} labeled images parsed")
     
@@ -379,7 +396,7 @@ def create_tf_example(record_obj, class_dict):
         'image/height': dataset_util.int64_feature(record_obj.height),
         'image/width': dataset_util.int64_feature(record_obj.width),
         'image/filename': dataset_util.bytes_feature(record_obj.filename.encode('utf8')),
-        'image/source_id': dataset_util.bytes_feature(record_obj.source_id.encode('utf8')),
+        'image/source_id': dataset_util.bytes_feature("empty".encode('utf8')),
         'image/encoded': dataset_util.bytes_feature(record_obj.encoded),
         'image/format': dataset_util.bytes_feature(record_obj.format),
         'image/object/bbox/xmin': dataset_util.float_list_feature(xmins),
@@ -502,7 +519,7 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
             rearranged_records.append(rearranged_records.pop(record_index))
         record_index += 1
     records = rearranged_records
-    
+
     # Making the tfrecord files
     split_start = 0
     print(f'Creating {len(splits)} TFRecord files:')
