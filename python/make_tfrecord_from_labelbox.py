@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Testing remote development
 
-# Largely based off of https://github.com/caseydaly/LabelboxToTFRecord/
+# Based off of https://github.com/caseydaly/LabelboxToTFRecord/
 
 import yaml
 import io
@@ -18,6 +18,63 @@ from collections import OrderedDict
 from object_detection.utils import dataset_util
 from object_detection.protos import string_int_label_map_pb2
 from google.protobuf import text_format
+
+
+class Label:
+    """
+    A class representing bounding box coordinates and labels for an annotation.
+
+    Attributes
+    ----------
+    xmin : int
+        The minimum x-coordinate of the bounding box.
+    xmax : int
+        The maximum x-coordinate of the bounding box.
+    ymin : int
+        The minimum y-coordinate of the bounding box.
+    ymax : int
+        The maximum y-coordinate of the bounding box.
+    label : int or str
+        The class id.
+
+    Methods
+    -------
+    __repr__()
+        Returns a string representation of the Label object.
+    """
+
+    def __init__(self, xmin, xmax, ymin, ymax, label, text=""):
+        self.xmin = xmin
+        self.xmax = xmax
+        self.ymin = ymin
+        self.ymax = ymax
+        self.label = label
+
+    def __repr__(self):
+        return "Label({0}, {1}, {2}, {3}, {4}, {5})".format(self.xmin, self.xmax, self.ymin, self.ymax, self.label)
+
+
+# Making a "TFRecordInfo" class to store multiple label classes and some
+# metadata. Since I'm not downloading the images I don't need a lot of these
+# things so I might end up getting rid of this one and pulling the metadata
+# from the local images.
+class TFRecordInfo:
+
+    def __init__(self, height, width, filename, source_id, encoded, format, sha_key, labelbox_rowid, labelbox_url, labels):
+        self.height = height
+        self.width = width
+        self.filename = filename
+        self.source_id = source_id
+        self.encoded = encoded
+        self.format = format
+        self.sha_key = sha_key
+        self.labelbox_rowid = labelbox_rowid
+        self.labelbox_url = labelbox_url
+        self.labels = labels
+
+    def __repr__(self):
+        return "TFRecordInfo({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8})".format(self.height, self.width, self.filename, self.source_id, type(self.encoded), self.format, self.sha_key, self.labelbox_rowid, self.labels)
+
 
 def open_yaml(
     yaml_path: Path
@@ -42,7 +99,6 @@ def open_yaml(
     return yaml_dict
 
 
-# Downloading the labels
 def download_labels(
     api_key: dict,
     project_id: str
@@ -75,27 +131,28 @@ def download_labels(
     return labels
 
 
-# Making a "label" class to store annotations and info for a single image
-class Label:
+def label_from_labelbox_obj(
+    lbl_box_obj: list,
+) -> Label:
+    """Create a Label object from a Labelbox label.
 
-    def __init__(self, xmin, xmax, ymin, ymax, label, text=""):
-        self.xmin = xmin
-        self.xmax = xmax
-        self.ymin = ymin
-        self.ymax = ymax
-        self.label = label
-        self.text = text
+    Parameters
+    ----------
+    lbl_box_obj : list
+        A list containing annotations from Labelbox.
 
-    def __repr__(self):
-        return "Label({0}, {1}, {2}, {3}, {4}, {5})".format(self.xmin, self.xmax, self.ymin, self.ymax, self.label, self.text)
+    Returns
+    -------
+    Label
+        A Label object with bounding box coordinates and label identifier.
 
-
-def label_from_labelbox_obj(lbl_box_obj):
+    """
     ymin = lbl_box_obj["bbox"]["top"]
     xmin = lbl_box_obj["bbox"]["left"]
     ymax = ymin + lbl_box_obj["bbox"]["height"]
     xmax = xmin + lbl_box_obj["bbox"]["width"]
     return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
+
 
 def tube_tip_label_from_labelbox_obj(lbl_box_obj, image_date):
     # Camera switch date
@@ -121,28 +178,13 @@ def tube_tip_label_from_labelbox_obj(lbl_box_obj, image_date):
     ymin = max(0, point_y - 0.5 * box_edge_len)
     ymax = min(image_h, point_y + 0.5 * box_edge_len)
 
-    return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
+    # If the tube tip label is "tube_tip_bulging" then change it to "tube_tip"
+    if lbl_box_obj["value"] == "tube_tip_bulging":
+        lbl_box_obj["value"] = "tube_tip"
 
-# Making a "TFRecordInfo" class to store multiple label classes and some 
-# metadata. Since I'm not downloading the images I don't need a lot of these 
-# things so I might end up getting rid of this one and pulling the metadata 
-# from the local images.
-class TFRecordInfo:
+    if lbl_box_obj["value"] != "tube_tip_burst":
+        return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
 
-    def __init__(self, height, width, filename, source_id, encoded, format, sha_key, labelbox_rowid, labelbox_url, labels):
-        self.height = height
-        self.width = width
-        self.filename = filename
-        self.source_id = source_id
-        self.encoded = encoded
-        self.format = format
-        self.sha_key = sha_key
-        self.labelbox_rowid = labelbox_rowid
-        self.labelbox_url = labelbox_url
-        self.labels = labels
-
-    def __repr__(self):
-        return "TFRecordInfo({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8})".format(self.height, self.width, self.filename, self.source_id, type(self.encoded), self.format, self.sha_key, self.labelbox_rowid, self.labels)
 
 # Parsing the labels 
 def parse_labelbox_data(data, label_arg):
@@ -186,9 +228,11 @@ def parse_labelbox_data(data, label_arg):
                if l.get("bbox"):
                    labels.append(label_from_labelbox_obj(l))
                else:
-                   # Makes bounding box from point. Change the bounding bix size
-                   # inside the function.
-                   labels.append(tube_tip_label_from_labelbox_obj(l, image_date))
+                   # Makes bounding box from point. Checks to make sure it's not
+                   # None because tube_tip_burst class is removed in the function.
+                   append_item = tube_tip_label_from_labelbox_obj(l, image_date)
+                   if append_item is not None:
+                       labels.append(append_item)
         elif label_arg == "pollen":
             for l in label_objs:
                 if l.get("bbox"):
@@ -200,9 +244,9 @@ def parse_labelbox_data(data, label_arg):
                 if l.get("bbox"):
                     pass
                 else:
-                    # Makes bounding box from point. Change the bounding bix size
-                    # inside the fuction.
-                    labels.append(tube_tip_label_from_labelbox_obj(l, image_date))
+                    append_item = tube_tip_label_from_labelbox_obj(l, image_date)
+                    if append_item is not None:
+                        labels.append(append_item)
 
         # Checks the image name to see what camera they came from. If they're from the first camera they get
         # 2048x2048, if they're from the second camera they get 1600x1200
@@ -228,16 +272,17 @@ def get_classes_from_labelbox(data, label_arg):
             if "objects" in record["Label"]:
                 label_objs = record["Label"]["objects"]
                 for obj in label_objs:
-                    if label_arg == "all":
-                        labels_set.add(obj["value"])
-                    elif label_arg == "pollen":
-                        if obj.get("bbox"):
+                    if obj["value"] != "tube_tip_bulging" and obj["value"] != "tube_tip_burst":
+                        if label_arg == "all":
                             labels_set.add(obj["value"])
-                    else: # Tube tip classes
-                        if obj.get("bbox"):
-                            pass # Ignore pollen classes
-                        else:
-                            labels_set.add(obj["value"])
+                        elif label_arg == "pollen":
+                            if obj.get("bbox"):
+                                labels_set.add(obj["value"])
+                        else:  # Tube tip classes
+                            if obj.get("bbox"):
+                                pass  # Ignore pollen classes
+                            else:
+                                labels_set.add(obj["value"])
     labels_list = list(labels_set)
     # Sort labels list so it's the same every time (at least until I add more classes)
     labels_list.sort()
@@ -313,7 +358,6 @@ def path_from_filename(filename):
 
 
 def create_tf_example(record_obj, class_dict):
-
     xmins = []
     xmaxs = []
     ymins = []
@@ -322,25 +366,14 @@ def create_tf_example(record_obj, class_dict):
     classes = []
 
     for label_obj in record_obj.labels:
-        # print(label_obj.xmin)
-        # print(record_obj.width)
-        # print(label_obj.xmax)
-        # print(record_obj.width)
-        # print(label_obj.ymin)
-        # print(record_obj.height)
-        # print(label_obj.ymax)
-        # print(record_obj.height)
         xmins.append(label_obj.xmin / record_obj.width)
         xmaxs.append(label_obj.xmax / record_obj.width)
         ymins.append(label_obj.ymin / record_obj.height)
         ymaxs.append(label_obj.ymax / record_obj.height)
-        # print("Label_obj.label (classes_text): ", label_obj.label)
         classes_text.append(label_obj.label.encode('utf8'))
         # print(f"Class_dict at label_obj.label with one added is: {class_dict[label_obj.label] + 1}")
         # To match the classes in class_dict
         classes.append(class_dict[label_obj.label] + 1)
-        # print(class_dict)
-        # print(" ")
 
     tf_example = tf.train.Example(features=tf.train.Features(feature={
         'image/height': dataset_util.int64_feature(record_obj.height),
@@ -468,9 +501,7 @@ def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class
             # Moves it to the end of the records list
             rearranged_records.append(rearranged_records.pop(record_index))
         record_index += 1
-    print(len(rearranged_records))
     records = rearranged_records
-    print(len(records))
     
     # Making the tfrecord files
     split_start = 0
