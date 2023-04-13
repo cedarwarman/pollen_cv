@@ -19,7 +19,7 @@ from object_detection.utils import dataset_util
 from object_detection.protos import string_int_label_map_pb2
 from google.protobuf import text_format
 
-# from typing import Dict
+from typing import Dict, List, Tuple
 
 
 class Label:
@@ -228,81 +228,69 @@ def tube_tip_label_from_labelbox_obj(
         return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
 
 
-# Parsing the labels 
-def parse_labelbox_data(data, label_arg):
-    records = list()
+def parse_labelbox_data(
+    data: List[Dict],
+    label_arg: str
+) -> List[TFRecordInfo]:
+    """Convert Labelbox data to a list of TFRecordInfo objects.
+
+    Parameters
+    ----------
+    data : List[Dict]
+        A list of dictionaries containing Labelbox data for each image.
+    label_arg : str
+        A string specifying which labels to include in the output.
+        Options: "all", "pollen", "tube_tip".
+
+    Returns
+    -------
+    records
+        A list of TFRecordInfo objects.
+
+    """
+
+    records = []
     image_format = b'jpg'
 
-    for i in range(len(data)):
-        record = data[i]
-
+    for record in data:
         image_name = record['External ID']
+        image_date = datetime.strptime(image_name.split("_")[0], "%Y-%m-%d")
 
-        split_string = image_name.split("_")
-        image_date = datetime.strptime(split_string[0], "%Y-%m-%d")
-
-        # Reading in the image from the disk
-        # Getting the correct filename. In the future make the image base path an arg
-        #filename = record_obj.filename.encode('utf8')
         print(f'Importing {image_name}')
         image_path = path_from_filename(image_name)
 
         with tf.io.gfile.GFile(image_path, 'rb') as fid:
             encoded_jpg = fid.read()
 
-            # Skipping this because the disk image size might eventually be different 
-            # from the Labelbox upload size and I want the ratios to be right, so 
-            # manually inputting the labelbox upload size below. Can be changed in future.
-            # im = Image.open(image_path)
-            # width, height = im.size
-            #print(f'Image width is: {width}')
-            #print(f'Image height is: {height}')
-
-
-        # Object labels.
-        labels = list()
+        labels = []
         label_objs = record["Label"]["objects"]
 
-        # Adding them to a nice list using the "label" class defined above.
-        # For now I'm only including bounding boxes, so just pollen no tube tips.
+        # Checks to see if the user wants all the labels, just the pollen
+        # labels, or just the tube tip labels
         if label_arg == "all":
-           for l in label_objs:
-               if l.get("bbox"):
-                   labels.append(label_from_labelbox_obj(l))
-               else:
-                   # Makes bounding box from point. Checks to make sure it's not
-                   # None because tube_tip_burst class is removed in the function.
-                   append_item = tube_tip_label_from_labelbox_obj(l, image_date)
-                   if append_item is not None:
-                       labels.append(append_item)
+            label_list = label_objs
         elif label_arg == "pollen":
-            for l in label_objs:
-                if l.get("bbox"):
-                    labels.append(label_from_labelbox_obj(l))
-                else:
-                    pass
-        else: # label_arg == "tube_tip"
-            for l in label_objs:
-                if l.get("bbox"):
-                    pass
-                else:
-                    append_item = tube_tip_label_from_labelbox_obj(l, image_date)
-                    if append_item is not None:
-                        labels.append(append_item)
+            label_list = [l for l in label_objs if l.get("bbox")]
+        else:  # label_arg == "tube_tip"
+            label_list = [l for l in label_objs if not l.get("bbox")]
 
-        # Checks the image name to see what camera they came from. If they're from the first camera they get
-        # 2048x2048, if they're from the second camera they get 1600x1200
+        # If necessary, converts tube tip points to bounding boxes
+        for l in label_list:
+            if l.get("bbox"):
+                labels.append(label_from_labelbox_obj(l))
+            else:
+                append_item = tube_tip_label_from_labelbox_obj(l, image_date)
+                if append_item is not None:
+                    labels.append(append_item)
 
-        if image_date <= datetime(2022, 5, 27):
-            records.append(
-                TFRecordInfo(2048, 2048, image_name, encoded_jpg, image_format, labels))
-        else:
-            records.append(
-                TFRecordInfo(1200, 1600, image_name, encoded_jpg, image_format, labels))
+        width, height = (2048, 2048) if image_date <= datetime(2022, 5, 27) else (1600, 1200)
+
+        records.append(TFRecordInfo(width, height, image_name, encoded_jpg, image_format, labels))
 
     print(f"{len(data)} labeled images parsed")
     
-    return data, records
+    return records
+
 
 # Getting classes.
 def get_classes_from_labelbox(data, label_arg):
@@ -586,15 +574,15 @@ def main():
     labels = download_labels(api_key, project_id)
 
     # Parsing the labels
-    data, records = parse_labelbox_data(labels, args.label_type)
+    records = parse_labelbox_data(labels, args.label_type)
 
     # Getting the different classes present
-    class_dict = get_classes_from_labelbox(data, args.label_type)
+    class_dict = get_classes_from_labelbox(labels, args.label_type)
 
     splits = validate_splits(args.splits, parser)
 
     # Making the tfrecords
-    generate_tfrecords("add_image_path", args.tfrecord_dest, splits, data, records, class_dict)
+    generate_tfrecords("add_image_path", args.tfrecord_dest, splits, labels, records, class_dict)
 
 if __name__ == "__main__":
     main()
