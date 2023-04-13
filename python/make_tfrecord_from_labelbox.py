@@ -19,6 +19,8 @@ from object_detection.utils import dataset_util
 from object_detection.protos import string_int_label_map_pb2
 from google.protobuf import text_format
 
+# from typing import Dict
+
 
 class Label:
     """A class representing annotations.
@@ -41,6 +43,7 @@ class Label:
     -------
     __repr__()
         Returns a string representation of the Label object.
+
     """
 
     def __init__(self, xmin, xmax, ymin, ymax, label):
@@ -77,6 +80,7 @@ class TFRecordInfo:
     -------
     __repr__():
         Returns a string representation of the TFRecordInfo object.
+
     """
 
     def __init__(self, height, width, filename, encoded, format, labels):
@@ -141,7 +145,6 @@ def download_labels(
     # Create Labelbox client
     lb = labelbox.Client(api_key=api_key)
 
-    # Get project by ID
     project = lb.get_project(project_id)
 
     # Export labels created in the selected date range as a json file:
@@ -166,34 +169,53 @@ def label_from_labelbox_obj(
         A Label object with bounding box coordinates and label identifier.
 
     """
+
     ymin = lbl_box_obj["bbox"]["top"]
     xmin = lbl_box_obj["bbox"]["left"]
     ymax = ymin + lbl_box_obj["bbox"]["height"]
     xmax = xmin + lbl_box_obj["bbox"]["width"]
+
     return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
 
 
-def tube_tip_label_from_labelbox_obj(lbl_box_obj, image_date):
-    # Camera switch date
-    camera_switch_date = datetime(2022, 5, 27)
+def tube_tip_label_from_labelbox_obj(
+    lbl_box_obj: dict,
+    image_date: datetime,
+) -> Label:
+    """Generate a tube tip label object from a labelbox object.
 
-    # Image dimensions
+    Parameters
+    ----------
+    lbl_box_obj : dict
+        A dictionary containing the labelbox object with keys "point" and "value".
+        The "point" key contains a dictionary with keys "x" and "y" representing
+        the x and y coordinates of the point.
+    image_date : datetime
+        The date the image was captured.
+
+    Returns
+    -------
+    Label
+        A Label object representing the tube tip label with xmin, xmax, ymin,
+        ymax, and class id.
+
+    """
+
+
+    # Image dimensions are different depending on the date
+    camera_switch_date = datetime(2022, 5, 27)
     image_w = 2048 if image_date <= camera_switch_date else 1600
     image_h = 2048 if image_date <= camera_switch_date else 1200
 
-    # The length of the edge of the box in pixels.
-    # Used 35x35 for a 2048x2048 image
-    # Used nnxnn for a 1600x1200 image
+    # Size of bounding box around point
     box_edge_len = 35 if image_date <= camera_switch_date else 18
 
     point_x = lbl_box_obj["point"]["x"]
     point_y = lbl_box_obj["point"]["y"]
 
-    # Calculate xmin and xmax
+    # Makes sure bounding box doesn't go off the edge of the image
     xmin = max(0, point_x - 0.5 * box_edge_len)
     xmax = min(image_w, point_x + 0.5 * box_edge_len)
-
-    # Calculate ymin and ymax
     ymin = max(0, point_y - 0.5 * box_edge_len)
     ymax = min(image_h, point_y + 0.5 * box_edge_len)
 
@@ -201,6 +223,7 @@ def tube_tip_label_from_labelbox_obj(lbl_box_obj, image_date):
     if lbl_box_obj["value"] == "tube_tip_bulging":
         lbl_box_obj["value"] = "tube_tip"
 
+    # Ignore tube_tip_burst
     if lbl_box_obj["value"] != "tube_tip_burst":
         return Label(xmin, xmax, ymin, ymax, lbl_box_obj["value"])
 
@@ -361,12 +384,10 @@ def path_from_filename(filename):
     image_date = datetime.strptime(split_string[0], "%Y-%m-%d")
 
     if image_date <= datetime(2022, 5, 27):
-        print("First camera")
         dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_stab"
         path_base = Path('/media/volume/sdb/jpgs')
         out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
     else:
-        print("Second camera")
         dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_normalized_stabilized"
         path_base = Path('/media/volume/sdb/norm_stab_jpgs')
         out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
