@@ -293,31 +293,50 @@ def parse_labelbox_data(
 
 
 # Getting classes.
-def get_classes_from_labelbox(data, label_arg):
+def get_classes_from_labelbox(
+    data: List[Dict],
+    label_arg: str
+) -> Dict[str, int]:
+    """Extract unique class labels from labelbox data.
+
+    Parameters
+    ----------
+    data : List[Dict]
+        A list of dictionaries containing labelbox data.
+    label_arg : str
+        A string specifying which labels to include in the output.
+        Options: "all", "pollen", "tube_tip".
+
+    Returns
+    -------
+    labels
+        A dictionary with class labels as keys and integer indices as values.
+
+    """
+
     labels_set = set()
     for record in data:
-        if isinstance(record, dict):
-            if "objects" in record["Label"]:
-                label_objs = record["Label"]["objects"]
-                for obj in label_objs:
-                    if obj["value"] != "tube_tip_bulging" and obj["value"] != "tube_tip_burst":
-                        if label_arg == "all":
-                            labels_set.add(obj["value"])
-                        elif label_arg == "pollen":
-                            if obj.get("bbox"):
-                                labels_set.add(obj["value"])
-                        else:  # Tube tip classes
-                            if obj.get("bbox"):
-                                pass  # Ignore pollen classes
-                            else:
-                                labels_set.add(obj["value"])
-    labels_list = list(labels_set)
-    # Sort labels list so it's the same every time (at least until I add more classes)
-    labels_list.sort()
-    labels = {}
-    for i in range(0, len(labels_list)):
-        labels[labels_list[i]] = i
+        if isinstance(record, dict) and "objects" in record["Label"]:
+            label_objs = record["Label"]["objects"]
+
+            for obj in label_objs:
+                # These are removed or changed to tube_tip in the function
+                # "tube_tip_label_from_labelbox_obj".
+                if obj["value"] in {"tube_tip_bulging", "tube_tip_burst"}:
+                    continue
+
+                if label_arg == "all":
+                    labels_set.add(obj["value"])
+                elif label_arg == "pollen" and obj.get("bbox"):
+                    labels_set.add(obj["value"])
+                elif label_arg == "tube_tip" and not obj.get("bbox"):  # Tube tip classes
+                    labels_set.add(obj["value"])
+
+    labels_list = sorted(list(labels_set))
+    labels = {label: idx for idx, label in enumerate(labels_list)}
+
     return labels
+
 
 def validate_splits(args_splits, parser):
     splits = []
