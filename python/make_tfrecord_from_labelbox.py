@@ -4,7 +4,6 @@
 # Based off of https://github.com/caseydaly/LabelboxToTFRecord/
 
 import yaml
-import io
 import os
 from datetime import datetime
 import random
@@ -12,7 +11,6 @@ from pathlib import Path
 import labelbox
 import argparse
 import tensorflow as tf
-from PIL import Image
 from collections import OrderedDict
 
 from object_detection.utils import dataset_util
@@ -154,13 +152,13 @@ def download_labels(
 
 
 def label_from_labelbox_obj(
-    lbl_box_obj: list,
+    lbl_box_obj: dict
 ) -> Label:
     """Create a Label object from a Labelbox label.
 
     Parameters
     ----------
-    lbl_box_obj : list
+    lbl_box_obj : dict
         A list containing annotations from Labelbox.
 
     Returns
@@ -180,7 +178,7 @@ def label_from_labelbox_obj(
 
 def tube_tip_label_from_labelbox_obj(
     lbl_box_obj: dict,
-    image_date: datetime,
+    image_date: datetime
 ) -> Label:
     """Generate a tube tip label object from a labelbox object.
 
@@ -200,7 +198,6 @@ def tube_tip_label_from_labelbox_obj(
         ymax, and class id.
 
     """
-
 
     # Image dimensions are different depending on the date
     camera_switch_date = datetime(2022, 5, 27)
@@ -244,7 +241,7 @@ def parse_labelbox_data(
 
     Returns
     -------
-    records
+    records : List[TFRecordInfo]
         A list of TFRecordInfo objects.
 
     """
@@ -292,7 +289,6 @@ def parse_labelbox_data(
     return records
 
 
-# Getting classes.
 def get_classes_from_labelbox(
     data: List[Dict],
     label_arg: str
@@ -309,7 +305,7 @@ def get_classes_from_labelbox(
 
     Returns
     -------
-    labels
+    labels : Dict[str, int]
         A dictionary with class labels as keys and integer indices as values.
 
     """
@@ -338,66 +334,112 @@ def get_classes_from_labelbox(
     return labels
 
 
-def validate_splits(args_splits, parser):
-    splits = []
+def validate_splits(
+    args_splits: List[int],
+    parser: argparse.ArgumentParser
+) -> List[int]:
+    """Validate input splits and adjust if necessary.
+
+    Parameters
+    ----------
+    args_splits : List[int]
+        A list of integer values representing dataset split percentages.
+    parser : argparse.ArgumentParser
+        The argparse instance used for error handling.
+
+    Returns
+    -------
+    List[int]
+        A list of adjusted and sorted integer values representing dataset split percentages.
+
+    """
 
     if not args_splits:
-        splits = [100]
-    else:
-        if any(s <= 0 for s in args_splits):
-            parser.error(message='splits must be positive integers')
+        return [100]
 
-        if sum(args_splits) < 100:
-            splits = args_splits + [100 - sum(args_splits)]
-        elif sum(args_splits) > 100:
-            parser.error("splits must sum up to <= 100")
-        else:
-            splits = args_splits
+    if any(s <= 0 for s in args_splits):
+        parser.error(message='splits must be positive integers')
 
-    splits.sort()
+    splits_sum = sum(args_splits)
+    if splits_sum < 100:
+        args_splits.append(100 - splits_sum)
+    elif splits_sum > 100:
+        parser.error("splits must sum up to <= 100")
 
-    return splits
+    return sorted(args_splits)
 
-# Convert a list of percentages adding to 100, ie [20, 30, 50] to a list of indices into the list of records
-# at which to split off a new file
-def splits_to_record_indices(splits, num_records):
-    if splits is None or splits == []:
-        splits = [100]
-    if sum(splits) != 100: raise ValueError("Percentages must add to 100")
-    if not splits or splits == [100]: return [num_records]
+
+def splits_to_record_indices(
+    splits: List[int],
+    num_records: int
+) -> List[int]:
+    """Convert percentage splits to record indices based on the total number of records.
+
+    Parameters
+    ----------
+    splits : List[int]
+        A list of integer values representing dataset split percentages.
+    num_records : int
+        The total number of records in the dataset.
+
+    Returns
+    -------
+    List[int]
+        A list of integer values representing the indices corresponding to the dataset splits.
+
+    """
+
+    if not splits or splits == [100]:
+        return [num_records]
+
+    if sum(splits) != 100:
+        raise ValueError("Percentages must add to 100")
 
     prev_idx = 0
     img_indices = []
-    for split_idx,split in enumerate(splits[:-1]):
-        end_img_idx = round(prev_idx + (split / 100) * num_records)
 
-        if end_img_idx == prev_idx:
-            #Leave in dupes for now. Take out at the end
-            pass
-        else:
-            img_indices += [min(end_img_idx, num_records)]
+    for split in splits[:-1]:
+        end_img_idx = round(prev_idx + (split / 100) * num_records)
+        if end_img_idx != prev_idx:
+            img_indices.append(min(end_img_idx, num_records))
         prev_idx = end_img_idx
 
-    # Adding the last index this way ensures that it isn't rounded down
-    img_indices += [num_records]
-    # Dedupe
+    img_indices.append(num_records)
+
     return list(OrderedDict.fromkeys(img_indices))
 
-# Get path from filename (for loading images locally according to my directory structure)
-def path_from_filename(filename):
-    split_string = filename.split("_")
 
-    # Checking to see if it's from the first or second camera
+def path_from_filename(
+    filename: str
+) -> Path:
+    """Get the local image file path.
+    This function is not generalizable, it uses specific paths where images
+    from different dates were located. It will need to be modified if there
+    is any change in file naming format or local directory structure.
+
+    Parameters
+    ----------
+    filename : str
+        The filename of the image.
+
+    Returns
+    -------
+    out_path: Path
+        The local path to the image file.
+
+    """
+
+    split_string = filename.split("_")
     image_date = datetime.strptime(split_string[0], "%Y-%m-%d")
 
     if image_date <= datetime(2022, 5, 27):
-        dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_stab"
+        dir_string = f"{split_string[0]}_{split_string[1]}_{split_string[2]}_stab"
         path_base = Path('/media/volume/sdb/jpgs')
-        out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
     else:
-        dir_string = split_string[0] + "_" + split_string[1] + "_" + split_string[2] + "_normalized_stabilized"
+        dir_string = f"{split_string[0]}_{split_string[1]}_{split_string[2]}_normalized_stabilized"
         path_base = Path('/media/volume/sdb/norm_stab_jpgs')
-        out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
+
+    out_path = path_base / dir_string / f'well_{split_string[3]}' / filename
     
     return out_path
 
