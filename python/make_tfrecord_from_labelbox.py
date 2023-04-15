@@ -444,7 +444,27 @@ def path_from_filename(
     return out_path
 
 
-def create_tf_example(record_obj, class_dict):
+def create_tf_example(
+    record_obj: List[TFRecordInfo],
+    class_dict: Dict[str, int]
+) -> tf.train.Example:
+    """Create a TensorFlow object from a record and a class dict.
+    Each record represents one image. This function converts their object
+    annotations and image data into the right Tensorflow format.
+
+    Parameters
+    ----------
+    record_obj : List[TFRecordInfo]
+        A record object containing image data and labels.
+    class_dict : Dict[str, int]
+        A dictionary mapping class names to class indices.
+
+    Returns
+    -------
+    tf.train.Example
+        A TensorFlow Example object with the record's data and labels.
+    """
+
     xmins = []
     xmaxs = []
     ymins = []
@@ -458,7 +478,7 @@ def create_tf_example(record_obj, class_dict):
         ymins.append(label_obj.ymin / record_obj.height)
         ymaxs.append(label_obj.ymax / record_obj.height)
         classes_text.append(label_obj.label.encode('utf8'))
-        # print(f"Class_dict at label_obj.label with one added is: {class_dict[label_obj.label] + 1}")
+
         # To match the classes in class_dict
         classes.append(class_dict[label_obj.label] + 1)
 
@@ -476,19 +496,36 @@ def create_tf_example(record_obj, class_dict):
         'image/object/class/text': dataset_util.bytes_list_feature(classes_text),
         'image/object/class/label': dataset_util.int64_list_feature(classes),
     }))
+
     return tf_example
 
-# Maps a { 'shark': 1, 'person': 2 } dict to a labelmap structure
-# for the pbtxt file
-def class_dict_to_label_map_str(class_dict):
+
+def class_dict_to_label_map_str(
+    class_dict: Dict[str, int]
+) -> str:
+    """
+    Convert a class dictionary to a labelmap string for a .pbtxt file.
+
+    Parameters
+    ----------
+    class_dict : Dict[str, int]
+        A dictionary mapping class names to class indices. 0 is reserved for
+        the background, so they start at 1.
+
+    Returns
+    -------
+    str
+        A labelmap string in the format suitable for a .pbtxt file.
+    """
+
     label_map_proto = string_int_label_map_pb2.StringIntLabelMap()
-    for key,val in class_dict.items():
+    for key, val in class_dict.items():
         item = label_map_proto.item.add()
         item.name = key
-        # 0 is reserved for 'background' only, which we aren't using
         item.id = val + 1
 
     return text_format.MessageToString(label_map_proto)
+
 
 # Making the tfrecords with split
 def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class_dict):
