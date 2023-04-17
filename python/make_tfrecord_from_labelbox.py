@@ -695,6 +695,9 @@ def main():
         default="all")
     args = parser.parse_args()
 
+    # Setting random seed for publication data
+    random.seed(13)
+
     # Getting the Labelbox secrets
     yaml_path = Path.home() / '.credentials' / 'labelbox.yaml'
     api_key, project_id = open_yaml(yaml_path)
