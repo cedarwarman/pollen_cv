@@ -1,23 +1,46 @@
 #!/usr/bin/env python3
-# Testing remote development
+"""Make tfrecords and label maps from Labelbox image annotations.
+This script will download image annotations from Labelbox and use local image
+files to create training and testing tfrecord files, along with a pbtxt
+label map. These files become the input for model training using the
+Tensorflow Object Detection API. The script uses the Labelbox API to download
+annotations from the web. It includes some helper functions to convert
+annotations labeled with points to bounding boxes and to correct for data
+leakage if more than one image from the same time series is present in the
+set of labeled images. This script was based off the work of Github user
+caseydaly, who wrote a similar script located here:
+https://github.com/caseydaly/LabelboxToTFRecord/
 
-# Based off of https://github.com/caseydaly/LabelboxToTFRecord/
+Usage:
+    python make_tfrecord_from_labelbox.py \
+        --label_type all \
+        --splits 80 20 \
+        --tfrecord-dest /media/volume/sdb/tfrecords/2023-04-13
 
-import yaml
-import os
-from datetime import datetime
-import random
-from pathlib import Path
-import labelbox
+Arguments:
+    --label_type
+        The labels to import. Options include "all", "pollen", or "tube_tip".
+    --splits
+        The percentage splits for tfrecords.
+    --tfrecord-dest
+        The location where the tfrecord(s) and label map will be saved.
+
+"""
+
 import argparse
-import tensorflow as tf
 from collections import OrderedDict
-
-from object_detection.utils import dataset_util
-from object_detection.protos import string_int_label_map_pb2
-from google.protobuf import text_format
-
+from datetime import datetime
+from pathlib import Path
+import random
 from typing import Dict, List, Tuple
+
+import labelbox
+import tensorflow as tf
+import yaml
+
+from google.protobuf import text_format
+from object_detection.protos import string_int_label_map_pb2
+from object_detection.utils import dataset_util
 
 
 class Label:
@@ -99,9 +122,8 @@ class TFRecordInfo:
 
 def open_yaml(
     yaml_path: Path
-) -> dict:
+) -> Tuple[str, str]:
     """Open Labelbox secrets.
-    Open Labelbox secrets YAML file and load it as a dictionary.
 
     Parameters
     ----------
@@ -110,14 +132,20 @@ def open_yaml(
 
     Returns
     -------
-    yaml_dict : dict
-        The dictionary containing the YAML data.
+    api_key : str
+        The API key for the Labelbox project.
+    project_id : str
+        The project ID for the Labelbox project.
 
     """
 
     with open(yaml_path) as file:
         yaml_dict = yaml.safe_load(file)
-    return yaml_dict
+
+    api_key = yaml_dict["api_key"]
+    project_id = yaml_dict["project_id"]
+
+    return api_key, project_id
 
 
 def download_labels(
@@ -503,8 +531,8 @@ def create_tf_example(
 def class_dict_to_label_map_str(
     class_dict: Dict[str, int]
 ) -> str:
-    """
-    Convert a class dictionary to a labelmap string for a .pbtxt file.
+    """Convert a class dictionary to a labelmap string.
+    Used to make the .pbtxt file.
 
     Parameters
     ----------
@@ -528,128 +556,133 @@ def class_dict_to_label_map_str(
 
 
 # Making the tfrecords with split
-def generate_tfrecords(image_source, tfrecord_dest, splits, data, records, class_dict):
+def generate_tfrecords(
+    tfrecord_dest: str,
+    splits: List[int],
+    records: List[TFRecordInfo],
+    class_dict: Dict[str, int]
+) -> None:
+    """Generate TFRecord files with the specified split ratios.
+    Also makes label map pbtxt file.
+
+    Parameters
+    ----------
+    tfrecord_dest : str
+        Path to the destination folder for the TFRecord files.
+    splits : List[int
+        List of integers representing the percentage split for the dataset.
+    records : List[TFRecordInfo]
+        List of TFRecordInfo objects containing image data and labels.
+    class_dict : Dict[str, int]
+        Dictionary mapping class names to class indices (starts with 1).
+    """
+
     print("Making tfrecords")
 
-    # Hopefully from here it's pretty straightforward? Just need to add the 
-    # images as an arg and deal with their paths in parse_labelbox_data and/or
-    # create_tf_example, figure out what's actually necessary in create_tf_example,
-    # and write it up.
-
-    # Making a directory for the output tfrecords
-    tfrecord_folder = tfrecord_dest
-    # print(tfrecord_folder)
-    if not os.path.exists(tfrecord_folder):
-        os.makedirs(tfrecord_folder)
-    # Might not need to do this if I'm using pathlib
-    if tfrecord_folder[len(tfrecord_folder)-1] != '/':
-        tfrecord_folder += '/'
+    tfrecord_folder = Path(tfrecord_dest)
+    tfrecord_folder.mkdir(parents=True, exist_ok=True)
 
     strnow = datetime.now().strftime('%Y-%m-%d_t%H%M%S')
+
     splits = splits_to_record_indices(splits, len(records))
-    # print("splits is: ", splits)
     assert splits[-1] == len(records), f'{splits}, {len(records)}'
 
     random.shuffle(records)
 
-    # This section ensures images with multiple records in the same time series all
-    # end up in the training dataset to remove possible data leakage. If the training
-    # dataset doesn't not have possible data leakage then this section can be removed.
-    # It checks to see if images are part of a list of time series duplicates, and if 
-    # so, moves them tot he end of the records list, which will put them in the 
-    # largest split, which is the training set. If you are doing more than one split 
-    # the behavior could be not what you expect (tested with -splits 80 20).
-    image_duplicates = [
-        "2021-12-20_run1_26C_A3_t048_stab.jpg",
-        "2021-12-15_run1_34C_D4_t034_stab.jpg",
-        "2022-01-25_run2_34C_C1_t007_stab.jpg",
-        "2021-11-03_run1_34C_A3_t069_stab.jpg",
-        "2022-03-18_run1_34C_D6_t050_stab.jpg",
-        "2022-02-09_run1_26C_D2_t038_stab.jpg",
-        "2021-12-02_run2_34C_C5_t073_stab.jpg",
-        "2022-03-18_run1_34C_D6_t017_stab.jpg",
-        "2022-03-21_run2_26C_C4_t005_stab.jpg",
-        "2022-05-03_run2_34C_C4_t047_stab.jpg",
-        "2022-03-21_run2_26C_C4_t041_stab.jpg",
-        "2021-12-17_run2_34C_C2_t043_stab.jpg",
-        "2021-12-02_run2_34C_C5_t074_stab.jpg",
-        "2022-02-01_run1_34C_A5_t035_stab.jpg",
-        "2022-04-28_run2_34C_D2_t036_stab.jpg",
-        "2022-02-21_run1_26C_D4_t054_stab.jpg",
-        "2022-03-09_run2_26C_C1_t069_stab.jpg",
-        "2022-02-08_run1_34C_C6_t037_stab.jpg",
-        "2022-04-14_run1_26C_D4_t073_stab.jpg",
-        "2022-04-28_run2_34C_D2_t034_stab.jpg",
-        "2022-02-08_run1_34C_C6_t077_stab.jpg",
-        "2022-01-25_run2_34C_C1_t069_stab.jpg",
-        "2022-02-09_run1_26C_D2_t003_stab.jpg",
-        "2022-03-08_run1_34C_B3_t012_stab.jpg",
-        "2021-12-17_run2_34C_D2_t076_stab.jpg",
-        "2022-03-22_run1_34C_C3_t055_stab.jpg",
-        "2021-11-19_run2_34C_A6_t063_stab.jpg",
-        "2022-04-28_run2_34C_D2_t003_stab.jpg",
-        "2022-05-09_run1_26C_D4_t027_stab.jpg",
-        "2021-11-08_run1_34C_C1_t004_stab.jpg",
-        "2022-02-21_run1_26C_D4_t082_stab.jpg",
-        "2021-12-15_run1_34C_D4_t050_stab.jpg",
-        "2022-04-21_run2_34C_C2_t056_stab.jpg",
-        "2021-12-20_run1_26C_A3_t043_stab.jpg",
-        "2022-03-09_run2_26C_C1_t078_stab.jpg",
-        "2022-04-14_run1_26C_D4_t029_stab.jpg",
-        "2022-04-21_run2_34C_C2_t064_stab.jpg",
-        "2022-04-20_run2_26C_B6_t074_stab.jpg",
-        "2021-11-08_run1_34C_C1_t059_stab.jpg",
-        "2021-11-03_run1_34C_A3_t005_stab.jpg",
-        "2022-03-22_run1_34C_C3_t067_stab.jpg",
-        "2022-05-03_run2_34C_C4_t050_stab.jpg",
-        "2022-03-08_run1_34C_B3_t004_stab.jpg",
-        "2022-04-20_run2_26C_B6_t007_stab.jpg",
-        "2021-12-17_run2_34C_D2_t062_stab.jpg",
-        "2022-05-09_run1_26C_D4_t077_stab.jpg",
-        "2021-11-19_run2_34C_A6_t060_stab.jpg",
-        "2022-03-21_run1_26C_D4_t029_stab.jpg",
-        "2022-02-01_run1_34C_A5_t038_stab.jpg",
-        "2022-02-09_run2_26C_C1_t021_stab.jpg",
-        "2022-03-21_run1_26C_D4_t009_stab.jpg",
-        "2021-12-17_run2_34C_C2_t070_stab.jpg",
-        "2022-02-09_run2_26C_C1_t010_stab.jpg"]
-    record_index = 0
-    #list_index = 0 # Just for printing during troubleshooting
-    rearranged_records = records
-
-    for record in records:
-        if any(record.filename in x for x in image_duplicates):
-            #list_index += 1
-            #print(record.filename, "present in list, total =", list_index)
-
-            # Moves it to the end of the records list
-            rearranged_records.append(rearranged_records.pop(record_index))
-        record_index += 1
-    records = rearranged_records
+    # This function makes sure there is no data leakage in the test set used
+    # in this project. It is not necessary if the training set doesn't have
+    # potential data leakage.
+    records = fix_data_leakage(records)
 
     # Making the tfrecord files
     split_start = 0
     print(f'Creating {len(splits)} TFRecord files:')
     for split_end in splits:
         outfile = f'{strnow}_n{split_end - split_start}.tfrecord'
-        # print(f"Outfile is: {outfile}")
-        outpath = tfrecord_folder + outfile
-        with tf.io.TFRecordWriter(outpath) as writer:
+        with tf.io.TFRecordWriter(str(tfrecord_folder / outfile)) as writer:
             for record in records[split_start:split_end]:
                 print("Adding", record.filename, "to split ending in", split_end)
                 tf_example = create_tf_example(record, class_dict)
                 writer.write(tf_example.SerializeToString())
-        print(f'Successfully created TFRecord file at: {outpath}')
+        print(f'Successfully created TFRecord file at: {tfrecord_folder / outfile}')
         split_start = split_end
 
+    # Making the label map
     pb_file_name = f'{strnow}.pbtxt'
     label_text = class_dict_to_label_map_str(class_dict)
-    with open(tfrecord_folder + pb_file_name, 'w') as label_file:
+    with open(tfrecord_folder / pb_file_name, 'w') as label_file:
         label_file.write(label_text)
-        print(f'Successfully created label map file at: {tfrecord_folder + pb_file_name}')
+        print(f'Successfully created label map file at: {tfrecord_folder / pb_file_name}')
+
+
+def fix_data_leakage(
+    records: List[TFRecordInfo]
+) -> List[TFRecordInfo]:
+    """Handle time-series duplicates to control data leakage.
+
+    This function ensures images with multiple records in the same time series all
+    end up in the training dataset to remove possible data leakage. If the training
+    dataset doesn't have possible data leakage then this function is unnecessary.
+
+    Images are checked against a list of time series duplicates. If they are present
+    in the duplicated image list, they are moved to the end of the records list,
+    which will put them in the largest split, which is the training set. If you are
+    doing more than one split the behavior could be not what you expect.
+
+    Tested with "-splits 80 20".
+
+    Parameters
+    ----------
+    records : List[TFRecordInfo]
+        List of record objects containing image data and labels.
+
+    Returns
+    -------
+    rearranged_records : List[TFRecordInfo]
+        List of rearranged record objects with duplicates at the end.
+    """
+
+    image_duplicates = [
+        "2021-12-20_run1_26C_A3_t048_stab.jpg", "2021-12-15_run1_34C_D4_t034_stab.jpg",
+        "2022-01-25_run2_34C_C1_t007_stab.jpg", "2021-11-03_run1_34C_A3_t069_stab.jpg",
+        "2022-03-18_run1_34C_D6_t050_stab.jpg", "2022-02-09_run1_26C_D2_t038_stab.jpg",
+        "2021-12-02_run2_34C_C5_t073_stab.jpg", "2022-03-18_run1_34C_D6_t017_stab.jpg",
+        "2022-03-21_run2_26C_C4_t005_stab.jpg", "2022-05-03_run2_34C_C4_t047_stab.jpg",
+        "2022-03-21_run2_26C_C4_t041_stab.jpg", "2021-12-17_run2_34C_C2_t043_stab.jpg",
+        "2021-12-02_run2_34C_C5_t074_stab.jpg", "2022-02-01_run1_34C_A5_t035_stab.jpg",
+        "2022-04-28_run2_34C_D2_t036_stab.jpg", "2022-02-21_run1_26C_D4_t054_stab.jpg",
+        "2022-03-09_run2_26C_C1_t069_stab.jpg", "2022-02-08_run1_34C_C6_t037_stab.jpg",
+        "2022-04-14_run1_26C_D4_t073_stab.jpg", "2022-04-28_run2_34C_D2_t034_stab.jpg",
+        "2022-02-08_run1_34C_C6_t077_stab.jpg", "2022-01-25_run2_34C_C1_t069_stab.jpg",
+        "2022-02-09_run1_26C_D2_t003_stab.jpg", "2022-03-08_run1_34C_B3_t012_stab.jpg",
+        "2021-12-17_run2_34C_D2_t076_stab.jpg", "2022-03-22_run1_34C_C3_t055_stab.jpg",
+        "2021-11-19_run2_34C_A6_t063_stab.jpg", "2022-04-28_run2_34C_D2_t003_stab.jpg",
+        "2022-05-09_run1_26C_D4_t027_stab.jpg", "2021-11-08_run1_34C_C1_t004_stab.jpg",
+        "2022-02-21_run1_26C_D4_t082_stab.jpg", "2021-12-15_run1_34C_D4_t050_stab.jpg",
+        "2022-04-21_run2_34C_C2_t056_stab.jpg", "2021-12-20_run1_26C_A3_t043_stab.jpg",
+        "2022-03-09_run2_26C_C1_t078_stab.jpg", "2022-04-14_run1_26C_D4_t029_stab.jpg",
+        "2022-04-21_run2_34C_C2_t064_stab.jpg", "2022-04-20_run2_26C_B6_t074_stab.jpg",
+        "2021-11-08_run1_34C_C1_t059_stab.jpg", "2021-11-03_run1_34C_A3_t005_stab.jpg",
+        "2022-03-22_run1_34C_C3_t067_stab.jpg", "2022-05-03_run2_34C_C4_t050_stab.jpg",
+        "2022-03-08_run1_34C_B3_t004_stab.jpg", "2022-04-20_run2_26C_B6_t007_stab.jpg",
+        "2021-12-17_run2_34C_D2_t062_stab.jpg", "2022-05-09_run1_26C_D4_t077_stab.jpg",
+        "2021-11-19_run2_34C_A6_t060_stab.jpg", "2022-03-21_run1_26C_D4_t029_stab.jpg",
+        "2022-02-01_run1_34C_A5_t038_stab.jpg", "2022-02-09_run2_26C_C1_t021_stab.jpg",
+        "2022-03-21_run1_26C_D4_t009_stab.jpg", "2021-12-17_run2_34C_C2_t070_stab.jpg",
+        "2022-02-09_run2_26C_C1_t010_stab.jpg"]
+
+    record_index = 0
+    rearranged_records = records
+
+    for record in records:
+        if any(record.filename in x for x in image_duplicates):
+            rearranged_records.append(rearranged_records.pop(record_index))
+        record_index += 1
+
+    return rearranged_records
+
 
 def main():
-    # Some args
     parser = argparse.ArgumentParser(description='Convert Labelbox data to TFRecord and store .tfrecord file(s) locally.')
     parser.add_argument('--tfrecord-dest', help="Destination folder for .tfrecord file(s)", default="tfrecord")
     parser.add_argument('--splits', help="Space-separated list of integer percentages for splitting the " +
@@ -662,11 +695,9 @@ def main():
         default="all")
     args = parser.parse_args()
 
-    # Getting the secrets
+    # Getting the Labelbox secrets
     yaml_path = Path.home() / '.credentials' / 'labelbox.yaml'
-    labelbox_secrets = open_yaml(yaml_path)
-    api_key = labelbox_secrets["api_key"]
-    project_id = labelbox_secrets["project_id"]
+    api_key, project_id = open_yaml(yaml_path)
 
     # Downloading the labels
     labels = download_labels(api_key, project_id)
@@ -677,10 +708,12 @@ def main():
     # Getting the different classes present
     class_dict = get_classes_from_labelbox(labels, args.label_type)
 
+    # Validating the splits
     splits = validate_splits(args.splits, parser)
 
-    # Making the tfrecords
-    generate_tfrecords("add_image_path", args.tfrecord_dest, splits, labels, records, class_dict)
+    # Making the tfrecords and saving them to the destination
+    generate_tfrecords(args.tfrecord_dest, splits, records, class_dict)
+
 
 if __name__ == "__main__":
     main()
