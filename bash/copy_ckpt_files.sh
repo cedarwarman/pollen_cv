@@ -16,9 +16,14 @@ fi
 
 while true; do
     for file in "$src_dir"/*; do
-	    if [[ "$file" == *ckpt-* && ! "$file" == *_temp* ]]; then
-            cp "$file" "$dst_dir"
-            # echo "File $file copied to $dst_dir"
+        if [[ "$file" == *ckpt-* && ! "$file" == *_temp* ]]; then
+            base_filename=$(basename "$file")
+            destination_file="$dst_dir/$base_filename"
+
+	    if [ ! -f "$destination_file" ]; then
+                cp "$file" "$dst_dir"
+                # echo "File $file copied to $dst_dir"
+	    fi
         fi
     done
 
