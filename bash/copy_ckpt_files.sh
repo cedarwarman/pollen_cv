@@ -16,7 +16,7 @@ fi
 
 while true; do
     for file in "$src_dir"/*; do
-        if [[ "$file" == *ckpt-* ]]; then
+	    if [[ "$file" == *ckpt-* && ! "$file" == *_temp* ]]; then
             cp "$file" "$dst_dir"
             # echo "File $file copied to $dst_dir"
         fi
