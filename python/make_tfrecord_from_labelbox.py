@@ -327,7 +327,7 @@ def parse_labelbox_data(
 
         width, height = (2048, 2048) if image_date <= datetime(2022, 5, 27) else (1600, 1200)
 
-        records.append(TFRecordInfo(width, height, image_name, encoded_jpg, image_format, labels))
+        records.append(TFRecordInfo(height, width, image_name, encoded_jpg, image_format, labels))
 
     print(f"{len(data)} labeled images parsed")
     
@@ -523,6 +523,12 @@ def create_tf_example(
         ymins.append(label_obj.ymin / record_obj.height)
         ymaxs.append(label_obj.ymax / record_obj.height)
         classes_text.append(label_obj.label.encode('utf8'))
+
+        # Troubleshooting
+        if (label_obj.xmax / record_obj.width) > 1:
+            print("xmax ", record_obj.filename, label_obj.xmax, record_obj.width)
+        if (label_obj.ymax / record_obj.height) > 1:
+            print("ymax ", record_obj.filename, label_obj.ymax, record_obj.height)
 
         # To match the classes in class_dict
         classes.append(class_dict[label_obj.label] + 1)
