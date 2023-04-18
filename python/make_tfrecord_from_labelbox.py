@@ -75,7 +75,7 @@ class Label:
         self.label = label
 
     def __repr__(self):
-        return "Label({0}, {1}, {2}, {3}, {4}, {5})".format(self.xmin, self.xmax, self.ymin, self.ymax, self.label)
+        return "Label({0}, {1}, {2}, {3}, {4})".format(self.xmin, self.xmax, self.ymin, self.ymax, self.label)
 
 
 class TFRecordInfo:
@@ -150,16 +150,22 @@ def open_yaml(
 
 def download_labels(
     api_key: dict,
-    project_id: str
+    project_id: str,
+    camera: str
 ) -> dict:
     """Download the labels from a Labelbox project.
+    Labeling for the 500 images from the first camera was finished January 31, 2023.
+    Labeling for the 500 images from the second camera was started February 1, 2023.
+    Using two separate cameras is unique to this project and can be removed if necessary.
 
     Parameters
     ----------
     api_key : str
         The Labelbox API key.
     project_id : str
-        The ID of the Labelbox project.
+        The ID completedof the Labelbox project.
+    camera : str
+        The camera source for the downloaded labels.
 
     Returns
     -------
@@ -173,8 +179,19 @@ def download_labels(
 
     project = lb.get_project(project_id)
 
+    # Set the date range based on the camera
+    if camera == "one":
+        start = "2022-01-01"
+        end = "2023-01-31"
+    elif camera == "two":
+        start = "2023-02-01"
+        end = "2023-04-17"
+    else:  # both
+        start = "2022-01-01"
+        end = "2023-04-17"
+
     # Export labels created in the selected date range as a json file:
-    labels = project.export_labels(download=True)
+    labels = project.export_labels(download=True, start=start, end=end)
 
     return labels
 
@@ -693,6 +710,9 @@ def main():
     parser.add_argument('--label_type',
         choices=["all", "pollen", "tube_tip"], help="Which labels to import",
         default="all")
+    parser.add_argument('--camera',
+        choices=["both", "one", "two"], help="Use which camera(s) for labels",
+        default="all")
     args = parser.parse_args()
 
     # Setting random seed for publication data
@@ -703,7 +723,7 @@ def main():
     api_key, project_id = open_yaml(yaml_path)
 
     # Downloading the labels
-    labels = download_labels(api_key, project_id)
+    labels = download_labels(api_key, project_id, args.camera)
 
     # Parsing the labels
     records = parse_labelbox_data(labels, args.label_type)
