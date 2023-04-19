@@ -17,15 +17,15 @@ Arguments:
 """
 
 import argparse
-import os
 import io
+import os
 import pathlib
 from typing import Tuple
 
-from PIL import Image
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+from PIL import Image
 
 
 def process_example(
