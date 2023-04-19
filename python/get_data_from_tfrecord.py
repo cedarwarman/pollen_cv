@@ -133,6 +133,10 @@ def parse_tfrecord(
     """
 
     base_path = os.path.dirname(tfrecord_path)
+
+    if not os.path.exists(output):
+        os.makedirs(output)
+
     save_dir = os.path.join(base_path, "images")
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
