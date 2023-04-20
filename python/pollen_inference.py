@@ -40,7 +40,7 @@ Arguments:
 import argparse
 import os
 import pathlib
-from typing import Callable, Tuple
+from typing import Callable, Dict, Tuple
 
 from PIL import Image
 import numpy as np
@@ -120,7 +120,7 @@ def parse_arguments(
 
 
 def load_image_into_numpy_array(
-    path: str
+    path: pathlib.Path
 ) -> np.ndarray:
     """Load an image from file into a numpy array.
   
@@ -129,11 +129,15 @@ def load_image_into_numpy_array(
     channels=3 for RGB. Since we're using grayscale images, we copy the grayscale
     values to all channels so the input is as expected.
 
-    Args:
-      path: the file path to the image
+    Parameters
+    ----------
+    path : pathlib.Path
+        The file path to the image
   
-    Returns:
-      uint8 numpy array with shape (img_height, img_width, 3)
+    Returns
+    -------
+    image_np : np.ndarray
+        uint8 numpy array with shape (img_height, img_width, 3)
     """
 
     with Image.open(path) as image:
@@ -180,7 +184,7 @@ def build_model(
     @tf.function
     def detect_fn(
         image: tf.Tensor
-    ) -> Tuple[tf.Tensor, tf.Tensor, tf.Tensor]:
+    ) -> dict:
         """
         Detect objects in image.
 
@@ -191,19 +195,21 @@ def build_model(
 
         Returns
         -------
-        Tuple[tf.Tensor, tf.Tensor, tf.Tensor]
-            Detections, prediction dictionary, and reshaped shapes tensor.
+        detections : dict
+            A dictionary of the detections.
         """
         image, shapes = detection_model.preprocess(image)
         prediction_dict = detection_model.predict(image, shapes)
         detections = detection_model.postprocess(prediction_dict, shapes)
 
-        return detections, prediction_dict, tf.reshape(shapes, [-1])
+        return detections
 
     return detect_fn
 
 
-def load_label_map(label_map_path):
+def load_label_map(
+    label_map_path: str
+) -> Dict[int, str]:
     """Load label map.
 
     Loads label map for plotting. Should look like this (starts at 1):
@@ -217,11 +223,15 @@ def load_label_map(label_map_path):
         name: 'Dog'
     }
 
-    Args:
-        label_map_path: the path to the label map file
+    Parameters
+    ----------
+    label_map_path : str
+        The path to the label map file.
 
-    Returns:
-        a tuple containing a label map dictionary and a category index
+    Returns
+    -------
+    category_index : Dict[int, str]
+        A category index.
     """
 
     label_map = label_map_util.load_labelmap(label_map_path)
@@ -232,30 +242,37 @@ def load_label_map(label_map_path):
     # It looks like the plotting doesn't even use label_map_dict, so maybe 
     # in the future.
     category_index = label_map_util.create_category_index(categories)
-    label_map_dict = label_map_util.get_label_map_dict(label_map, use_display_name=True)
 
-    return label_map_dict, category_index
+    return category_index
 
-def run_inference(loaded_model, image_path):
+
+def run_inference(
+    loaded_model: Callable,
+    image_path: pathlib.Path
+) -> Tuple[np.ndarray, dict]:
     """Run inference on a single image.
     
-    Opens an image, converts to numpy array, and runs inference to generate 
-    detections.
+    Opens an image, converts to numpy array, and runs inference to generate detections.
 
-    Args:
-        loaded_model: inference model, output of build_model function
-        image_path: path to image to perform inference on
+    Parameters
+    ----------
+    loaded_model : Callable
+        Inference model, output of build_model function.
+    image_path : pathlib.Path
+        Path to the image to perform inference on.
 
-    Returns:
-        a tuple containing the image as an numpy array, ?detections?, ?predictions_dict?, ?shapes?
+    Returns
+    -------
+    Tuple[np.ndarray, dict]
+        A tuple containing the image as a numpy array and the detections dictionary.
     """
 
     image_np = load_image_into_numpy_array(image_path)
     input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
-    # Might not needs predictions_dict or shapes
-    detections, predictions_dict, shapes = loaded_model(input_tensor)
+    detections = loaded_model(input_tensor)
 
     return image_np, detections
+
 
 def do_non_max_suppression(detections):
     """Do non-max suppression
@@ -454,7 +471,7 @@ def main():
     print("Model built")
     
     print("Loading label map")
-    label_map_dict, category_index = load_label_map(args.map)
+    category_index = load_label_map(args.map)
     print("Label map loaded")
 
     print("Entering inference loop")
