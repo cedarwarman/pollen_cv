@@ -40,6 +40,7 @@ Arguments:
 import argparse
 import os
 import pathlib
+from typing import Callable, Tuple
 
 from PIL import Image
 import numpy as np
@@ -72,7 +73,11 @@ def parse_arguments(
         if os.path.isdir(string):
             return string
         else:
-            raise NotADirectoryError(string)
+            try:
+                os.makedirs(string, exist_ok=True)
+                return string
+            except OSError as e:
+                raise OSError(f"Error creating directory '{string}': {e}")
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -89,19 +94,26 @@ def parse_arguments(
     )
     parser.add_argument(
         "--images",
-        type=dir_path, help="Path to directory containing images to do inference on", required=True
+        type=dir_path,
+        help="Path to directory containing images to do inference on",
+        required=True
     )
     parser.add_argument(
         "--output",
-        type=dir_path, help="Path to directory where output images will be saved", required=True
+        type=dir_path,
+        help="Path to directory where output images will be saved",
+        required=True
     )
     parser.add_argument(
         "--save_images",
-        action="store_true", help="Save images to output directory if this flag is present"
+        action="store_true",
+        help="Save images to output directory if this flag is present"
     )
     parser.add_argument(
         "--camera",
-        choices=["both", "one", "two"], help="Choose camera whose images you will analyze: both, one, or two", required=True
+        choices=["both", "one", "two"],
+        help="Choose camera whose images you will analyze: both, one, or two",
+        required=True
     )
 
     return parser.parse_args()
@@ -132,50 +144,64 @@ def load_image_into_numpy_array(
     return image_np
 
 
-def build_model(config_path, checkpoint_path):
-    """Build a model for inference.
+def build_model(
+    config_path: str,
+    checkpoint_path: str
+) -> Callable:
+    """Builds a model for inference.
 
-    Loads a model checkpoint and config file and builds the model for 
+    Loads a model checkpoint and config file and builds the model function for
     inference.
 
-    Args:
-        config_path: the path to the config file
-        checkpoint_path: the path to the model checkpoint
+    Parameters
+    ----------
+    config_path : str
+        The path to the config file.
+    checkpoint_path : str
+        The path to the model checkpoint.
 
-    Returns:
-        model detection function based on the config and checkpoint
+    Returns
+    -------
+    Callable
+        Model detection function based on the config and checkpoint.
     """
 
-    # Somehow this gets the right config
     configs = config_util.get_configs_from_pipeline_file(config_path)
     model_config = configs['model']
 
-    # Load pipeline config and build a detection model
     detection_model = model_builder.build(
-          model_config = model_config, is_training = False)
+        model_config=model_config, is_training=False
+    )
     
     # Restore checkpoint
     ckpt = tf.compat.v2.train.Checkpoint(model=detection_model)
     ckpt.restore(checkpoint_path).expect_partial()
-    
-    def get_model_detection_function(model):
-      """Get a tf.function for detection."""
-    
-      @tf.function
-      def detect_fn(image):
-        """Detect objects in image."""
-    
-        image, shapes = model.preprocess(image)
-        prediction_dict = model.predict(image, shapes)
-        detections = model.postprocess(prediction_dict, shapes)
-    
-        return detections, prediction_dict, tf.reshape(shapes, [-1])
-    
-      return detect_fn
 
-    detect_fn = get_model_detection_function(detection_model)
+    @tf.function
+    def detect_fn(
+        image: tf.Tensor
+    ) -> Tuple[tf.Tensor, tf.Tensor, tf.Tensor]:
+        """
+        Detect objects in image.
+
+        Parameters
+        ----------
+        image : tf.Tensor
+            Input image tensor.
+
+        Returns
+        -------
+        Tuple[tf.Tensor, tf.Tensor, tf.Tensor]
+            Detections, prediction dictionary, and reshaped shapes tensor.
+        """
+        image, shapes = detection_model.preprocess(image)
+        prediction_dict = detection_model.predict(image, shapes)
+        detections = detection_model.postprocess(prediction_dict, shapes)
+
+        return detections, prediction_dict, tf.reshape(shapes, [-1])
 
     return detect_fn
+
 
 def load_label_map(label_map_path):
     """Load label map.
