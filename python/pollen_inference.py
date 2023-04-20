@@ -1,54 +1,122 @@
 #!/usr/bin/env python3
+"""Pollen inference.
 
-# This script has been partially adapted from:
-# https://github.com/tensorflow/models/blob/master/research/object_detection/
-# colab_tutorials/inference_tf2_colab.ipynb
+This script performs inference on pollen germination images using a deep learning
+model trained with the Tensorflow Object Detection API. This script has been partially
+adapted from:
+# https://github.com/tensorflow/models/blob/master/research/object_detection/colab_tutorials/inference_tf2_colab.ipynb
 
-import io
-import os
-import glob
-import pathlib
+Usage:
+    python pollen_inference.py \
+        --checkpoint [path] \
+        --config [path] \
+        --map [path] \
+        --images [path] \
+        --output [path] \
+        --save_images \
+        --camera both
+
+Arguments:
+    --checkpoint
+        Path to the model checkpoint.
+    --config
+        Path to the model config file.
+    --map
+        Path to the label map file.
+    --images
+        Path to the directory containing images to do inference on.
+    --output
+        Path to the directory where the output images will be saved.
+    --save_images
+        Argument for whether to save images with bounding box annotations.
+        If present, images are saved.
+    --camera
+        Argument for which camera images to run the inference on. Options
+        include "both", "one", or "two".
+
+"""
+
+
 import argparse
-import matplotlib
-import matplotlib.pyplot as plt
-#import scipy.misc
+import os
+import pathlib
+
+from PIL import Image
 import numpy as np
 import pandas as pd
-from six import BytesIO # Part of io but uses six for Python compatibility
-from PIL import Image, ImageDraw, ImageFont
-
 import tensorflow as tf
 
-from object_detection.utils import label_map_util
-from object_detection.utils import config_util
-from object_detection.utils import visualization_utils as viz_utils
 from object_detection.builders import model_builder
+from object_detection.utils import config_util
+from object_detection.utils import label_map_util
+from object_detection.utils import visualization_utils as viz_utils
 
-### Adding arguments
-def dir_path(string):
-    if os.path.isdir(string):
-        return string
-    else:
-        raise NotADirectoryError(string)
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--checkpoint', type=str, help = "Path to model checkpoint", required = True)
-parser.add_argument('--config', type=str, help = "Path to model config file", required = True)
-parser.add_argument('--map', type=str, help = "Path to the label map file", required = True)
-parser.add_argument('--images', type=dir_path, help = "Path to directory containing images to do inference on", required = True)
-parser.add_argument('--output', type=dir_path, help = "Path to directory where output images will be save", required = True)
-args = parser.parse_args()
+def parse_arguments(
+) -> argparse.Namespace:
+    """
+    Parse command-line arguments for the script.
 
-### Functions
-def load_image_into_numpy_array(path):
+    Returns
+    -------
+    parser : argparse.Namespace
+        Parsed arguments as a namespace object.
+
+    Raises
+    ------
+    NotADirectoryError
+        If a given directory path is not a directory.
+    """
+
+    def dir_path(string: str) -> str:
+        if os.path.isdir(string):
+            return string
+        else:
+            raise NotADirectoryError(string)
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--checkpoint",
+        type=str, help="Path to model checkpoint file", required=True
+    )
+    parser.add_argument(
+        "--config",
+        type=str, help="Path to model config file", required=True
+    )
+    parser.add_argument(
+        "--map",
+        type=str, help="Path to the label map file", required=True
+    )
+    parser.add_argument(
+        "--images",
+        type=dir_path, help="Path to directory containing images to do inference on", required=True
+    )
+    parser.add_argument(
+        "--output",
+        type=dir_path, help="Path to directory where output images will be saved", required=True
+    )
+    parser.add_argument(
+        "--save_images",
+        action="store_true", help="Save images to output directory if this flag is present"
+    )
+    parser.add_argument(
+        "--camera",
+        choices=["both", "one", "two"], help="Choose camera whose images you will analyze: both, one, or two", required=True
+    )
+
+    return parser.parse_args()
+
+
+def load_image_into_numpy_array(
+    path: str
+) -> np.ndarray:
     """Load an image from file into a numpy array.
   
-    Puts image into numpy array to feed into tensorflow graph.
-    Note that by convention we put it into a numpy array with shape
-    (height, width, channels), where channels=3 for RGB.
+    Puts image into numpy array to feed into tensorflow graph. Note that by convention
+    we put it into a numpy array with shape (height, width, channels), where
+    channels=3 for RGB. Since we're using grayscale images, we copy the grayscale
+    values to all channels so the input is as expected.
 
-    CHANGED TO channels=1 FOR GRAYSCALE, CHECK TO SEE IF THIS BREAKS THINGS
-  
     Args:
       path: the file path to the image
   
@@ -56,18 +124,13 @@ def load_image_into_numpy_array(path):
       uint8 numpy array with shape (img_height, img_width, 3)
     """
 
-    img_data = tf.io.gfile.GFile(path, 'rb').read()
-    image = Image.open(BytesIO(img_data))
-    (im_width, im_height) = image.size
-    image_np = np.array(image.getdata()).reshape(
-        (im_height, im_width, 1)).astype(np.uint8)
-    # Copying channels to 3 so input matches (maybe fix this in the model 
-    # somewhere to make it faster?) Also make sure that this is what it 
-    # did during training. 
-    # image_np = np.tile(image_np, (1, 1, 3)).astype(np.uint8)
-    image_np = np.tile(image_np, (1, 1, 3))
+    with Image.open(path) as image:
+        (im_width, im_height) = image.size
+        image_np = np.array(image.convert('L')).reshape((im_height, im_width, 1)).astype(np.uint8)
+        image_np = np.repeat(image_np, 3, axis=2)
 
     return image_np
+
 
 def build_model(config_path, checkpoint_path):
     """Build a model for inference.
@@ -359,6 +422,7 @@ def get_detections(detections, category_index, image_name):
     return output_df
 
 def main():
+    args = parse_arguments()
     print("Building model")
     loaded_model = build_model(args.config, args.checkpoint)
     print("Model built")
