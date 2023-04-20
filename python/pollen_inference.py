@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.8
 """Pollen inference.
 
 This script performs inference on pollen germination images using a deep learning
@@ -177,7 +177,7 @@ def build_model(
         model_config=model_config, is_training=False
     )
     
-    # Restore checkpoint
+    # Load the checkpoint
     ckpt = tf.compat.v2.train.Checkpoint(model=detection_model)
     ckpt.restore(checkpoint_path).expect_partial()
 
@@ -274,87 +274,82 @@ def run_inference(
     return image_np, detections
 
 
-def do_non_max_suppression(detections):
-    """Do non-max suppression
+def do_non_max_suppression(
+    detections: dict
+) -> dict:
+    """Do non-max suppression.
 
-    Performs the Tensorflow implementation of non-max suppression on inference 
-    output.
+    Performs the Tensorflow implementation of non-max suppression on inference output.
 
-    Args:
-        detections: inference output
+    Parameters
+    ----------
+    detections : dict
+        Inference output.
 
-    Returns:
-        a subset of detections with overlapping boxes removed by non-max 
-        suppression
+    Returns
+    -------
+    out_dic : dict
+        A subset of detections with overlapping boxes removed by non-max suppression.
     """
 
-    nms_vec = tf.image.non_max_suppression(
-        tf.squeeze(detections['detection_boxes']), # Wants rank 2 tensor, so removes all 1s
-        tf.squeeze(detections['detection_scores']), # Same
-        100000,
+    # non_max_suppression wants a rank 2 tensor, so removes all 1s
+    detection_boxes = tf.squeeze(detections['detection_boxes'])
+    detection_scores = tf.squeeze(detections['detection_scores'])
+
+    nms_indices = tf.image.non_max_suppression(
+        detection_boxes,
+        detection_scores,
+        max_output_size=100000,
         iou_threshold=0.5,
         score_threshold=float('-inf'),
-        name=None)
+        name=None
+    )
 
-    # Indexing the input dictionary with the output of non_max_suppression,
-    # which is the list of boxes (and score, class) to keep.
-    # print(nms_vec)
-    out_dic = detections.copy()
+    # Indexing the input dictionary with the output of non_max_suppression, which is
+    # the list of boxes (and score, class) to keep.
+    out_dic = {
+        'detection_boxes': tf.gather(detection_boxes, nms_indices),
+        'detection_scores': tf.gather(detection_scores, nms_indices),
+        'detection_classes': tf.gather(tf.squeeze(detections['detection_classes']), nms_indices)
+    }
 
-    out_dic['detection_boxes'] = tf.gather(tf.squeeze(detections['detection_boxes']), nms_vec)
-    out_dic['detection_scores'] = tf.gather(tf.squeeze(detections['detection_scores']), nms_vec)
-    out_dic['detection_classes'] = tf.gather(tf.squeeze(detections['detection_classes']), nms_vec)
-    
     return out_dic
 
+
 def get_colors_from_category_index(category_index):
-    """Pull out categories and colors 
+    """Pull out categories and colors.
 
-    Using a category index, get the right indices for colors for the 
-    viz.utils.visualize_boxes_and_labels_on_image_array() function. They will
-    be used to make the right track_ids argument.
+    Getting the right indices for colors for the
+    viz.utils.visualize_boxes_and_labels_on_image_array() function using the category
+    index. They will be used for the right track_ids argument.
 
-    Args:
-        category_index: output
+    Parameters
+    ----------
+    category_index: Dict[int, Dict[str, str]]
+        A dictionary where keys are integers and values are dictionaries containing a
+        single key-value pair with key 'name' and value being the category name.
 
-    Returns:
-        dictionary of which category index gets which color
+    Returns
+    -------
+    category_index_unnested : Dict[int, int]
+        A dictionary of which category index gets which color index.
     """
 
-    # First unnesting the dictionary, not sure why they even made it like this,
-    # seems unnecessary.
-    category_index_unnested = {}
-
-    for key in category_index.keys():
-        category_index_unnested[key] = category_index[key]['name']
-
-    # Next I'll make a dict with with which color index each class gets:
-   #  color_index_dict = {
-   #      "aborted" : 110, # SlateGray
-   #      "burst" : 28, # DeepPink
-   #      "germinated" : 65, # Lime
-   #      "tube_tip" : 3, # Aquamarine
-   #      "tube_tip_bulging" : 124, # Yellow
-   #      "tube_tip_burst" : 120, # Violet
-   #      "ungerminated" : 17, # Cyan
-   #      "unknown_germinated" : 22} # DarkOrange
-    # Somethings not working properly, just going to try to figure it out for the talk
     color_index_dict = {
-        "aborted" : 65, #
-        "burst" : 22, #
-        "germinated" : 5, #
-        "tube_tip" : 32, # 33
-        "tube_tip_bulging" : 34, # 
-        "tube_tip_burst" : 3, #
-        "ungerminated" : 11, #
-        "unknown_germinated" : 15} # 
+        "aborted": 65,            # Light blue
+        "burst": 22,              # Magenta
+        "germinated": 5,          # Bright green
+        "tube_tip": 32,           # Orange
+        "tube_tip_bulging": 34,   # Pale yellow
+        "tube_tip_burst": 3,      # Pale red
+        "ungerminated": 11,       # Cyan
+        "unknown_germinated": 15  # Forest green
+    }
 
-    # Finally I'll change the class name to the color index:
-    for key in category_index_unnested.keys():
-        category_index_unnested[key] = color_index_dict[category_index_unnested[key]]
-
-    print(category_index)
-    print(category_index_unnested)
+    category_index_unnested = {
+        key: color_index_dict[category_index[key]['name']]
+        for key in category_index
+    }
 
     return category_index_unnested
 
