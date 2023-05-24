@@ -471,9 +471,16 @@ def main():
 
     print("Entering inference loop")
     final_df = pd.DataFrame()
-    save_path_dir_string = str(pathlib.Path(args.images).parents[0].name)[:-4] + str(pathlib.Path(args.images).name)[5:]
-    save_path = pathlib.Path(args.output) / save_path_dir_string
-    os.mkdir(save_path)
+
+    # This version was used for running inference on the full dataset.
+    # save_path_dir_string = str(pathlib.Path(args.images).parents[0].name)[:-4] + str(pathlib.Path(args.images).name)[5:]
+
+    # This version was used for running inference on test and validation sets.
+    # save_path_dir_string = str(pathlib.Path(args.images).parents[0].name)[:-4] + str(pathlib.Path(args.images).name)[5:]
+    save_path = pathlib.Path(args.output)
+
+    # Commented out for training and validation
+    #os.mkdir(save_path)
 
     for image_path in sorted(pathlib.Path(args.images).glob('*.jpg')):
         print("Running inference on", image_path.name)
