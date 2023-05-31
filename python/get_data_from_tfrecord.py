@@ -137,9 +137,9 @@ def parse_tfrecord(
     if not os.path.exists(output):
         os.makedirs(output)
 
-    save_dir = os.path.join(base_path, "images")
-    if not os.path.exists(save_dir):
-        os.makedirs(save_dir)
+    # save_dir = os.path.join(base_path, "images")
+    # if not os.path.exists(save_dir):
+    #     os.makedirs(save_dir)
 
     raw_dataset = tf.data.TFRecordDataset(tfrecord_path)
     data = []

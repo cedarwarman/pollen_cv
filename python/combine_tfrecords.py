@@ -16,6 +16,7 @@ Arguments:
 """
 
 import argparse
+from typing import List
 
 import tensorflow as tf
 
@@ -29,6 +30,7 @@ def parse_arguments(
         The parsed command line arguments.
     """
 
+    print("Parsing arguments")
     parser = argparse.ArgumentParser(description='Combine and shuffle TFRecord files')
 
     parser.add_argument('--records', type=str, nargs='+',
@@ -59,7 +61,9 @@ def create_and_shuffle_dataset(
         The shuffled TFRecordDataset.
     """
 
+    print("Loading tfrecords")
     dataset = tf.data.TFRecordDataset(filenames)
+    print("Shuffling")
     dataset = dataset.shuffle(buffer_size)
 
     return dataset
@@ -79,6 +83,7 @@ def write_dataset_to_file(
         The filename of the output TFRecord file.
     """
 
+    print("Writing file")
     writer = tf.io.TFRecordWriter(output_filename)
     for serialized_example in dataset:
         writer.write(serialized_example.numpy())
@@ -90,7 +95,7 @@ def main():
     args = parse_arguments()
 
     # Create and shuffle dataset
-    dataset = create_and_shuffle_dataset(args.filenames)
+    dataset = create_and_shuffle_dataset(args.records)
 
     # Write dataset to file
     write_dataset_to_file(dataset, args.output)
