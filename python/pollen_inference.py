@@ -500,7 +500,12 @@ def main():
         final_df = pd.concat([final_df, detections_table]).reset_index(drop = True)
 
     print("Saving detections")
-    final_df.to_csv(save_path / (str(image_path.stem) + '_predictions.tsv'),
+    # This version for running it on the full set
+    # final_df.to_csv(save_path / (str(image_path.stem) + '_predictions.tsv'),
+    #     index = False,
+    #     sep = '\t')
+    # This version for running it on the training and validation sets 
+    final_df.to_csv(save_path / (str(save_path.name) + '_predictions.tsv'),
         index = False,
         sep = '\t')
 
