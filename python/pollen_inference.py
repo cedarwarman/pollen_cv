@@ -239,8 +239,6 @@ def load_label_map(
         label_map,
         max_num_classes=label_map_util.get_max_label_map_index(label_map),
         use_display_name=True)
-    # It looks like the plotting doesn't even use label_map_dict, so maybe 
-    # in the future.
     category_index = label_map_util.create_category_index(categories)
 
     return category_index
