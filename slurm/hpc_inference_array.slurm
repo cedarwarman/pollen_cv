@@ -35,6 +35,7 @@ for (( run=$START_NUM; run<=$END_NUM; run++ )); do
 			--config /xdisk/rpalaniv/cedar/cv/models/pub_models/combined_all/pipeline.config \
 			--map /xdisk/rpalaniv/cedar/cv/models/pub_models/combined_all/labelmap.pbtxt \
 			--images $dir_path \
+			--camera two \
 			--output /xdisk/rpalaniv/cedar/cv/inference/2023-06-21_Calvin
 done
 

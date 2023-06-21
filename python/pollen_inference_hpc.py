@@ -475,12 +475,15 @@ def main():
 
     # This version was used for running inference on normalized stabilized
     # images in well directories:
-    # save_path_dir_string = str(pathlib.Path(args.images).parents[0].name)[:-21] + str(pathlib.Path(args.images).name)[5:]
 
-    save_path = pathlib.Path(args.output)
+    # First, making a directory for the well. It will also make a directory
+    # for the experiment, if necessary
+    exp_dir = pathlib.Path(args.images).parent.name.replace('_normalized_stabilized', '')
+    well_dir = pathlib.Path(args.images).name
+    output_dir = pathlib.Path(args.output)
 
-    # Commented out for training and validation
-    #os.mkdir(save_path)
+    os.mkdirs(output_dir / exp_dir / well_dir, exist_ok=True)
+
 
     for image_path in sorted(pathlib.Path(args.images).glob('*.tif')):
         print("Running inference on", image_path.name)
@@ -493,7 +496,8 @@ def main():
         out_image = make_detections_image(image_np, detections, category_index)
 
         print("Saving image")
-        out_image.save(save_path / (str(image_path.stem) + '_inference.tif'))
+        image_path_string = str(image_path.stem)[:-5] + '_inference.tif'
+        out_image.save(output_dir / exp_dir / well_dir / image_path_string)
 
         print("Extracting detections")
         detections_table = get_detections(detections, category_index, image_path.stem)
@@ -504,10 +508,16 @@ def main():
     # final_df.to_csv(save_path / (str(image_path.stem) + '_predictions.tsv'),
     #     index = False,
     #     sep = '\t')
+
     # This version for running it on the training and validation sets 
-    final_df.to_csv(save_path / (str(save_path.name) + '_predictions.tsv'),
-        index = False,
-        sep = '\t')
+    final_df.to_csv(
+        output_dir / 
+        exp_dir / 
+        "predictions"
+        / (str(exp_dir) + "_" + str(well_dir) + "_predictions.tsv"),
+        index=False,
+        sep="\t",
+    )
 
     print("Finished")
 
