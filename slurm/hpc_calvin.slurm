@@ -9,9 +9,11 @@
 #SBATCH --gres=gpu:1
 #SBATCH --output=%x_%A_%a.out
 #SBATCH --error=%x_%A_%a.err
-#SBATCH --array=1-34
+#SBATCH --array=1-3
 
-dir_path=$(ls /xdisk/rpalaniv/cjperkins1/chronic_hs/052623_chronic_HS | sed -n $SLURM_ARRAY_TASK_IDp)
+ls /xdisk/rpalaniv/cjperkins1/chronic_hs/052623_chronic_HS
+
+dir_path=$(ls -d /xdisk/rpalaniv/cjperkins1/chronic_hs/052623_chronic_HS/* | sed -n "${SLURM_ARRAY_TASK_ID}p")
 
 echo This is Slurm task $SLURM_ARRAY_TASK_ID, dir_path $dir_path
 apptainer exec \

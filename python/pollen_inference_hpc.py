@@ -393,11 +393,11 @@ def make_detections_image(image_np, detections, category_index):
         category_index,
         use_normalized_coordinates=True,
         max_boxes_to_draw=800,
-        min_score_thresh=.35,
+        min_score_thresh=.3,
         agnostic_mode=False,
         track_ids=np.array(track_ids)[boolean_array],
         skip_track_ids=True,
-        line_thickness=6)
+        line_thickness=4)
 
     # Convert to PIL format for saving
     output_image = Image.fromarray(image_np)
@@ -445,9 +445,14 @@ def get_detections(detections, category_index, image_name):
     output_df = output_df.replace({"class": class_dict})
 
     # Adding some metadata
-    output_df['image_name'] = image_name
+    name_list = image_name.split('_')
+    output_df['date'] = name_list[0]
+    output_df['run'] = name_list[1][3:]
+    output_df['tempc'] = name_list[2][:-1]
+    output_df['well'] = name_list[3]
+    output_df['timepoint'] = name_list[4][1:]
 
-    output_df = output_df[['image_name', 
+    output_df = output_df[['date', 'run', 'well', 'timepoint', 'tempc', 
         'class', 'score', 'ymin', 'xmin', 'ymax', 'xmax']]
 
     return output_df
@@ -468,8 +473,10 @@ def main():
     # This version was used for running inference on the full dataset.
     # save_path_dir_string = str(pathlib.Path(args.images).parents[0].name)[:-4] + str(pathlib.Path(args.images).name)[5:]
 
-    # This version was used for running inference on test and validation sets.
-    # save_path_dir_string = str(pathlib.Path(args.images).parents[0].name)[:-4] + str(pathlib.Path(args.images).name)[5:]
+    # This version was used for running inference on normalized stabilized
+    # images in well directories:
+    # save_path_dir_string = str(pathlib.Path(args.images).parents[0].name)[:-21] + str(pathlib.Path(args.images).name)[5:]
+
     save_path = pathlib.Path(args.output)
 
     # Commented out for training and validation
@@ -504,26 +511,6 @@ def main():
 
     print("Finished")
 
-
-
-
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

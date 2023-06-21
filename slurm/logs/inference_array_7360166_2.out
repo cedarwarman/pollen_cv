@@ -1,0 +1,7692 @@
+052623_chronic_1
+052623_chronic_2
+052623_chronic_3_1hr
+This is Slurm task 2, dir_path /xdisk/rpalaniv/cjperkins1/chronic_hs/052623_chronic_HS/052623_chronic_2
+Building model
+Model built
+Loading label map
+Label map loaded
+Entering inference loop
+Running inference on A1_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A1_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A2_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A3_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A4_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A5_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on A6_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B1_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B2_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B3_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B4_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B5_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on B6_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C1_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C2_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C3_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C4_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C5_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on C6_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D1_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D2_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D3_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D4_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D5_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t00.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t01.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t02.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t03.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t04.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t05.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t06.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t07.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t08.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t09.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t10.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t11.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t12.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t13.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t14.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t15.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t16.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t17.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t18.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t19.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t20.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t21.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t22.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t23.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t24.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t25.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t26.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t27.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t28.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t29.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t30.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t31.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t32.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t33.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t34.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t35.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t36.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t37.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t38.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t39.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t40.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t41.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t42.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t43.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t44.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t45.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t46.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t47.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t48.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t49.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t50.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t51.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t52.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t53.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t54.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t55.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t56.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t57.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t58.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t59.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t60.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t61.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t62.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on D6_S001_t63.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Saving detections
+Finished
+Detailed performance metrics for this job will be available at https://metrics.hpc.arizona.edu/#job_viewer?action=show&realm=SUPREMM&resource_id=73&local_job_id=7360179 by 8am on 2023/06/03.
