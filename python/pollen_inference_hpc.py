@@ -397,7 +397,7 @@ def make_detections_image(image_np, detections, category_index):
         agnostic_mode=False,
         track_ids=np.array(track_ids)[boolean_array],
         skip_track_ids=True,
-        line_thickness=4)
+        line_thickness=3)
 
     # Convert to PIL format for saving
     output_image = Image.fromarray(image_np)
@@ -482,7 +482,7 @@ def main():
     well_dir = pathlib.Path(args.images).name
     output_dir = pathlib.Path(args.output)
 
-    os.mkdirs(output_dir / exp_dir / well_dir, exist_ok=True)
+    os.makedirs(output_dir / exp_dir / well_dir, exist_ok=True)
 
 
     for image_path in sorted(pathlib.Path(args.images).glob('*.tif')):
@@ -510,6 +510,8 @@ def main():
     #     sep = '\t')
 
     # This version for running it on the training and validation sets 
+    os.makedirs(output_dir / exp_dir / "predictions", exist_ok=True)
+
     final_df.to_csv(
         output_dir / 
         exp_dir / 

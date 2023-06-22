@@ -1,0 +1,1364 @@
+This is task 1, which will do runs 1 to 100
+This is SLURM task 1, run number 1, dir_path /xdisk/rpalaniv/cedar/cv/images/normalized_stabilized/2023-06-09_run1_26C_normalized_stabilized/well_C3
+Building model
+Model built
+Loading label map
+Label map loaded
+Entering inference loop
+Running inference on 2023-06-09_run1_26C_C3_t000_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t001_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t002_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t003_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t004_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t005_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t006_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t007_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t008_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t009_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t010_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t011_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t012_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t013_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t014_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t015_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t016_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t017_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t018_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t019_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t020_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t021_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t022_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t023_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t024_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t025_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t026_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t027_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t028_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t029_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t030_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t031_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t032_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t033_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t034_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t035_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t036_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t037_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t038_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t039_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t040_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t041_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t042_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t043_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t044_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t045_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t046_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t047_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t048_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t049_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t050_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t051_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t052_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t053_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t054_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t055_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t056_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t057_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t058_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t059_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t060_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t061_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t062_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t063_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t064_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_C3_t065_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Saving detections
+Finished
+This is SLURM task 1, run number 2, dir_path /xdisk/rpalaniv/cedar/cv/images/normalized_stabilized/2023-06-09_run1_26C_normalized_stabilized/well_A1
+Building model
+Model built
+Loading label map
+Label map loaded
+Entering inference loop
+Running inference on 2023-06-09_run1_26C_A1_t001_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t002_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t003_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t004_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t005_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t006_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t007_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t008_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t009_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t010_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t011_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t012_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t013_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t014_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t015_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t016_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t017_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t018_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t019_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t020_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t021_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t022_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t023_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t024_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t025_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t026_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t027_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t028_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t029_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t030_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t031_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t032_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t033_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t034_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t035_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t036_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t037_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t038_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t039_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t040_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t041_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t042_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t043_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t044_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t045_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t046_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t047_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t048_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t049_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t050_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t051_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t052_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t053_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t054_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t055_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t056_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t057_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t058_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t059_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t060_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t061_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t062_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t063_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t064_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t065_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A1_t066_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Saving detections
+Finished
+This is SLURM task 1, run number 3, dir_path /xdisk/rpalaniv/cedar/cv/images/normalized_stabilized/2023-06-09_run1_26C_normalized_stabilized/well_A2
+Building model
+Model built
+Loading label map
+Label map loaded
+Entering inference loop
+Running inference on 2023-06-09_run1_26C_A2_t000_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t001_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t002_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t003_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t004_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t005_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t006_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t007_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t008_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t009_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t010_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t011_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t012_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t013_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t014_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t015_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t016_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t017_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t018_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t019_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t020_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t021_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t022_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t023_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t024_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t025_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t026_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t027_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t028_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t029_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t030_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t031_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t032_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t033_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t034_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t035_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t036_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t037_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t038_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t039_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t040_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t041_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t042_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t043_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t044_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t045_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t046_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t047_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t048_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t049_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t050_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t051_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t052_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t053_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t054_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t055_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t056_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t057_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t058_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t059_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t060_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t061_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t062_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t063_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t064_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t065_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A2_t066_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Saving detections
+Finished
+This is SLURM task 1, run number 4, dir_path /xdisk/rpalaniv/cedar/cv/images/normalized_stabilized/2023-06-09_run1_26C_normalized_stabilized/well_A4
+Building model
+Model built
+Loading label map
+Label map loaded
+Entering inference loop
+Running inference on 2023-06-09_run1_26C_A4_t000_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t001_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t002_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t003_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t004_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t005_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t006_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t007_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t008_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t009_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t010_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t011_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t012_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t013_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t014_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t015_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t016_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t017_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t018_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t019_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t020_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t021_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t022_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t023_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t024_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t025_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t026_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t027_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t028_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t029_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t030_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t031_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t032_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t033_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t034_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t035_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t036_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t037_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t038_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t039_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t040_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t041_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t042_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t043_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t044_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t045_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t046_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t047_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t048_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t049_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t050_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t051_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t052_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t053_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t054_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t055_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t056_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t057_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t058_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t059_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t060_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t061_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t062_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t063_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t064_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t065_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Running inference on 2023-06-09_run1_26C_A4_t066_stab.tif
+Doing non-max suppression
+Making image
+Saving image
+Extracting detections
+Saving detections
+Finished
+This is SLURM task 1, run number 5, dir_path /xdisk/rpalaniv/cedar/cv/images/normalized_stabilized/2023-06-09_run1_26C_normalized_stabilized/well_C2
