@@ -406,8 +406,8 @@ def main():
 
     # Some example image sequence inference files
     # image_seq_name = "2022-03-03_run1_26C_C2"
-    image_seq_name = "2022-03-07_run1_26C_B5"
-    # image_seq_name = "2022-03-07_run1_26C_C2"
+    # image_seq_name = "2022-03-07_run1_26C_B5"
+    image_seq_name = "2022-03-07_run1_26C_C2"
 
     # Loading and processing the dataframe
     df = load_tsv(image_seq_name)
