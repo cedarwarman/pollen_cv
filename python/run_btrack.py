@@ -54,10 +54,10 @@ def load_tsv(
     tsv_file = data_dir / file_name
 
     # Load the tsv file into a Pandas DataFrame
-    df = pd.read_csv(tsv_file, sep='\t')
+    df = pd.read_csv(tsv_file, sep="\t")
 
     # Fix a bad column name
-    df = df.rename(columns={'class': 'class_label'})
+    df = df.rename(columns={"class": "class_label"})
 
     return df
 
@@ -150,12 +150,12 @@ def add_rows_to_btrack(
     print(df)
 
     for row in df.itertuples(index=False):
-        row_dict = {'ID': id_counter,
-                    't': getattr(row, "timepoint"),
-                    'x': getattr(row, "centroid_x"),
-                    'y': getattr(row, "centroid_y"),
-                    'z': 0.,
-                    'object_class': getattr(row, "class_label")}
+        row_dict = {"ID": id_counter,
+                    "t": getattr(row, "timepoint"),
+                    "x": getattr(row, "centroid_x"),
+                    "y": getattr(row, "centroid_y"),
+                    "z": 0.,
+                    "object_class": getattr(row, "class_label")}
 
         obj = btrack.btypes.PyTrackObject.from_dict(row_dict)
         btrack_objects.append(obj)
@@ -269,7 +269,7 @@ def visualize_tracks(
         image_array = np.asarray(image)
         image_series.append(image_array)
     viewer_array = np.asarray(image_series)
-    viewer.add_image(viewer_array, scale=(1.0, 1.0, 1.0), name='images')
+    viewer.add_image(viewer_array, scale=(1.0, 1.0, 1.0), name="images")
 
     print("Adding tracks")
     viewer.add_tracks(
@@ -280,12 +280,38 @@ def visualize_tracks(
         tail_width=4,
         tail_length=1000,
         colormap="hsv",
-        blending="Translucent",
-        opacity=0.5,
+        blending="Opaque",
+        #opacity=0.5,
         visible=True
     )
 
     napari.run()
+
+
+def infer_classes(
+    input_df: pd.DataFrame
+) -> pd.DataFrame:
+    """Add and correct class information
+    Infers missing classes from adjacent timepoints. Corrects class predictions that
+    are biologically impossible. E.g., pollen must progress ungerminated > germinated
+    > burst. It can start at any class (most often because a pollen grain floats down
+    to the surface of the well), but cannot move backwards through the class
+    progression.
+
+    Parameters
+    ----------
+    input_df : pd.DataFrame
+
+    Returns
+    -------
+    input_df : pd.DataFrame
+        Dataframe with inferred classes.
+
+    """
+    input_df['object_class'].replace('nan', np.nan, inplace=True)
+    input_df["object_class"].fillna(method="ffill", inplace=True)
+
+    return input_df
 
 
 def make_output_df(
@@ -308,15 +334,23 @@ def make_output_df(
 
     """
     properties_df = pd.DataFrame(track_properties)
-    track_data_df = pd.DataFrame(track_data, columns=['root', 'time', 'y', 'x'])
+    track_data_df = pd.DataFrame(
+        track_data, columns=["root_track_data", "time", "y", "x"]
+    )
 
     output_df = pd.concat([properties_df, track_data_df], axis=1)
+    output_df = output_df.drop(
+        ["state", "generation", "parent", "root_track_data", "time"], axis=1
+    )
+    output_df = output_df.rename(columns={"root": "track_id"})
+
+    output_df = infer_classes(output_df)
 
     return output_df
 
 
 def main():
-    pd.set_option('display.max_columns', None)
+    pd.set_option("display.max_columns", None)
 
     # Some example image sequence inference files
     image_seq_name = "2022-03-03_run1_26C_C2"
@@ -333,7 +367,7 @@ def main():
     data, properties, graph = run_tracking(btrack_objects)
 
     # Viewing tracks and images with Napari
-    visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
+    #visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
 
     ####### EXPERIMENTAL #######
 
@@ -347,6 +381,7 @@ def main():
 
     # Viewing tracks and images with Napari
     print("visualizing")
+    print(properties)
     visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
 
     # Making a dataframe with all the track and class info
