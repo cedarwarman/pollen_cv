@@ -281,7 +281,7 @@ def visualize_tracks(
         tail_length=1000,
         colormap="hsv",
         blending="Opaque",
-        #opacity=0.5,
+        # opacity=0.5,
         visible=True
     )
 
@@ -308,8 +308,60 @@ def infer_classes(
         Dataframe with inferred classes.
 
     """
-    input_df['object_class'].replace('nan', np.nan, inplace=True)
+    # Replace NA with the value from the previous row
+    input_df["object_class"].replace("nan", np.nan, inplace=True)
     input_df["object_class"].fillna(method="ffill", inplace=True)
+
+    # If a pollen grain germinates then it can"t be aborted and it must have started
+    # as ungerminated. Here it"s considered germinated if 3/4 classes are germinated in a rolling window.
+    # Helper function to be applied on each group
+    def replace_func(group):
+        # Create a boolean series where True if object_class is "germinated"
+        is_germinated = group["object_class"] == "germinated"
+
+        # Apply rolling window of size 4 and check if sum (number of "germinated") is >=3
+        germinated_in_window = is_germinated.rolling(4).sum() >= 3
+
+        # If any window meets the condition, get the first index of "germinated" in this group
+        if germinated_in_window.any():
+            # idxmax returns the first occurrence of maximum value, i.e., True
+            first_germinated_index = is_germinated.idxmax()
+            group.loc[:first_germinated_index, "object_class"] = "ungerminated"
+
+        return group
+    input_df.groupby("track_id").apply(replace_func)
+
+    # If the pollen grain class is aborted for >50% of the frames then it is
+    # considered aborted for the entire track. Otherwise, aborted classes are
+    # replaced with the previous class.
+    # Calculating the percentage of "aborted" for each track_id.
+    total_counts = input_df.groupby("track_id").size()
+    aborted_counts = input_df[input_df["object_class"] == "aborted"].groupby("track_id").size()
+    percentage_aborted = aborted_counts / total_counts
+
+    # Track IDs where "aborted" is more than 50%
+    aborted_track_ids = percentage_aborted[percentage_aborted > 0.6].index
+
+    # Change all the object_class to "aborted" for these track_ids
+    input_df.loc[input_df["track_id"].isin(aborted_track_ids), "object_class"] = "aborted"
+
+    # Track IDs where "aborted" is less than 50%
+    not_aborted_track_ids = percentage_aborted[percentage_aborted <= 0.6].index
+
+    # For these track_ids, replace "aborted" with the previous value, unless it's the
+    # first one, then replace with "ungerminated".
+    for track_id in not_aborted_track_ids:
+        track_df = input_df.loc[input_df['track_id'] == track_id].copy()
+        first_row_index = track_df.index[0]
+        if track_df.loc[first_row_index, 'object_class'] == 'aborted':
+            track_df.loc[first_row_index, 'object_class'] = 'ungerminated'
+        track_df['object_class'] = track_df['object_class'].replace('aborted', method='ffill')
+        input_df.loc[input_df['track_id'] == track_id, 'object_class'] = track_df['object_class']
+
+    # For all other class conflicts, they must follow the ungerminated > germinated >
+    # burst progression and class conflicts (switching from one to another not in the
+    # progression) are settled by switching classes once 3/4 of consecutive classes
+    # are the next class in the progression.
 
     return input_df
 
@@ -353,8 +405,8 @@ def main():
     pd.set_option("display.max_columns", None)
 
     # Some example image sequence inference files
-    image_seq_name = "2022-03-03_run1_26C_C2"
-    # image_seq_name = "2022-03-07_run1_26C_B5"
+    # image_seq_name = "2022-03-03_run1_26C_C2"
+    image_seq_name = "2022-03-07_run1_26C_B5"
     # image_seq_name = "2022-03-07_run1_26C_C2"
 
     # Loading and processing the dataframe
@@ -367,7 +419,7 @@ def main():
     data, properties, graph = run_tracking(btrack_objects)
 
     # Viewing tracks and images with Napari
-    #visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
+    # visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
 
     ####### EXPERIMENTAL #######
 
