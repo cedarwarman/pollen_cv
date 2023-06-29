@@ -308,13 +308,17 @@ def infer_classes(
         Dataframe with inferred classes.
 
     """
+    # Making a copy of the original object_class column to make sure everything is
+    # working as expected.
+    input_df["original_object_class"] = input_df["object_class"].copy()
+
     # Replace NA with the value from the previous row
     input_df["object_class"].replace("nan", np.nan, inplace=True)
     input_df["object_class"].fillna(method="ffill", inplace=True)
 
-    # If a pollen grain germinates then it can"t be aborted and it must have started
-    # as ungerminated. Here it"s considered germinated if 3/4 classes are germinated in a rolling window.
-    # Helper function to be applied on each group
+    # If a pollen grain germinates then it can't be aborted and it must have started
+    # as ungerminated. Here it's considered germinated if 3/4 classes are germinated
+    # in a rolling window.
     def replace_func(group):
         # Create a boolean series where True if object_class is "germinated"
         is_germinated = group["object_class"] == "germinated"
@@ -322,9 +326,8 @@ def infer_classes(
         # Apply rolling window of size 4 and check if sum (number of "germinated") is >=3
         germinated_in_window = is_germinated.rolling(4).sum() >= 3
 
-        # If any window meets the condition, get the first index of "germinated" in this group
+        # Replace every class before germination with ungerminated
         if germinated_in_window.any():
-            # idxmax returns the first occurrence of maximum value, i.e., True
             first_germinated_index = is_germinated.idxmax()
             group.loc[:first_germinated_index, "object_class"] = "ungerminated"
 
@@ -340,13 +343,13 @@ def infer_classes(
     percentage_aborted = aborted_counts / total_counts
 
     # Track IDs where "aborted" is more than 50%
-    aborted_track_ids = percentage_aborted[percentage_aborted > 0.6].index
+    aborted_track_ids = percentage_aborted[percentage_aborted > 0.5].index
 
     # Change all the object_class to "aborted" for these track_ids
     input_df.loc[input_df["track_id"].isin(aborted_track_ids), "object_class"] = "aborted"
 
     # Track IDs where "aborted" is less than 50%
-    not_aborted_track_ids = percentage_aborted[percentage_aborted <= 0.6].index
+    not_aborted_track_ids = percentage_aborted[percentage_aborted <= 0.5].index
 
     # For these track_ids, replace "aborted" with the previous value, unless it's the
     # first one, then replace with "ungerminated".
@@ -358,10 +361,54 @@ def infer_classes(
         track_df['object_class'] = track_df['object_class'].replace('aborted', method='ffill')
         input_df.loc[input_df['track_id'] == track_id, 'object_class'] = track_df['object_class']
 
+    # If the track_id's class is unknown_germinated, or switches to unknown_germinated,
+    # then it can't be used, so these track_ids are deleted. If unknown_germinated only
+    # pops up occasionally, then it's just replaced with the previous class.
+
     # For all other class conflicts, they must follow the ungerminated > germinated >
     # burst progression and class conflicts (switching from one to another not in the
     # progression) are settled by switching classes once 3/4 of consecutive classes
     # are the next class in the progression.
+    progression = ["ungerminated", "germinated", "burst"]
+
+    def process_group(group):
+        group = group.copy()
+        # Determine the starting class in the progression for this group
+        start_class = group['object_class'].head(3).mode()[0]
+        # If it's aborted then they will all be aborted (see above) so will be
+        # unaltered.
+        if group["object_class"].iloc[0] == "aborted":
+            return group
+        start_index = progression.index(start_class)
+        last_transition_index = group.index.min()
+        # If the group never satisfies the requirements for a transition, we still want
+        # to correct class errors, so we will deal with those groups at the end.
+        made_transition = False
+
+        # Apply the rules for each transition in the progression
+        for i in range(start_index, len(progression) - 1):
+            current_class = progression[i]
+            next_class = progression[i + 1]
+            is_next_class = group["object_class"] == next_class
+            next_class_in_window = is_next_class.rolling(4).sum() >= 3
+            if next_class_in_window.any():
+                # If any window meets the condition, get the first index of this window
+                first_next_class_index = group[is_next_class & next_class_in_window].index.min()
+                group.loc[last_transition_index:first_next_class_index-3, "object_class"] = current_class
+                last_transition_index = first_next_class_index
+                made_transition = True
+
+        # Need to add some logic for if the final transition in the progression never happens, e.g.
+        # it goes from ungerminated to germinated but never to burst, and make it work if the last
+        # class is burst, etc.
+
+        if not made_transition:
+            group["object_class"] = start_class
+
+        return group
+
+    # Apply the function on each group
+    input_df = input_df.groupby("track_id").apply(process_group)
 
     return input_df
 
@@ -431,15 +478,14 @@ def main():
     btrack_objects = add_rows_to_btrack(subsetted_df)
     data, properties, graph = run_tracking(btrack_objects)
 
+    # Making a dataframe with all the track and class info
+    print("Making dataframe")
+    track_df = make_output_df(data, properties)
+
     # Viewing tracks and images with Napari
     print("visualizing")
     print(properties)
     visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
-
-    # Making a dataframe with all the track and class info
-    print("Making dataframe")
-    track_df = make_output_df(data, properties)
-    # Checking to make sure the roots line up (these are the track ids)
 
     print("All done")
 
