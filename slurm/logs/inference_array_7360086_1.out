@@ -1,9 +1,0 @@
-This is Slurm task 1, dir_path 052623_chronic_1
-Building model
-Model built
-Loading label map
-Label map loaded
-Entering inference loop
-Saving detections
-Finished
-Detailed performance metrics for this job will be available at https://metrics.hpc.arizona.edu/#job_viewer?action=show&realm=SUPREMM&resource_id=73&local_job_id=7360098 by 8am on 2023/06/03.
