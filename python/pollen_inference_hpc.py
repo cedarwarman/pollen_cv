@@ -462,7 +462,10 @@ def main():
 
     # First, making a directory for the well. It will also make a directory
     # for the experiment, if necessary
-    exp_dir = pathlib.Path(args.images).parent.name.replace('_normalized_stabilized', '')
+    # This was only necessary if the directories had _normalized_stabilized at
+    # the end, which was removed for the final inference run.
+    # exp_dir = pathlib.Path(args.images).parent.name.replace('_normalized_stabilized', '')
+    exp_dir = pathlib.Path(args.images).parent.name
     well_dir = pathlib.Path(args.images).name
     output_dir = pathlib.Path(args.output)
 
