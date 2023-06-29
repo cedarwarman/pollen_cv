@@ -121,8 +121,13 @@ def calculate_centroid(
     original_x = 2048
     original_y = 2048
 
-    df["centroid_x"] = df.apply(lambda row: (row["xmin"] + row["xmax"]) / 2 * original_x, axis=1)
-    df["centroid_y"] = df.apply(lambda row: (row["ymin"] + row["ymax"]) / 2 * original_y, axis=1)
+    #df["centroid_x"] = df.apply(lambda row: (row["xmin"] + row["xmax"]) / 2 * original_x, axis=1)
+    #df["centroid_y"] = df.apply(lambda row: (row["ymin"] + row["ymax"]) / 2 * original_y, axis=1)
+
+    df = df.assign(
+        centroid_x=(df["xmin"] + df["xmax"]) / 2 * original_x,
+        centroid_y=(df["ymin"] + df["ymax"]) / 2 * original_y,
+    )
 
     return df
 
@@ -332,7 +337,7 @@ def infer_classes(
             group.loc[:first_germinated_index, "object_class"] = "ungerminated"
 
         return group
-    input_df.groupby("track_id").apply(replace_func)
+    input_df.groupby("track_id", group_keys=False).apply(replace_func)
 
     # If the pollen grain class is aborted for >50% of the frames then it is
     # considered aborted for the entire track. Otherwise, aborted classes are
@@ -391,24 +396,23 @@ def infer_classes(
             next_class = progression[i + 1]
             is_next_class = group["object_class"] == next_class
             next_class_in_window = is_next_class.rolling(4).sum() >= 3
+            # If there is a class transition, all the classes from the previous
+            # transition up until the transition happens are the current class.
             if next_class_in_window.any():
                 # If any window meets the condition, get the first index of this window
                 first_next_class_index = group[is_next_class & next_class_in_window].index.min()
                 group.loc[last_transition_index:first_next_class_index-3, "object_class"] = current_class
                 last_transition_index = first_next_class_index
                 made_transition = True
-
-        # Need to add some logic for if the final transition in the progression never happens, e.g.
-        # it goes from ungerminated to germinated but never to burst, and make it work if the last
-        # class is burst, etc.
-
-        if not made_transition:
-            group["object_class"] = start_class
+            # If the transition never happens, all the remaining classes are the
+            # current class.
+            else:
+                group.loc[last_transition_index:, "object_class"] = current_class
 
         return group
 
     # Apply the function on each group
-    input_df = input_df.groupby("track_id").apply(process_group)
+    input_df = input_df.groupby("track_id", group_keys=False).apply(process_group)
 
     return input_df
 
@@ -483,8 +487,7 @@ def main():
     track_df = make_output_df(data, properties)
 
     # Viewing tracks and images with Napari
-    print("visualizing")
-    print(properties)
+    print("Visualizing")
     visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
 
     print("All done")
