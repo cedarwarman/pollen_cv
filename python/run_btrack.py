@@ -54,10 +54,10 @@ def load_tsv(
     tsv_file = data_dir / file_name
 
     # Load the tsv file into a Pandas DataFrame
-    df = pd.read_csv(tsv_file, sep='\t')
+    df = pd.read_csv(tsv_file, sep="\t")
 
     # Fix a bad column name
-    df = df.rename(columns={'class': 'class_label'})
+    df = df.rename(columns={"class": "class_label"})
 
     return df
 
@@ -150,12 +150,12 @@ def add_rows_to_btrack(
     print(df)
 
     for row in df.itertuples(index=False):
-        row_dict = {'ID': id_counter,
-                    't': getattr(row, "timepoint"),
-                    'x': getattr(row, "centroid_x"),
-                    'y': getattr(row, "centroid_y"),
-                    'z': 0.,
-                    'object_class': getattr(row, "class_label")}
+        row_dict = {"ID": id_counter,
+                    "t": getattr(row, "timepoint"),
+                    "x": getattr(row, "centroid_x"),
+                    "y": getattr(row, "centroid_y"),
+                    "z": 0.,
+                    "object_class": getattr(row, "class_label")}
 
         obj = btrack.btypes.PyTrackObject.from_dict(row_dict)
         btrack_objects.append(obj)
@@ -269,7 +269,7 @@ def visualize_tracks(
         image_array = np.asarray(image)
         image_series.append(image_array)
     viewer_array = np.asarray(image_series)
-    viewer.add_image(viewer_array, scale=(1.0, 1.0, 1.0), name='images')
+    viewer.add_image(viewer_array, scale=(1.0, 1.0, 1.0), name="images")
 
     print("Adding tracks")
     viewer.add_tracks(
@@ -280,12 +280,137 @@ def visualize_tracks(
         tail_width=4,
         tail_length=1000,
         colormap="hsv",
-        blending="Translucent",
-        opacity=0.5,
+        blending="Opaque",
+        # opacity=0.5,
         visible=True
     )
 
     napari.run()
+
+
+def infer_classes(
+    input_df: pd.DataFrame
+) -> pd.DataFrame:
+    """Add and correct class information
+    Infers missing classes from adjacent timepoints. Corrects class predictions that
+    are biologically impossible. E.g., pollen must progress ungerminated > germinated
+    > burst. It can start at any class (most often because a pollen grain floats down
+    to the surface of the well), but cannot move backwards through the class
+    progression.
+
+    Parameters
+    ----------
+    input_df : pd.DataFrame
+
+    Returns
+    -------
+    input_df : pd.DataFrame
+        Dataframe with inferred classes.
+
+    """
+    # Making a copy of the original object_class column to make sure everything is
+    # working as expected.
+    input_df["original_object_class"] = input_df["object_class"].copy()
+
+    # Replace NA with the value from the previous row
+    input_df["object_class"].replace("nan", np.nan, inplace=True)
+    input_df["object_class"].fillna(method="ffill", inplace=True)
+
+    # If a pollen grain germinates then it can't be aborted and it must have started
+    # as ungerminated. Here it's considered germinated if 3/4 classes are germinated
+    # in a rolling window.
+    def replace_func(group):
+        # Create a boolean series where True if object_class is "germinated"
+        is_germinated = group["object_class"] == "germinated"
+
+        # Apply rolling window of size 4 and check if sum (number of "germinated") is >=3
+        germinated_in_window = is_germinated.rolling(4).sum() >= 3
+
+        # Replace every class before germination with ungerminated
+        if germinated_in_window.any():
+            first_germinated_index = is_germinated.idxmax()
+            group.loc[:first_germinated_index, "object_class"] = "ungerminated"
+
+        return group
+    input_df.groupby("track_id").apply(replace_func)
+
+    # If the pollen grain class is aborted for >50% of the frames then it is
+    # considered aborted for the entire track. Otherwise, aborted classes are
+    # replaced with the previous class.
+    # Calculating the percentage of "aborted" for each track_id.
+    total_counts = input_df.groupby("track_id").size()
+    aborted_counts = input_df[input_df["object_class"] == "aborted"].groupby("track_id").size()
+    percentage_aborted = aborted_counts / total_counts
+
+    # Track IDs where "aborted" is more than 50%
+    aborted_track_ids = percentage_aborted[percentage_aborted > 0.5].index
+
+    # Change all the object_class to "aborted" for these track_ids
+    input_df.loc[input_df["track_id"].isin(aborted_track_ids), "object_class"] = "aborted"
+
+    # Track IDs where "aborted" is less than 50%
+    not_aborted_track_ids = percentage_aborted[percentage_aborted <= 0.5].index
+
+    # For these track_ids, replace "aborted" with the previous value, unless it's the
+    # first one, then replace with "ungerminated".
+    for track_id in not_aborted_track_ids:
+        track_df = input_df.loc[input_df['track_id'] == track_id].copy()
+        first_row_index = track_df.index[0]
+        if track_df.loc[first_row_index, 'object_class'] == 'aborted':
+            track_df.loc[first_row_index, 'object_class'] = 'ungerminated'
+        track_df['object_class'] = track_df['object_class'].replace('aborted', method='ffill')
+        input_df.loc[input_df['track_id'] == track_id, 'object_class'] = track_df['object_class']
+
+    # If the track_id's class is unknown_germinated, or switches to unknown_germinated,
+    # then it can't be used, so these track_ids are deleted. If unknown_germinated only
+    # pops up occasionally, then it's just replaced with the previous class.
+
+    # For all other class conflicts, they must follow the ungerminated > germinated >
+    # burst progression and class conflicts (switching from one to another not in the
+    # progression) are settled by switching classes once 3/4 of consecutive classes
+    # are the next class in the progression.
+    progression = ["ungerminated", "germinated", "burst"]
+
+    def process_group(group):
+        group = group.copy()
+        # Determine the starting class in the progression for this group
+        start_class = group['object_class'].head(3).mode()[0]
+        # If it's aborted then they will all be aborted (see above) so will be
+        # unaltered.
+        if group["object_class"].iloc[0] == "aborted":
+            return group
+        start_index = progression.index(start_class)
+        last_transition_index = group.index.min()
+        # If the group never satisfies the requirements for a transition, we still want
+        # to correct class errors, so we will deal with those groups at the end.
+        made_transition = False
+
+        # Apply the rules for each transition in the progression
+        for i in range(start_index, len(progression) - 1):
+            current_class = progression[i]
+            next_class = progression[i + 1]
+            is_next_class = group["object_class"] == next_class
+            next_class_in_window = is_next_class.rolling(4).sum() >= 3
+            if next_class_in_window.any():
+                # If any window meets the condition, get the first index of this window
+                first_next_class_index = group[is_next_class & next_class_in_window].index.min()
+                group.loc[last_transition_index:first_next_class_index-3, "object_class"] = current_class
+                last_transition_index = first_next_class_index
+                made_transition = True
+
+        # Need to add some logic for if the final transition in the progression never happens, e.g.
+        # it goes from ungerminated to germinated but never to burst, and make it work if the last
+        # class is burst, etc.
+
+        if not made_transition:
+            group["object_class"] = start_class
+
+        return group
+
+    # Apply the function on each group
+    input_df = input_df.groupby("track_id").apply(process_group)
+
+    return input_df
 
 
 def make_output_df(
@@ -308,20 +433,28 @@ def make_output_df(
 
     """
     properties_df = pd.DataFrame(track_properties)
-    track_data_df = pd.DataFrame(track_data, columns=['root', 'time', 'y', 'x'])
+    track_data_df = pd.DataFrame(
+        track_data, columns=["root_track_data", "time", "y", "x"]
+    )
 
     output_df = pd.concat([properties_df, track_data_df], axis=1)
+    output_df = output_df.drop(
+        ["state", "generation", "parent", "root_track_data", "time"], axis=1
+    )
+    output_df = output_df.rename(columns={"root": "track_id"})
+
+    output_df = infer_classes(output_df)
 
     return output_df
 
 
 def main():
-    pd.set_option('display.max_columns', None)
+    pd.set_option("display.max_columns", None)
 
     # Some example image sequence inference files
-    image_seq_name = "2022-03-03_run1_26C_C2"
+    # image_seq_name = "2022-03-03_run1_26C_C2"
     # image_seq_name = "2022-03-07_run1_26C_B5"
-    # image_seq_name = "2022-03-07_run1_26C_C2"
+    image_seq_name = "2022-03-07_run1_26C_C2"
 
     # Loading and processing the dataframe
     df = load_tsv(image_seq_name)
@@ -333,7 +466,7 @@ def main():
     data, properties, graph = run_tracking(btrack_objects)
 
     # Viewing tracks and images with Napari
-    visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
+    # visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
 
     ####### EXPERIMENTAL #######
 
@@ -345,14 +478,14 @@ def main():
     btrack_objects = add_rows_to_btrack(subsetted_df)
     data, properties, graph = run_tracking(btrack_objects)
 
-    # Viewing tracks and images with Napari
-    print("visualizing")
-    visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
-
     # Making a dataframe with all the track and class info
     print("Making dataframe")
     track_df = make_output_df(data, properties)
-    # Checking to make sure the roots line up (these are the track ids)
+
+    # Viewing tracks and images with Napari
+    print("visualizing")
+    print(properties)
+    visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
 
     print("All done")
 
