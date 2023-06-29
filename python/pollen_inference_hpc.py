@@ -13,8 +13,7 @@ Usage:
         --map [path] \
         --images [path] \
         --output [path] \
-        --save_images \
-        --camera both
+        --save_images
 
 Arguments:
     --checkpoint
@@ -30,9 +29,6 @@ Arguments:
     --save_images
         Argument for whether to save images with bounding box annotations.
         If present, images are saved.
-    --camera
-        Argument for which camera images to run the inference on. Options
-        include "both", "one", or "two".
 
 """
 
@@ -108,12 +104,6 @@ def parse_arguments(
         "--save_images",
         action="store_true",
         help="Save images to output directory if this flag is present"
-    )
-    parser.add_argument(
-        "--camera",
-        choices=["both", "one", "two"],
-        help="Choose camera whose images you will analyze: both, one, or two",
-        required=True
     )
 
     return parser.parse_args()
@@ -470,12 +460,6 @@ def main():
     print("Entering inference loop")
     final_df = pd.DataFrame()
 
-    # This version was used for running inference on the full dataset.
-    # save_path_dir_string = str(pathlib.Path(args.images).parents[0].name)[:-4] + str(pathlib.Path(args.images).name)[5:]
-
-    # This version was used for running inference on normalized stabilized
-    # images in well directories:
-
     # First, making a directory for the well. It will also make a directory
     # for the experiment, if necessary
     exp_dir = pathlib.Path(args.images).parent.name.replace('_normalized_stabilized', '')
@@ -484,32 +468,30 @@ def main():
 
     os.makedirs(output_dir / exp_dir / well_dir, exist_ok=True)
 
+    # So it works with tif or jpg
+    image_paths = [f for ext in ['tif', 'jpg'] for f in pathlib.Path(args.images).glob(f'*.{ext}')]
+    image_paths = sorted(image_paths)
 
-    for image_path in sorted(pathlib.Path(args.images).glob('*.tif')):
+    for image_path in image_paths:
         print("Running inference on", image_path.name)
         image_np, detections = run_inference(loaded_model, image_path)
 
         print("Doing non-max suppression")
         detections = do_non_max_suppression(detections)
 
-        print("Making image")
-        out_image = make_detections_image(image_np, detections, category_index)
+        if args.save_images:
+            print("Making image")
+            out_image = make_detections_image(image_np, detections, category_index)
 
-        print("Saving image")
-        image_path_string = str(image_path.stem)[:-5] + '_inference.tif'
-        out_image.save(output_dir / exp_dir / well_dir / image_path_string)
+            print("Saving image")
+            image_path_string = str(image_path.stem)[:-5] + '_inference' + str(image_path.suffix)
+            out_image.save(output_dir / exp_dir / well_dir / image_path_string)
 
         print("Extracting detections")
         detections_table = get_detections(detections, category_index, image_path.stem)
         final_df = pd.concat([final_df, detections_table]).reset_index(drop = True)
 
     print("Saving detections")
-    # This version for running it on the full set
-    # final_df.to_csv(save_path / (str(image_path.stem) + '_predictions.tsv'),
-    #     index = False,
-    #     sep = '\t')
-
-    # This version for running it on the training and validation sets 
     os.makedirs(output_dir / exp_dir / "predictions", exist_ok=True)
 
     final_df.to_csv(
