@@ -39,7 +39,7 @@ def load_tsv(
     """
 
     # Add the rest of the file name based on the inference output convention
-    file_name = file_name + "_t082_stab_predictions.tsv"
+    file_name = file_name + "_predictions.tsv"
 
     # Get the path of the current script
     current_script_path = Path(__file__).resolve()
@@ -48,7 +48,7 @@ def load_tsv(
     parent_dir = current_script_path.parent.parent
 
     # Navigate to the data directory
-    data_dir = parent_dir / "data" / "btrack_inference"
+    data_dir = parent_dir / "data" / "cv_model_inference" / "predictions"
 
     # Get the path of the tsv file
     tsv_file = data_dir / file_name
@@ -225,7 +225,6 @@ def visualize_tracks(
         track_properties: dict,
         track_graph: dict,
         background_images: str,
-        show_bounding_boxes: bool
 ) -> None:
     """Visualize btrack output with source images as background.
 
@@ -239,8 +238,6 @@ def visualize_tracks(
         Output from the run_tracking function.
     background_images : str
         Name of the images used for the background.
-    show_bounding_boxes : bool
-        Whether or not to load the background images with bounding boxes.
 
     Returns
     -------
@@ -254,11 +251,7 @@ def visualize_tracks(
     print("Adding images")
     image_series = []
 
-    # Formatting the image background image string
-    if show_bounding_boxes:
-        background_images = background_images + "_stab_inference"
-    else:
-        background_images = background_images + "_stab"
+    background_images = background_images + "_inference"
 
     # Getting the path of the background images
     current_script_path = Path(__file__).resolve()
@@ -267,7 +260,7 @@ def visualize_tracks(
     parent_dir = current_script_path.parent.parent
 
     # Navigate to the data directory
-    image_dir = parent_dir / "data" / "btrack_visualization_images" / background_images
+    image_dir = parent_dir / "data" / "cv_model_inference" / "images" / background_images
 
     for image_path in sorted(image_dir.glob("*.jpg")):
         image = imread(image_path)
