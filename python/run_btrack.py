@@ -7,6 +7,7 @@ Original btrack repository is located here:
 https://github.com/quantumjot/BayesianTracker
 """
 
+from datetime import datetime
 from pathlib import Path
 from typing import List, Tuple, Union
 
@@ -62,6 +63,35 @@ def load_tsv(
     return df
 
 
+def get_image_dimensions(
+    df: pd.DataFrame
+) -> dict:
+    """Get image dimensions from date.
+    This experiment used two cameras which had different dimensions. The appropriate
+    dimensions are found by looking at the date of the image sequence.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input dataframe.
+
+    Returns
+    -------
+    image_dimensions : dict
+        x and y dimensions of the images.
+
+    """
+
+    image_date = pd.to_datetime(df["date"].iloc[0])
+    camera_switch_date = datetime(2022, 5, 27)
+    image_dimensions = {
+        "x": 2048 if image_date <= camera_switch_date else 1600,
+        "y": 2048 if image_date <= camera_switch_date else 1200,
+    }
+
+    return image_dimensions
+
+
 def subset_df(
     df: pd.DataFrame,
     confidence_score: float,
@@ -99,7 +129,8 @@ def subset_df(
 
 
 def calculate_centroid(
-    df: pd.DataFrame
+    df: pd.DataFrame,
+    image_dimensions: dict
 ) -> pd.DataFrame:
     """Calculate the centroid value for each row of a dataframe.
 
@@ -109,6 +140,8 @@ def calculate_centroid(
     ----------
     df : pd.DataFrame
         Input dataframe.
+    image_dimensions : dict
+        The x, y dimensions of the image.
 
     Returns:
     -------
@@ -118,11 +151,8 @@ def calculate_centroid(
     """
 
     # Coordinates are scaled. Returning to the original dimensions here.
-    original_x = 2048
-    original_y = 2048
-
-    #df["centroid_x"] = df.apply(lambda row: (row["xmin"] + row["xmax"]) / 2 * original_x, axis=1)
-    #df["centroid_y"] = df.apply(lambda row: (row["ymin"] + row["ymax"]) / 2 * original_y, axis=1)
+    original_x = image_dimensions["x"]
+    original_y = image_dimensions["y"]
 
     df = df.assign(
         centroid_x=(df["xmin"] + df["xmax"]) / 2 * original_x,
@@ -170,7 +200,8 @@ def add_rows_to_btrack(
 
 
 def run_tracking(
-    btrack_objects: Union[List[btrack.btypes.PyTrackObject], np.ndarray]
+    btrack_objects: Union[List[btrack.btypes.PyTrackObject], np.ndarray],
+    image_dimensions: dict
 ) -> Tuple[np.ndarray, dict, dict]:
     """Run the btrack tracking algorithm on a list of PyTrackObjects.
 
@@ -178,6 +209,8 @@ def run_tracking(
     ----------
     btrack_objects : Union[List[btrack.btypes.PyTrackObject], np.ndarray]
         A list of PyTrackObjects created with the add_rows_to_btrack function.
+    image_dimensions : dict
+        The x/y dimensions of the image
 
     Returns
     -------
@@ -201,8 +234,9 @@ def run_tracking(
         # append the objects to be tracked
         tracker.append(btrack_objects)
 
-        # set the tracking volume
-        tracker.volume = ((0, 2048), (0, 2048))
+        # Setting the tracking volume, depending on the camera the images have a
+        # different size.
+        tracker.volume = ((0, image_dimensions["x"]), (0, image_dimensions["y"]))
 
         # track them (in interactive mode)
         tracker.track(step_size=100)
@@ -446,34 +480,29 @@ def make_output_df(
 
 
 def main():
-    pd.set_option("display.max_columns", None)
-
     # Some example image sequence inference files
-    # image_seq_name = "2022-03-03_run1_26C_C2"
+    # image_seq_name = "2022-01-05_run1_26C_D2"
     # image_seq_name = "2022-03-07_run1_26C_B5"
-    image_seq_name = "2022-03-07_run1_26C_C2"
+    # image_seq_name = "2022-03-07_run1_26C_C2"
+    image_seq_name = "2022-06-05_run1_34C_A6"
+    # image_seq_name = "2022-06-05_run1_34C_B1"
+    # image_seq_name = "2022-06-05_run1_34C_B3"
 
     # Loading and processing the dataframe
+    print("Loading data")
     df = load_tsv(image_seq_name)
-    subsetted_df = subset_df(df, 0.35, "tip")
-    subsetted_df = calculate_centroid(subsetted_df)
 
-    # Adding to btrack and calculating tracks
-    btrack_objects = add_rows_to_btrack(subsetted_df)
-    data, properties, graph = run_tracking(btrack_objects)
+    # Getting the image dimensions (vary by camera)
+    image_dimensions = get_image_dimensions(df)
 
-    # Viewing tracks and images with Napari
-    # visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
-
-    ####### EXPERIMENTAL #######
-
-    # Repeating for pollen classes
+    # Doing pollen classes for now
     subsetted_df = subset_df(df, 0.35, "pollen")
-    subsetted_df = calculate_centroid(subsetted_df)
+    subsetted_df = calculate_centroid(subsetted_df, image_dimensions)
 
     # Adding to btrack and calculating tracks
+    print("Calculating tracks")
     btrack_objects = add_rows_to_btrack(subsetted_df)
-    data, properties, graph = run_tracking(btrack_objects)
+    data, properties, graph = run_tracking(btrack_objects, image_dimensions)
 
     # Making a dataframe with all the track and class info
     print("Making dataframe")
@@ -481,7 +510,7 @@ def main():
 
     # Viewing tracks and images with Napari
     print("Visualizing")
-    visualize_tracks(data, properties, graph, image_seq_name, show_bounding_boxes=True)
+    visualize_tracks(data, properties, graph, image_seq_name)
 
     print("All done")
 
