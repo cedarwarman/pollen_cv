@@ -94,7 +94,6 @@ def get_image_dimensions(
 
 def subset_df(
     df: pd.DataFrame,
-    confidence_score: float,
     class_string: str
 ) -> pd.DataFrame:
     """Subset a dataframe based on a confidence score and class.
@@ -103,8 +102,6 @@ def subset_df(
     ----------
     df : pd.DataFrame
         Input dataframe.
-    confidence_score : float
-        Minimum score to filter the dataframe.
     class_string : str
         Class for subsetting the dataframe. Either "tip" or "pollen"
 
@@ -114,18 +111,42 @@ def subset_df(
 
     """
 
+    subset_dict_camera_one = {"aborted": 0.33,
+                              "ungerminated": 0.39,
+                              "germinated": 0.36,
+                              "burst": 0.23,
+                              "tube_tip": 0.34,
+                              "unknown_germinated": 0.25}
+    subset_dict_camera_two = {"aborted": 0.29,
+                              "ungerminated": 0.23,
+                              "germinated": 0.35,
+                              "burst": 0.16,
+                              "tube_tip": 0.3,
+                              "unknown_germinated": 0.34}
+
+    # Subsetting by tube tip or pollen
     if class_string == "tip":
-        subsetted_df = df[(df["score"] >= confidence_score) & (df["class_label"] == "tube_tip")]
-
+        df = df[df["class_label"] == "tube_tip"]
     else:
-        subsetted_df = df[(df["score"] >= confidence_score) &
-                          (df["class_label"].isin(["germinated",
-                                                   "ungerminated",
-                                                   "burst",
-                                                   "unknown_germinated",
-                                                   "aborted"]))]
+        df = df[df["class_label"].isin(["germinated",
+                                        "ungerminated",
+                                        "burst",
+                                        "unknown_germinated",
+                                        "aborted"])]
 
-    return subsetted_df
+    # Subsetting by confidence score, based on the camera switch date.
+    camera_switch_date = datetime(2022, 5, 27)
+
+    def filter_rows(row):
+        if datetime.strptime(row["date"], "%Y-%m-%d") <= camera_switch_date:
+            return row["score"] >= subset_dict_camera_one[row["class_label"]]
+        else:
+            return row["score"] >= subset_dict_camera_two[row["class_label"]]
+
+    mask = df.apply(filter_rows, axis=1)
+    df = df[mask]
+
+    return df
 
 
 def calculate_centroid(
@@ -348,9 +369,9 @@ def infer_classes(
     input_df["object_class"].replace("nan", np.nan, inplace=True)
     input_df["object_class"].fillna(method="ffill", inplace=True)
 
-    # If a pollen grain germinates then it can't be aborted and it must have started
-    # as ungerminated. Here it's considered germinated if 3/4 classes are germinated
-    # in a rolling window.
+    # If a pollen grain germinates or bursts then it can't be aborted and it must have
+    # started as ungerminated. Here it's considered germinated if 3/4 classes are
+    # germinated in a rolling window.
     def replace_func(group):
         # Create a boolean series where True if object_class is "germinated"
         is_germinated = group["object_class"] == "germinated"
@@ -496,7 +517,7 @@ def main():
     image_dimensions = get_image_dimensions(df)
 
     # Doing pollen classes for now
-    subsetted_df = subset_df(df, 0.35, "pollen")
+    subsetted_df = subset_df(df, "pollen")
     subsetted_df = calculate_centroid(subsetted_df, image_dimensions)
 
     # Adding to btrack and calculating tracks
