@@ -97,6 +97,7 @@ def subset_df(
     class_string: str
 ) -> pd.DataFrame:
     """Subset a dataframe based on a confidence score and class.
+    Also removes the "unknown_germinated" class.
 
     Parameters:
     ----------
@@ -111,6 +112,19 @@ def subset_df(
 
     """
 
+    # Subsetting by tube tip or pollen
+    if class_string == "tip":
+        df = df[df["class_label"] == "tube_tip"]
+    else:
+        # Removes "unknown_germinated"
+        df = df[df["class_label"].isin(["germinated",
+                                        "ungerminated",
+                                        "burst",
+                                        "aborted"])]
+
+    # Subsetting by confidence score, based on the camera switch date.
+    camera_switch_date = datetime(2022, 5, 27)
+
     subset_dict_camera_one = {"aborted": 0.33,
                               "ungerminated": 0.39,
                               "germinated": 0.36,
@@ -124,18 +138,6 @@ def subset_df(
                               "tube_tip": 0.3,
                               "unknown_germinated": 0.34}
 
-    # Subsetting by tube tip or pollen
-    if class_string == "tip":
-        df = df[df["class_label"] == "tube_tip"]
-    else:
-        df = df[df["class_label"].isin(["germinated",
-                                        "ungerminated",
-                                        "burst",
-                                        "unknown_germinated",
-                                        "aborted"])]
-
-    # Subsetting by confidence score, based on the camera switch date.
-    camera_switch_date = datetime(2022, 5, 27)
 
     def filter_rows(row):
         if datetime.strptime(row["date"], "%Y-%m-%d") <= camera_switch_date:
@@ -202,8 +204,6 @@ def add_rows_to_btrack(
 
     btrack_objects = []
     id_counter = 0
-
-    print(df)
 
     for row in df.itertuples(index=False):
         row_dict = {"ID": id_counter,
@@ -300,12 +300,8 @@ def visualize_tracks(
 
     """
 
-    print("Opening Napari viewer")
     viewer = napari.Viewer()
-
-    print("Adding images")
     image_series = []
-
     background_images = background_images + "_inference"
 
     # Getting the path of the background images
@@ -324,7 +320,6 @@ def visualize_tracks(
     viewer_array = np.asarray(image_series)
     viewer.add_image(viewer_array, scale=(1.0, 1.0, 1.0), name="images")
 
-    print("Adding tracks")
     viewer.add_tracks(
         track_data,
         properties=track_properties,
@@ -505,19 +500,20 @@ def main():
     # image_seq_name = "2022-01-05_run1_26C_D2"
     # image_seq_name = "2022-03-07_run1_26C_B5"
     # image_seq_name = "2022-03-07_run1_26C_C2"
-    image_seq_name = "2022-06-05_run1_34C_A6"
+    # image_seq_name = "2022-06-05_run1_34C_A6"
     # image_seq_name = "2022-06-05_run1_34C_B1"
-    # image_seq_name = "2022-06-05_run1_34C_B3"
+    image_seq_name = "2022-06-05_run1_34C_B3"
 
-    # Loading and processing the dataframe
     print("Loading data")
     df = load_tsv(image_seq_name)
 
-    # Getting the image dimensions (vary by camera)
-    image_dimensions = get_image_dimensions(df)
-
-    # Doing pollen classes for now
+    # Subsetting with pollen classes and confidence score threhsolds, removing
+    # unknown_germinated class.
+    print("Subsetting data")
     subsetted_df = subset_df(df, "pollen")
+
+    print("Calculating centroids")
+    image_dimensions = get_image_dimensions(df)
     subsetted_df = calculate_centroid(subsetted_df, image_dimensions)
 
     # Adding to btrack and calculating tracks
