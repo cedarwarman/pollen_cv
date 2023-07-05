@@ -457,6 +457,37 @@ def infer_classes(
     # Apply the function on each group
     input_df = input_df.groupby("track_id", group_keys=False).apply(process_group)
 
+    # Now that the initial processing is done, do a screen for pollen tracks that are
+    # not present in enough frames. Requiring 15 or more frames.
+    input_df = input_df.groupby("track_id").filter(lambda x: len(x) >= 15)
+
+    # Fill in classes when there's a gap.
+    def fill_missing_rows(df):
+        df.set_index(['track_id', 't'], inplace=True)
+        df['filled_in_row'] = False
+
+        filled_dfs = []
+        for track_id in df.index.get_level_values(0).unique():
+            reindexed_df = df.loc[track_id].reindex(
+                range(df.loc[track_id].index.min(), df.loc[track_id].index.max() + 1))
+            reindexed_df.index = pd.MultiIndex.from_product([[track_id], reindexed_df.index], names=['track_id', 't'])
+            reindexed_df['filled_in_row'] = reindexed_df['filled_in_row'].isna()
+            filled_dfs.append(reindexed_df)
+        filled_df = pd.concat(filled_dfs)
+
+        # Forward fill object_class after adding new rows
+        filled_df['object_class'] = filled_df.groupby(level=0)['object_class'].ffill()
+
+        # Interpolate x, y
+        filled_df[['y', 'x']] = filled_df.groupby('track_id')[['y', 'x']].transform(
+            lambda group: group.interpolate(method='linear'))
+
+        filled_df.reset_index(inplace=True)
+
+        return filled_df
+
+    input_df = fill_missing_rows(input_df)
+
     return input_df
 
 
@@ -501,8 +532,8 @@ def main():
     # image_seq_name = "2022-03-07_run1_26C_B5"
     # image_seq_name = "2022-03-07_run1_26C_C2"
     # image_seq_name = "2022-06-05_run1_34C_A6"
-    # image_seq_name = "2022-06-05_run1_34C_B1"
-    image_seq_name = "2022-06-05_run1_34C_B3"
+    image_seq_name = "2022-06-05_run1_34C_B1"
+    # image_seq_name = "2022-06-05_run1_34C_B3"
 
     print("Loading data")
     df = load_tsv(image_seq_name)
