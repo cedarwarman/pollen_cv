@@ -384,8 +384,8 @@ def infer_classes(
 
     # If the pollen grain class is aborted for >50% of the frames then it is
     # considered aborted for the entire track. Otherwise, aborted classes are
-    # replaced with the previous class.
-    # Calculating the percentage of "aborted" for each track_id.
+    # replaced with the previous class. First, calculating the percentage of "aborted"
+    # for each track_id.
     total_counts = input_df.groupby("track_id").size()
     aborted_counts = input_df[input_df["object_class"] == "aborted"].groupby("track_id").size()
     percentage_aborted = aborted_counts / total_counts
@@ -408,10 +408,6 @@ def infer_classes(
             track_df.loc[first_row_index, 'object_class'] = 'ungerminated'
         track_df['object_class'] = track_df['object_class'].replace('aborted', method='ffill')
         input_df.loc[input_df['track_id'] == track_id, 'object_class'] = track_df['object_class']
-
-    # If the track_id's class is unknown_germinated, or switches to unknown_germinated,
-    # then it can't be used, so these track_ids are deleted. If unknown_germinated only
-    # pops up occasionally, then it's just replaced with the previous class.
 
     # For all other class conflicts, they must follow the ungerminated > germinated >
     # burst progression and class conflicts (switching from one to another not in the
@@ -436,6 +432,7 @@ def infer_classes(
         # Apply the rules for each transition in the progression
         for i in range(start_index, len(progression) - 1):
             current_class = progression[i]
+
             next_class = progression[i + 1]
             is_next_class = group["object_class"] == next_class
             next_class_in_window = is_next_class.rolling(4).sum() >= 3
@@ -448,9 +445,21 @@ def infer_classes(
                 last_transition_index = first_next_class_index
                 made_transition = True
             # If the transition never happens, all the remaining classes are the
-            # current class.
+            # current class, unless a class in the progression is skipped.
             else:
-                group.loc[last_transition_index:, "object_class"] = current_class
+                if current_class == "ungerminated":
+                    # Check to see if it goes straight to burst
+                    is_burst = group["object_class"] == "burst"
+                    burst_in_window = is_burst.rolling(4).sum() >= 3
+                    if burst_in_window.any():
+                        # Everything up until burst should be the current class.
+                        first_burst_index = group[is_burst & burst_in_window].index.min()
+                        group.loc[last_transition_index:first_burst_index - 3, "object_class"] = current_class
+                        # Everything after burst should be burst.
+                        group.loc[first_burst_index - 2:, "object_class"] = "burst"
+                        break
+                else:
+                    group.loc[last_transition_index:, "object_class"] = current_class
 
         return group
 
