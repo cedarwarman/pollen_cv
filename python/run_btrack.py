@@ -428,26 +428,53 @@ def infer_classes(
         # If the group never satisfies the requirements for a transition, we still want
         # to correct class errors, so we will deal with those groups at the end.
         made_transition = False
+        print("\nHead")
+        print(group.head(1))
 
         # Apply the rules for each transition in the progression
         for i in range(start_index, len(progression) - 1):
             current_class = progression[i]
+            print("Current class: ", current_class)
 
             next_class = progression[i + 1]
+            print("Next class: ", next_class)
+
             is_next_class = group["object_class"] == next_class
             next_class_in_window = is_next_class.rolling(4).sum() >= 3
+
             # If there is a class transition, all the classes from the previous
             # transition up until the transition happens are the current class.
             if next_class_in_window.any():
+                print("Found class in a window, replacing up to the transition with current class")
                 # If any window meets the condition, get the first index of this window
                 first_next_class_index = group[is_next_class & next_class_in_window].index.min()
                 group.loc[last_transition_index:first_next_class_index-3, "object_class"] = current_class
                 last_transition_index = first_next_class_index
                 made_transition = True
+                if next_class == "burst":
+                    # Reached the end of the progression, so everything after the
+                    # transition is burst. But making sure it transitions in the right
+                    # place and doesn't go back to germinated.
+                    ###################################################################
+                    is_current_class = group["object_class"] == current_class
+                    current_class_in_window = is_current_class.rolling(4).sum() == 4
+                    # Checking to see if there are more of the current class after the
+                    # first next_class transition.
+                    has_true_after = current_class_in_window.loc[first_next_class_index-1:].any()
+                    if has_true_after:
+                        print("has_true_after")
+                        last_true_index = current_class_in_window.loc[first_next_class_index-1:][::-1].idxmax()
+                        group.loc[last_transition_index-2:last_true_index, "object_class"] = "germinated"
+                        print("Last true index: ", last_true_index)
+                        group.loc[last_true_index + 1:, "object_class"] = "burst"
+
+                    else:
+                        group.loc[first_next_class_index-1:, "object_class"] = "burst"
             # If the transition never happens, all the remaining classes are the
             # current class, unless a class in the progression is skipped.
             else:
                 if current_class == "ungerminated":
+                    print("Current class is ungerminated")
                     # Check to see if it goes straight to burst
                     is_burst = group["object_class"] == "burst"
                     burst_in_window = is_burst.rolling(4).sum() >= 3
@@ -456,9 +483,10 @@ def infer_classes(
                         first_burst_index = group[is_burst & burst_in_window].index.min()
                         group.loc[last_transition_index:first_burst_index - 3, "object_class"] = current_class
                         # Everything after burst should be burst.
-                        group.loc[first_burst_index - 2:, "object_class"] = "burst"
+                        group.loc[first_burst_index - 3:, "object_class"] = "burst"
                         break
                 else:
+                    print("Replacing everthing from ", last_transition_index, "with ", current_class)
                     group.loc[last_transition_index:, "object_class"] = current_class
 
         return group
@@ -537,11 +565,11 @@ def make_output_df(
 
 def main():
     # Some example image sequence inference files
-    # image_seq_name = "2022-01-05_run1_26C_D2"
+    image_seq_name = "2022-01-05_run1_26C_D2"
     # image_seq_name = "2022-03-07_run1_26C_B5"
     # image_seq_name = "2022-03-07_run1_26C_C2"
     # image_seq_name = "2022-06-05_run1_34C_A6"
-    image_seq_name = "2022-06-05_run1_34C_B1"
+    # image_seq_name = "2022-06-05_run1_34C_B1"
     # image_seq_name = "2022-06-05_run1_34C_B3"
 
     print("Loading data")
