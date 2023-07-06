@@ -276,10 +276,10 @@ def run_tracking(
 
 
 def visualize_tracks(
-        track_data: np.ndarray,
-        track_properties: dict,
-        track_graph: dict,
-        background_images: str,
+    track_data: np.ndarray,
+    track_properties: dict,
+    track_graph: dict,
+    background_images: str,
 ) -> None:
     """Visualize btrack output with source images as background.
 
@@ -336,10 +336,10 @@ def visualize_tracks(
     napari.run()
 
 
-def infer_classes(
+def infer_pollen_classes(
     input_df: pd.DataFrame
 ) -> pd.DataFrame:
-    """Add and correct class information
+    """Add and correct pollen class information
     Infers missing classes from adjacent timepoints. Corrects class predictions that
     are biologically impossible. E.g., pollen must progress ungerminated > germinated
     > burst. It can start at any class (most often because a pollen grain floats down
@@ -432,24 +432,17 @@ def infer_classes(
         # If the group never satisfies the requirements for a transition, we still want
         # to correct class errors, so we will deal with those groups at the end.
         made_transition = False
-        print("\nHead")
-        print(group.head(1))
 
         # Apply the rules for each transition in the progression
         for i in range(start_index, len(progression) - 1):
             current_class = progression[i]
-            print("Current class: ", current_class)
-
             next_class = progression[i + 1]
-            print("Next class: ", next_class)
-
             is_next_class = group["object_class"] == next_class
             next_class_in_window = is_next_class.rolling(4).sum() >= 3
 
             # If there is a class transition, all the classes from the previous
             # transition up until the transition happens are the current class.
             if next_class_in_window.any():
-                print("Found class in a window, replacing up to the transition with current class")
                 # If any window meets the condition, get the first index of this window
                 first_next_class_index = group[is_next_class & next_class_in_window].index.min()
                 group.loc[last_transition_index:first_next_class_index-3, "object_class"] = current_class
@@ -459,26 +452,23 @@ def infer_classes(
                     # Reached the end of the progression, so everything after the
                     # transition is burst. But making sure it transitions in the right
                     # place and doesn't go back to germinated.
-                    ###################################################################
                     is_current_class = group["object_class"] == current_class
                     current_class_in_window = is_current_class.rolling(4).sum() == 4
                     # Checking to see if there are more of the current class after the
                     # first next_class transition.
                     has_true_after = current_class_in_window.loc[first_next_class_index-1:].any()
                     if has_true_after:
-                        print("has_true_after")
                         last_true_index = current_class_in_window.loc[first_next_class_index-1:][::-1].idxmax()
                         group.loc[last_transition_index-2:last_true_index, "object_class"] = "germinated"
-                        print("Last true index: ", last_true_index)
                         group.loc[last_true_index + 1:, "object_class"] = "burst"
 
                     else:
                         group.loc[first_next_class_index-1:, "object_class"] = "burst"
+
             # If the transition never happens, all the remaining classes are the
             # current class, unless a class in the progression is skipped.
             else:
                 if current_class == "ungerminated":
-                    print("Current class is ungerminated")
                     # Check to see if it goes straight to burst
                     is_burst = group["object_class"] == "burst"
                     burst_in_window = is_burst.rolling(4).sum() >= 3
@@ -490,7 +480,6 @@ def infer_classes(
                         group.loc[first_burst_index - 3:, "object_class"] = "burst"
                         break
                 else:
-                    print("Replacing everthing from ", last_transition_index, "with ", current_class)
                     group.loc[last_transition_index:, "object_class"] = current_class
 
         return group
@@ -532,11 +521,77 @@ def infer_classes(
     return input_df
 
 
-def make_output_df(
+def infer_tube_tip_classes(
+    input_df: pd.DataFrame
+) -> pd.DataFrame:
+    """Add and correct tube tip class information
+    Corrects tube tip class information when missing.
+
+    Parameters
+    ----------
+    input_df : pd.DataFrame
+
+    Returns
+    -------
+    input_df : pd.DataFrame
+        Dataframe with inferred classes.
+
+    """
+    # Making a copy of the original object_class column to make sure everything is
+    # working as expected.
+    input_df["original_object_class"] = input_df["object_class"].copy()
+
+    # Replace nan with value from previous row.
+    input_df["object_class"].replace("nan", np.nan, inplace=True)
+    input_df["object_class"].fillna(method="ffill", inplace=True)
+
+    # Screen out tube tip tracks that are present in less than 15 frames.
+    input_df = input_df.groupby("track_id").filter(lambda x: len(x) >= 15)
+
+    # Fill in classes when there's a gap.
+    def fill_missing_rows(df):
+        df.set_index(['track_id', 't'], inplace=True)
+        df['filled_in_row'] = False
+
+        filled_dfs = []
+        for track_id in df.index.get_level_values(0).unique():
+            reindexed_df = df.loc[track_id].reindex(
+                range(df.loc[track_id].index.min(), df.loc[track_id].index.max() + 1))
+            reindexed_df.index = pd.MultiIndex.from_product([[track_id], reindexed_df.index], names=['track_id', 't'])
+            reindexed_df['filled_in_row'] = reindexed_df['filled_in_row'].isna()
+            filled_dfs.append(reindexed_df)
+        filled_df = pd.concat(filled_dfs)
+
+        # Forward fill object_class after adding new rows
+        filled_df['object_class'] = filled_df.groupby(level=0)['object_class'].ffill()
+
+        # Interpolate x, y
+        filled_df[['y', 'x']] = filled_df.groupby('track_id')[['y', 'x']].transform(
+            lambda group: group.interpolate(method='linear'))
+
+        filled_df.reset_index(inplace=True)
+
+        return filled_df
+
+    input_df = fill_missing_rows(input_df)
+
+    # After filling in missing columns, if more than 50% of the original object classes
+    # are nan, remove the track.
+    input_df["original_object_class"].replace("nan", np.nan, inplace=True)
+    nan_percentages = input_df.groupby("track_id")["original_object_class"].apply(
+        lambda x: x.isna().mean()
+    )
+    bad_track_ids = nan_percentages[nan_percentages > 0.5].index
+    input_df = input_df[~input_df["track_id"].isin(bad_track_ids)]
+
+    return input_df
+
+
+def make_pollen_df(
     track_data: np.ndarray,
     track_properties: dict
 ) -> pd.DataFrame:
-    """Visualize btrack output with source images as background.
+    """Process pollen tracks for output in a data frame.
 
     Parameters
     ----------
@@ -562,44 +617,140 @@ def make_output_df(
     )
     output_df = output_df.rename(columns={"root": "track_id"})
 
-    output_df = infer_classes(output_df)
+    output_df = infer_pollen_classes(output_df)
 
     return output_df
 
 
+def make_tube_tip_df(
+    track_data: np.ndarray,
+    track_properties: dict
+) -> pd.DataFrame:
+    """Process tube tip tracks for output in a data frame.
+
+    Parameters
+    ----------
+    track_data : np.ndarray
+        Output from the run_tracking function.
+    track_properties : dict
+        Output from the run_tracking function.
+
+    Returns
+    -------
+    output_df : pd.DataFrame
+        Dataframe that summarizes all the track and class information
+
+    """
+    properties_df = pd.DataFrame(track_properties)
+    track_data_df = pd.DataFrame(
+        track_data, columns=["root_track_data", "time", "y", "x"]
+    )
+
+    output_df = pd.concat([properties_df, track_data_df], axis=1)
+    output_df = output_df.drop(
+        ["state", "generation", "parent", "root_track_data", "time"], axis=1
+    )
+    output_df = output_df.rename(columns={"root": "track_id"})
+
+    output_df = infer_tube_tip_classes(output_df)
+
+    return output_df
+
+
+def link_tubes_to_pollen(
+    pollen_df: pd.DataFrame,
+    tube_df: pd.DataFrame
+) -> pd.DataFrame:
+    """Link tube tracks to pollen tracks.
+    Finds closest tracks with Euclidean distance, links tracks.
+
+    Parameters
+    ----------
+    pollen_df : pd.DataFrame
+        Processed pollen tracks.
+    tube_df : pd.DataFrame
+        Processed tube tip tracks.
+
+    Returns
+    -------
+    ADD EVERYTHING ELSE YOU NEED FOR NAPARI
+    output_df : pd.DataFrame
+        Data frame with tube tip tracks linked to pollen tracks.
+
+    """
+
+    # First, crop dfs and reset track ids so that they are all unique. This allows a
+    # parent / child relationship to be encoded in a graph as input to Napari for
+    # visualization.
+    pollen_df = pollen_df.iloc[:, :5]
+    tube_df = tube_df.iloc[:, :5]
+
+    pollen_df["track_id"] = pd.factorize(pollen_df["track_id"])[0]
+
+    tube_df["track_id"] = pd.factorize(tube_df["track_id"])[0] + pollen_df["track_id"].max() + 1
+
+    # Making outputs for visualization
+    output_df = pd.concat([pollen_df, tube_df]).reset_index(drop=True)
+    data_array = output_df.iloc[:, [0,1,3,4]].to_numpy(dtype="float64")
+    properties_dict = {
+        "t": output_df["t"].to_numpy(dtype='int64'),
+        "state": np.full(len(output_df), 5, dtype="int64"),
+        "generation": np.full(len(output_df), 0, dtype="int64"),
+        "root": output_df["track_id"].to_numpy(dtype="int64"),
+        "parent": output_df["track_id"].to_numpy(dtype="int64"),
+        "object_class": output_df["object_class"].to_numpy(dtype="<U32"),
+    }
+    graph_dict = {}
+
+    return output_df, data_array, properties_dict, graph_dict
+
+
 def main():
-    # Some example image sequence inference files
+    # Some example image sequence inference files. Will add as an arg in the future.
     # image_seq_name = "2022-01-05_run1_26C_D2"
     # image_seq_name = "2022-03-07_run1_26C_B5"
-    image_seq_name = "2022-03-07_run1_26C_C2"
+    # image_seq_name = "2022-03-07_run1_26C_C2"
     # image_seq_name = "2022-06-05_run1_34C_A6"
-    # image_seq_name = "2022-06-05_run1_34C_B1"
+    image_seq_name = "2022-06-05_run1_34C_B1"
     # image_seq_name = "2022-06-05_run1_34C_B3"
 
     print("Loading data")
     df = load_tsv(image_seq_name)
 
-    # Subsetting with pollen classes and confidence score threhsolds, removing
-    # unknown_germinated class.
-    print("Subsetting data")
-    subsetted_df = subset_df(df, "pollen")
-
     print("Calculating centroids")
     image_dimensions = get_image_dimensions(df)
-    subsetted_df = calculate_centroid(subsetted_df, image_dimensions)
+    df = calculate_centroid(df, image_dimensions)
 
-    # Adding to btrack and calculating tracks
-    print("Calculating tracks")
+    ### POLLEN ###
+    print("Pollen --- Subsetting data")
+    subsetted_df = subset_df(df, "pollen")
+
+    print("Pollen --- Calculating tracks")
     btrack_objects = add_rows_to_btrack(subsetted_df)
     data, properties, graph = run_tracking(btrack_objects, image_dimensions)
 
-    # Making a dataframe with all the track and class info
-    print("Making dataframe")
-    track_df = make_output_df(data, properties)
+    print("Pollen --- Making dataframe")
+    pollen_track_df = make_pollen_df(data, properties)
 
-    # Viewing tracks and images with Napari
+    ### TUBE TIPS ###
+    print("Tube tip --- Subsetting data")
+    subsetted_df = subset_df(df, "tip")
+
+    print("Tube tip --- Calculating tracks")
+    btrack_objects = add_rows_to_btrack(subsetted_df)
+    data, properties, graph = run_tracking(btrack_objects, image_dimensions)
+
+    print("Tube tip --- Making dataframe")
+    tube_tip_track_df = make_tube_tip_df(data, properties)
+
+    ### LINKING TUBES TO POLLEN
+    print("Linking tubes to pollen")
+    linked_df, data_array, properties_dict, graph_dict = link_tubes_to_pollen(pollen_track_df, tube_tip_track_df)
+
+
     print("Visualizing")
-    visualize_tracks(data, properties, graph, image_seq_name)
+#    visualize_tracks(data, properties, graph, image_seq_name)
+    visualize_tracks(data_array, properties_dict, graph_dict, image_seq_name)
 
     print("All done")
 
