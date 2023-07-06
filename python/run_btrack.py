@@ -17,6 +17,7 @@ import napari
 import numpy as np
 import pandas as pd
 from skimage.io import imread
+from sklearn.neighbors import BallTree
 
 
 def load_tsv(
@@ -684,10 +685,32 @@ def link_tubes_to_pollen(
     # visualization.
     pollen_df = pollen_df.iloc[:, :5]
     tube_df = tube_df.iloc[:, :5]
-
     pollen_df["track_id"] = pd.factorize(pollen_df["track_id"])[0]
-
     tube_df["track_id"] = pd.factorize(tube_df["track_id"])[0] + pollen_df["track_id"].max() + 1
+
+    # Next setting up the nearest neighbors algorithm. Using BallTrees, but the sklearn
+    # implementation will switch to brute force if there's less than 40 objects. Start
+    # by creating a dictionary of BallTrees for each unique time in pollen_df.
+    trees = {time: BallTree(pollen_df.loc[pollen_df.t == time][["x", "y"]]) for time in pollen_df.t.unique()}
+
+    # Create a dictionary to hold the corresponding track_ids
+    id_dict = {time: pollen_df.loc[pollen_df.t == time]["track_id"].values for time in pollen_df.t.unique()}
+
+    # Function to find the nearest point in the pollen_df for a given point in the
+    # tube_df at the same time.
+    def get_nearest_track(row):
+        point = [[row.x, row.y]]
+        time = row.t
+        if time in trees:
+            dist, ind = trees[time].query(point, k=1)
+            return id_dict[time][ind[0][0]]
+        else:
+            return None
+
+    # Add a new column to the tube_df with the id of the nearest track point in the
+    # pollen_df at the same time.
+    tube_df["closest_pollen_track"] = tube_df.apply(get_nearest_track, axis=1)
+
 
     # Making outputs for visualization
     output_df = pd.concat([pollen_df, tube_df]).reset_index(drop=True)
@@ -745,7 +768,9 @@ def main():
 
     ### LINKING TUBES TO POLLEN
     print("Linking tubes to pollen")
-    linked_df, data_array, properties_dict, graph_dict = link_tubes_to_pollen(pollen_track_df, tube_tip_track_df)
+    linked_df, data_array, properties_dict, graph_dict = link_tubes_to_pollen(
+        pollen_track_df, tube_tip_track_df
+    )
 
 
     print("Visualizing")
