@@ -418,7 +418,11 @@ def infer_classes(
     def process_group(group):
         group = group.copy()
         # Determine the starting class in the progression for this group
-        start_class = group['object_class'].head(3).mode()[0]
+        start_class = group["object_class"].head(3).mode()[0]
+        # Fixing a bug where ungerminated gets deleted if it's the first class
+        if group.iloc[0]["object_class"] == "ungerminated":
+            start_class = "ungerminated"
+
         # If it's aborted then they will all be aborted (see above) so will be
         # unaltered.
         if group["object_class"].iloc[0] == "aborted":
@@ -565,9 +569,9 @@ def make_output_df(
 
 def main():
     # Some example image sequence inference files
-    image_seq_name = "2022-01-05_run1_26C_D2"
+    # image_seq_name = "2022-01-05_run1_26C_D2"
     # image_seq_name = "2022-03-07_run1_26C_B5"
-    # image_seq_name = "2022-03-07_run1_26C_C2"
+    image_seq_name = "2022-03-07_run1_26C_C2"
     # image_seq_name = "2022-06-05_run1_34C_A6"
     # image_seq_name = "2022-06-05_run1_34C_B1"
     # image_seq_name = "2022-06-05_run1_34C_B3"
