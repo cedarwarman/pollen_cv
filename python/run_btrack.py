@@ -8,7 +8,9 @@ https://github.com/quantumjot/BayesianTracker
 """
 
 from datetime import datetime
+import os
 from pathlib import Path
+import argparse
 from typing import List, Tuple, Union
 
 import btrack
@@ -20,18 +22,62 @@ from skimage.io import imread
 from sklearn.neighbors import BallTree
 
 
+def parse_arguments(
+) -> argparse.Namespace:
+    """
+    Parse command-line arguments for the script.
+
+    Returns
+    -------
+    parser : argparse.Namespace
+        Parsed arguments as a namespace object.
+
+    Raises
+    ------
+    NotADirectoryError
+        If a given directory path is not a directory.
+    """
+
+    def dir_path(string: str) -> str:
+        if Path(string).exists():
+            return string
+        else:
+            try:
+                os.makedirs(string, exist_ok=True)
+                return string
+            except OSError as e:
+                raise OSError(f"Error creating directory '{string}': {e}")
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--inference",
+        type=str, help="Path to model inference file", required=True
+    )
+    parser.add_argument(
+        "--images",
+        type=dir_path,
+        help="Path to directory containing images for visualization with Napari",
+        required=False
+    )
+    parser.add_argument(
+        "--output",
+        type=dir_path,
+        help="Path to directory where output will be saved",
+        required=True
+    )
+
+    return parser.parse_args()
+
+
 def load_tsv(
-    file_name: str
+    file_path: str
 ) -> pd.DataFrame:
     """Load a tsv file into a pandas dataframe.
 
-    This function uses the location of the python script. The tsv must be in a
-    directory called "data" that is in the same location as the python script.
-
     Parameters:
     ----------
-    file_name : str
-        The name of the tsv file.
+    file_path : str
+        The path to the tsv file.
 
     Returns:
     -------
@@ -40,23 +86,8 @@ def load_tsv(
 
     """
 
-    # Add the rest of the file name based on the inference output convention
-    file_name = file_name + "_predictions.tsv"
-
-    # Get the path of the current script
-    current_script_path = Path(__file__).resolve()
-
-    # Navigate to the parent directory
-    parent_dir = current_script_path.parent.parent
-
-    # Navigate to the data directory
-    data_dir = parent_dir / "data" / "cv_model_inference" / "predictions"
-
-    # Get the path of the tsv file
-    tsv_file = data_dir / file_name
-
     # Load the tsv file into a Pandas DataFrame
-    df = pd.read_csv(tsv_file, sep="\t")
+    df = pd.read_csv(file_path, sep="\t")
 
     # Fix a bad column name
     df = df.rename(columns={"class": "class_label"})
@@ -754,17 +785,58 @@ def link_tubes_to_pollen(
     return output_df, data_array, properties_dict, graph_dict
 
 
+def save_df_as_tsv(
+    df: pd.DataFrame,
+    linked_df: pd.DataFrame,
+    output_path: Union[str, Path]
+) -> None:
+    """Save pandas data frame as a tsv file.
+    Also adds metadata about the run.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Original data frame to pull some metadata from.
+    linked_df : pd.DataFrame
+        DataFrame to be saved as tsv.
+    output_path : Union[str, Path]
+        The path where the tsv file will be saved.
+
+    Returns
+    -------
+    None
+
+    """
+    # Getting the run metadata from the original data frame and adding it to the
+    # output data frame.
+    metadata_row = df.loc[0, ["date", "run", "well", "tempc"]]
+    metadata_df = pd.DataFrame([metadata_row] * len(linked_df)).reset_index(drop=True)
+    linked_df = pd.concat([metadata_df, linked_df], axis=1)
+
+    # Making the output file string
+    file_name = (
+            str(metadata_row["date"])
+            + "_run"
+            + str(metadata_row["run"])
+            + "_"
+            + str(metadata_row["tempc"])
+            + "C_"
+            + str(metadata_row["well"])
+            + "_tracks.tsv"
+    )
+
+    # Getting the name of the image sequence from the df
+    save_path = Path(output_path) / file_name
+
+    linked_df.to_csv(save_path, sep='\t', index=False)
+
+
 def main():
-    # Some example image sequence inference files. Will add as an arg in the future.
-    # image_seq_name = "2022-01-05_run1_26C_D2"
-    # image_seq_name = "2022-03-07_run1_26C_B5"
-    # image_seq_name = "2022-03-07_run1_26C_C2"
-    # image_seq_name = "2022-06-05_run1_34C_A6"
-    image_seq_name = "2022-06-05_run1_34C_B1"
-    # image_seq_name = "2022-06-05_run1_34C_B3"
+    print("Parsing args")
+    args = parse_arguments()
 
     print("Loading data")
-    df = load_tsv(image_seq_name)
+    df = load_tsv(args.inference)
 
     print("Calculating centroids")
     image_dimensions = get_image_dimensions(df)
@@ -798,10 +870,12 @@ def main():
         pollen_track_df, tube_tip_track_df
     )
 
+    print("Saving data frame")
+    save_df_as_tsv(df, linked_df, args.output)
 
     print("Visualizing")
 #    visualize_tracks(data, properties, graph, image_seq_name)
-    visualize_tracks(data_array, properties_dict, graph_dict, image_seq_name)
+    visualize_tracks(data_array, properties_dict, graph_dict, args.images)
 
     print("All done")
 
