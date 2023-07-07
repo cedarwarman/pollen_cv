@@ -686,15 +686,28 @@ def link_tubes_to_pollen(
     pollen_df = pollen_df.iloc[:, :5]
     tube_df = tube_df.iloc[:, :5]
     pollen_df["track_id"] = pd.factorize(pollen_df["track_id"])[0]
-    tube_df["track_id"] = pd.factorize(tube_df["track_id"])[0] + pollen_df["track_id"].max() + 1
+    tube_df["track_id"] = (
+        pd.factorize(tube_df["track_id"])[0] + pollen_df["track_id"].max() + 1
+    )
 
     # Next setting up the nearest neighbors algorithm. Using BallTrees, but the sklearn
     # implementation will switch to brute force if there's less than 40 objects. Start
-    # by creating a dictionary of BallTrees for each unique time in pollen_df.
-    trees = {time: BallTree(pollen_df.loc[pollen_df.t == time][["x", "y"]]) for time in pollen_df.t.unique()}
+    # by making a cropped version of the pollen df so that tubes cannot be linked to
+    # aborted or burst pollen.
+    pollen_df_filtered = pollen_df[
+        pollen_df.object_class.isin(["germinated", "ungerminated"])
+    ]
+    # Creating a dictionary of BallTrees for each unique time in pollen_df.
+    trees = {
+        time: BallTree(pollen_df_filtered.loc[pollen_df_filtered.t == time][["x", "y"]])
+        for time in pollen_df_filtered.t.unique()
+    }
 
     # Create a dictionary to hold the corresponding track_ids
-    id_dict = {time: pollen_df.loc[pollen_df.t == time]["track_id"].values for time in pollen_df.t.unique()}
+    id_dict = {
+        time: pollen_df_filtered.loc[pollen_df_filtered.t == time]["track_id"].values
+        for time in pollen_df_filtered.t.unique()
+    }
 
     # Function to find the nearest point in the pollen_df for a given point in the
     # tube_df at the same time.
@@ -706,23 +719,36 @@ def link_tubes_to_pollen(
             return id_dict[time][ind[0][0]]
         else:
             return None
-
     # Add a new column to the tube_df with the id of the nearest track point in the
     # pollen_df at the same time.
     tube_df["closest_pollen_track"] = tube_df.apply(get_nearest_track, axis=1)
 
+    # Gets the closest pollen grain over time, so this replaces all of them with the
+    # one that it was closest to at the start.
+    most_common_in_first_three = tube_df.groupby("track_id").apply(
+        lambda group: group.head(3)["closest_pollen_track"].mode().iat[0]
+    )
+    tube_df["closest_pollen_track"] = tube_df["track_id"].map(most_common_in_first_three)
 
     # Making outputs for visualization
     output_df = pd.concat([pollen_df, tube_df]).reset_index(drop=True)
+    # Adding parent information. If a track is a pollen grain then the parent is
+    # itself.
+    output_df["closest_pollen_track"] = output_df["closest_pollen_track"].fillna(
+        output_df["track_id"]
+    )
     data_array = output_df.iloc[:, [0,1,3,4]].to_numpy(dtype="float64")
     properties_dict = {
         "t": output_df["t"].to_numpy(dtype='int64'),
         "state": np.full(len(output_df), 5, dtype="int64"),
         "generation": np.full(len(output_df), 0, dtype="int64"),
         "root": output_df["track_id"].to_numpy(dtype="int64"),
-        "parent": output_df["track_id"].to_numpy(dtype="int64"),
+        "parent": output_df["closest_pollen_track"].to_numpy(dtype="int64"),
         "object_class": output_df["object_class"].to_numpy(dtype="<U32"),
     }
+
+    # Going to try to encode the parent / child relatinoships in this graph dict, which
+    # is an input for Napari.
     graph_dict = {}
 
     return output_df, data_array, properties_dict, graph_dict
