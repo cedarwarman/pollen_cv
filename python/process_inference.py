@@ -1,16 +1,36 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.8
+"""Process inference.
+
+This script processes inference from a computer vision model. There are four steps:
+
+1) Correct bounding boxes based on biological priors.
+2) Track pollen and tube tip bounding boxes over time with Bayesian Tracker.
+3) Link pollen and tube tip tracks.
+4) (optional) visualize results with Napari.
+
+Usage:
+    python process_inference.py \
+        --inference [path] \
+        --images [path] \
+        --output [path]
+
+Arguments:
+    --inference
+        Path to an inference file from a single well.
+    --images
+        Path to the directory containing an image sequence from a single well, for
+        visualization. This argument is optional, if it is not included then tracks
+        will not be visualized.
+    --output
+        Path to the directory where the processed inference file will be saved.
 
 """
-Trying out btrack for tracking pollen tubes.
 
-Original btrack repository is located here:
-https://github.com/quantumjot/BayesianTracker
-"""
 
+import argparse
 from datetime import datetime
 import os
 from pathlib import Path
-import argparse
 from typing import List, Tuple, Union
 
 import btrack
@@ -24,8 +44,7 @@ from sklearn.neighbors import BallTree
 
 def parse_arguments(
 ) -> argparse.Namespace:
-    """
-    Parse command-line arguments for the script.
+    """Parse command-line arguments for the script.
 
     Returns
     -------
@@ -363,7 +382,7 @@ def visualize_tracks(
 def infer_pollen_classes(
     input_df: pd.DataFrame
 ) -> pd.DataFrame:
-    """Add and correct pollen class information
+    """Add and correct pollen class information.
     Infers missing classes from adjacent timepoints. Corrects class predictions that
     are biologically impossible. E.g., pollen must progress ungerminated > germinated
     > burst. It can start at any class (most often because a pollen grain floats down
@@ -548,7 +567,7 @@ def infer_pollen_classes(
 def infer_tube_tip_classes(
     input_df: pd.DataFrame
 ) -> pd.DataFrame:
-    """Add and correct tube tip class information
+    """Add and correct tube tip class information.
     Corrects tube tip class information when missing.
 
     Parameters
@@ -865,9 +884,9 @@ def main():
     print("Saving data frame")
     save_df_as_tsv(df, linked_df, args.output)
 
-    print("Visualizing")
-#    visualize_tracks(data, properties, graph, image_seq_name)
-    visualize_tracks(data_array, properties_dict, graph_dict, args.images)
+    if args.images is not None:
+        print("Visualizing")
+        visualize_tracks(data_array, properties_dict, graph_dict, args.images)
 
     print("All done")
 
