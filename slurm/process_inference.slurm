@@ -17,6 +17,8 @@ source /home/u16/cedar/.bashrc
 # Setting nullglob so that globs that match nothing don't make errors
 shopt -s nullglob
 
+conda activate process-inference
+
 # Everything in this directory will be processed
 # cd /xdisk/rpalaniv/cedar/cv/inference/2023-06-23_full_set/
 cd /xdisk/rpalaniv/cedar/cv/inference/test_inference
