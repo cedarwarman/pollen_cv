@@ -311,7 +311,7 @@ def visualize_tracks(
     track_data: np.ndarray,
     track_properties: dict,
     track_graph: dict,
-    background_images: str,
+    background_images: Union[str, Path],
 ) -> None:
     """Visualize btrack output with source images as background.
 
@@ -323,7 +323,7 @@ def visualize_tracks(
         Output from the run_tracking function.
     track_graph : dict
         Output from the run_tracking function.
-    background_images : str
+    background_images : Union[str, Path]
         Name of the images used for the background.
 
     Returns
@@ -334,16 +334,8 @@ def visualize_tracks(
 
     viewer = napari.Viewer()
     image_series = []
-    background_images = background_images + "_inference"
 
-    # Getting the path of the background images
-    current_script_path = Path(__file__).resolve()
-
-    # Navigate to the parent directory
-    parent_dir = current_script_path.parent.parent
-
-    # Navigate to the data directory
-    image_dir = parent_dir / "data" / "cv_model_inference" / "images" / background_images
+    image_dir = Path(background_images)
 
     for image_path in sorted(image_dir.glob("*.jpg")):
         image = imread(image_path)
