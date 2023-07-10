@@ -299,29 +299,26 @@ def run_tracking(
         tracker.max_search_radius = 200
         tracker.tracking_updates = ["MOTION"]
 
-        # configure the tracker using a config file
-        # tracker.configure("../config/btrack/btrack_config.json")
-        tracker.configure("../config/btrack/cell_config.json")
+        # Configure the tracker using a config file
+        script_dir = Path(__file__).resolve().parent
+        config_path = script_dir / "../config/btrack/cell_config.json"
+        tracker.configure(str(config_path))
 
-        # append the objects to be tracked
         tracker.append(btrack_objects)
 
         # Setting the tracking volume, depending on the camera the images have a
         # different size.
         tracker.volume = ((0, image_dimensions["x"]), (0, image_dimensions["y"]))
 
-        # track them (in interactive mode)
+        # Track them (in interactive mode)
         tracker.track(step_size=100)
 
         # generate hypotheses and run the global optimizer
         tracker.optimize()
 
-        # get the tracks in a format for napari visualization. Adding
+        # Get the tracks in a format for napari visualization. Adding
         # replace_na=False fixed a problem with adding class to PyTrackObjects.
         data, properties, graph = tracker.to_napari(replace_nan=False)
-
-        # get the tracks in their native format (removed because redundant)
-        # tracks = tracker.tracks
 
         return data, properties, graph
 
