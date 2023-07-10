@@ -585,8 +585,8 @@ def infer_tube_tip_classes(
     input_df["object_class"].replace("nan", np.nan, inplace=True)
     input_df["object_class"].fillna(method="ffill", inplace=True)
 
-    # Screen out tube tip tracks that are present in less than 15 frames.
-    input_df = input_df.groupby("track_id").filter(lambda x: len(x) >= 15)
+    # Screen out tube tip tracks that are present in less than 30 frames.
+    input_df = input_df.groupby("track_id").filter(lambda x: len(x) >= 30)
 
     # Fill in classes when there's a gap.
     def fill_missing_rows(df):
