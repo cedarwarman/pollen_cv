@@ -529,7 +529,7 @@ def infer_pollen_classes(
 
     # Now that the initial processing is done, do a screen for pollen tracks that are
     # not present in enough frames. Requiring 15 or more frames.
-    input_df = input_df.groupby("track_id").filter(lambda x: len(x) >= 15)
+    input_df = input_df.groupby("track_id").filter(lambda x: len(x) >= 30)
 
     # Fill in classes when there's a gap.
     def fill_missing_rows(df):
@@ -586,7 +586,7 @@ def infer_tube_tip_classes(
     input_df["object_class"].fillna(method="ffill", inplace=True)
 
     # Screen out tube tip tracks that are present in less than 30 frames.
-    input_df = input_df.groupby("track_id").filter(lambda x: len(x) >= 30)
+    input_df = input_df.groupby("track_id").filter(lambda x: len(x) >= 15)
 
     # Fill in classes when there's a gap.
     def fill_missing_rows(df):
