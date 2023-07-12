@@ -462,13 +462,19 @@ def infer_pollen_classes(
         # Fixing a bug where ungerminated gets deleted if it's the first class
         if group.iloc[0]["object_class"] == "ungerminated":
             start_class = "ungerminated"
-
         # If it's aborted then they will all be aborted (see above) so will be
         # unaltered.
         if group["object_class"].iloc[0] == "aborted":
             return group
         start_index = progression.index(start_class)
         last_transition_index = group.index.min()
+
+        # Troubleshooting
+        if group.iloc[0]["track_id"] == 35:
+            print("\nREACHED 35\n")
+            print("Start Index: ", start_index)
+            print("Last Transition Index: ", last_transition_index)
+
         # If the group never satisfies the requirements for a transition, we still want
         # to correct class errors, so we will deal with those groups at the end.
         made_transition = False
@@ -480,14 +486,22 @@ def infer_pollen_classes(
             is_next_class = group["object_class"] == next_class
             next_class_in_window = is_next_class.rolling(4).sum() >= 3
 
+            # Troubleshooting
+            if group.iloc[0]["track_id"] == 35:
+                print("(loop) current_class: ", current_class)
+                print("(loop) next_class: ", next_class)
+
             # If there is a class transition, all the classes from the previous
             # transition up until the transition happens are the current class.
             if next_class_in_window.any():
                 # If any window meets the condition, get the first index of this window
                 first_next_class_index = group[is_next_class & next_class_in_window].index.min()
-                group.loc[last_transition_index:first_next_class_index-3, "object_class"] = current_class
+                group.loc[last_transition_index:first_next_class_index - 3, "object_class"] = current_class
                 last_transition_index = first_next_class_index
                 made_transition = True
+                if group.iloc[0]["track_id"] == 35:
+                    print("Found next class in window at (first_next_class_index): ", first_next_class_index)
+                    print(group.tail(10))
                 if next_class == "burst":
                     # Reached the end of the progression, so everything after the
                     # transition is burst. But making sure it transitions in the right
@@ -496,14 +510,14 @@ def infer_pollen_classes(
                     current_class_in_window = is_current_class.rolling(4).sum() == 4
                     # Checking to see if there are more of the current class after the
                     # first next_class transition.
-                    has_true_after = current_class_in_window.loc[first_next_class_index-1:].any()
+                    has_true_after = current_class_in_window.loc[first_next_class_index - 1:].any()
                     if has_true_after:
-                        last_true_index = current_class_in_window.loc[first_next_class_index-1:][::-1].idxmax()
-                        group.loc[last_transition_index-2:last_true_index, "object_class"] = "germinated"
+                        last_true_index = current_class_in_window.loc[first_next_class_index - 1:][::-1].idxmax()
+                        group.loc[last_transition_index - 2:last_true_index, "object_class"] = "germinated"
                         group.loc[last_true_index + 1:, "object_class"] = "burst"
 
                     else:
-                        group.loc[first_next_class_index-1:, "object_class"] = "burst"
+                        group.loc[first_next_class_index - 2:, "object_class"] = "burst"
 
             # If the transition never happens, all the remaining classes are the
             # current class, unless a class in the progression is skipped.
@@ -517,8 +531,12 @@ def infer_pollen_classes(
                         first_burst_index = group[is_burst & burst_in_window].index.min()
                         group.loc[last_transition_index:first_burst_index - 3, "object_class"] = current_class
                         # Everything after burst should be burst.
-                        group.loc[first_burst_index - 3:, "object_class"] = "burst"
+                        group.loc[first_burst_index - 2:, "object_class"] = "burst"
                         break
+                    else:
+                        group.loc[:, "object_class"] = current_class
+                        break
+
                 else:
                     group.loc[last_transition_index:, "object_class"] = current_class
 
@@ -722,8 +740,16 @@ def link_tubes_to_pollen(
     # First, crop dfs and reset track ids so that they are all unique. This allows a
     # parent / child relationship to be encoded in a graph as input to Napari for
     # visualization.
-    pollen_df = pollen_df.iloc[:, :5]
-    tube_df = tube_df.iloc[:, :5]
+
+    # Original version
+    # pollen_df = pollen_df.iloc[:, :5]
+    # tube_df = tube_df.iloc[:, :5]
+
+    # This version for troublshooting, keeps all the data.
+    pollen_df["original_track_id"] = pollen_df["track_id"]
+    tube_df["original_track_id"] = tube_df["track_id"]
+
+
     pollen_df["track_id"] = pd.factorize(pollen_df["track_id"])[0]
     tube_df["track_id"] = (
         pd.factorize(tube_df["track_id"])[0] + pollen_df["track_id"].max() + 1
@@ -883,6 +909,7 @@ def main():
 
     if args.images is not None:
         print("Visualizing")
+        # visualize_tracks(data_array, properties_dict, graph_dict, args.images)
         visualize_tracks(data_array, properties_dict, graph_dict, args.images)
 
     print("All done")
