@@ -469,11 +469,11 @@ def infer_pollen_classes(
         start_index = progression.index(start_class)
         last_transition_index = group.index.min()
 
-        # Troubleshooting
-        if group.iloc[0]["track_id"] == 35:
-            print("\nREACHED 35\n")
-            print("Start Index: ", start_index)
-            print("Last Transition Index: ", last_transition_index)
+        # # Troubleshooting
+        # if group.iloc[0]["track_id"] == 35:
+        #     print("\nREACHED 35\n")
+        #     print("Start Index: ", start_index)
+        #     print("Last Transition Index: ", last_transition_index)
 
         # If the group never satisfies the requirements for a transition, we still want
         # to correct class errors, so we will deal with those groups at the end.
@@ -486,10 +486,10 @@ def infer_pollen_classes(
             is_next_class = group["object_class"] == next_class
             next_class_in_window = is_next_class.rolling(4).sum() >= 3
 
-            # Troubleshooting
-            if group.iloc[0]["track_id"] == 35:
-                print("(loop) current_class: ", current_class)
-                print("(loop) next_class: ", next_class)
+            # # Troubleshooting
+            # if group.iloc[0]["track_id"] == 35:
+            #     print("(loop) current_class: ", current_class)
+            #     print("(loop) next_class: ", next_class)
 
             # If there is a class transition, all the classes from the previous
             # transition up until the transition happens are the current class.
@@ -499,9 +499,9 @@ def infer_pollen_classes(
                 group.loc[last_transition_index:first_next_class_index - 3, "object_class"] = current_class
                 last_transition_index = first_next_class_index
                 made_transition = True
-                if group.iloc[0]["track_id"] == 35:
-                    print("Found next class in window at (first_next_class_index): ", first_next_class_index)
-                    print(group.tail(10))
+                # if group.iloc[0]["track_id"] == 35:
+                #     print("Found next class in window at (first_next_class_index): ", first_next_class_index)
+                #     print(group.tail(10))
                 if next_class == "burst":
                     # Reached the end of the progression, so everything after the
                     # transition is burst. But making sure it transitions in the right
@@ -742,12 +742,12 @@ def link_tubes_to_pollen(
     # visualization.
 
     # Original version
-    # pollen_df = pollen_df.iloc[:, :5]
-    # tube_df = tube_df.iloc[:, :5]
+    pollen_df = pollen_df.iloc[:, :5]
+    tube_df = tube_df.iloc[:, :5]
 
-    # This version for troublshooting, keeps all the data.
-    pollen_df["original_track_id"] = pollen_df["track_id"]
-    tube_df["original_track_id"] = tube_df["track_id"]
+    # # This version for troublshooting, keeps all the data.
+    # pollen_df["original_track_id"] = pollen_df["track_id"]
+    # tube_df["original_track_id"] = tube_df["track_id"]
 
 
     pollen_df["track_id"] = pd.factorize(pollen_df["track_id"])[0]
