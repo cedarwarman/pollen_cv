@@ -789,10 +789,16 @@ def link_tubes_to_pollen(
     tube_df["closest_pollen_track"] = tube_df.apply(get_nearest_track, axis=1)
 
     # Gets the closest pollen grain over time, so this replaces all of them with the
-    # one that it was closest to at the start.
-    most_common_in_first_three = tube_df.groupby("track_id").apply(
-        lambda group: group.head(3)["closest_pollen_track"].mode().iat[0]
-    )
+    # one that it was closest to at the start. Added some logic for if there are nans.
+    def find_closest_at_start(group):
+        non_nan_rows = group["closest_pollen_track"].dropna()
+        if len(non_nan_rows) >= 3:
+            return non_nan_rows.head(3).mode().iat[0]
+        elif len(non_nan_rows) > 0:
+            return non_nan_rows.mode().iat[0]
+        return np.nan
+
+    most_common_in_first_three = tube_df.groupby("track_id").apply(find_closest_at_start)
     tube_df["closest_pollen_track"] = tube_df["track_id"].map(most_common_in_first_three)
 
     # Making outputs for visualization
