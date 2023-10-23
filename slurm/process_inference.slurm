@@ -9,7 +9,7 @@
 #SBATCH --partition=standard
 #SBATCH --output=%x_%A_%a.out
 #SBATCH --error=%x_%A_%a.err
-#SBATCH --array=1-249%50
+#SBATCH --array=1-24%50
 
 # Sourcing my .bashrc so that conda works and the path is how it should be
 source /home/u16/cedar/.bashrc
@@ -20,7 +20,8 @@ shopt -s nullglob
 conda activate process-inference
 
 # Everything in this directory will be processed
-cd /xdisk/rpalaniv/cedar/cv/inference/2023-06-23_full_set/
+# cd /xdisk/rpalaniv/cedar/cv/inference/2023-06-23_full_set/
+cd /xdisk/rpalaniv/cedar/cv/inference/2023-06-23_full_set_missing_wells/
 
 # Setting up the array
 image_sequence=$(find . -maxdepth 1 -name '*run*' | sed -n ${SLURM_ARRAY_TASK_ID}p)
