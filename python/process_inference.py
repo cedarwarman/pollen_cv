@@ -606,7 +606,11 @@ def infer_tube_tip_classes(
     # Screen out tube tip tracks that are present in less than 30 frames.
     input_df = input_df.groupby("track_id").filter(lambda x: len(x) >= 15)
 
-    # Fill in classes when there's a gap.
+    # If there are none, return the empty data frame
+    if input_df.empty:
+        return(input_df)
+
+    # Otherwise fill in classes when there's a gap.
     def fill_missing_rows(df):
         df.set_index(['track_id', 't'], inplace=True)
         df['filled_in_row'] = False
@@ -699,6 +703,7 @@ def make_tube_tip_df(
         Dataframe that summarizes all the track and class information
 
     """
+
     properties_df = pd.DataFrame(track_properties)
     track_data_df = pd.DataFrame(
         track_data, columns=["root_track_data", "time", "y", "x"]
