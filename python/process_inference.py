@@ -736,12 +736,35 @@ def link_tubes_to_pollen(
         Data frame with tube tip tracks linked to pollen tracks.
 
     """
+    # First checks to see if there are tube tracks. It's possible that there
+    # aren't any, for example if every pollen grain is ungerminated.
+    if tube_df.empty:
+        # Handle the empty DataFrame case as needed
+        pollen_df = pollen_df.iloc[:, :5]
+        pollen_df["track_id"] = pd.factorize(pollen_df["track_id"])[0]
 
-    # First, crop dfs and reset track ids so that they are all unique. This allows a
+        # Making outputs for visualization
+        output_df = pollen_df
+
+        # Adding parent information, which is just its self in this case.
+        output_df["closest_pollen_track"] = output_df["track_id"]
+        data_array = output_df.iloc[:, [0, 1, 3, 4]].to_numpy(dtype="float64")
+        properties_dict = {
+            "t": output_df["t"].to_numpy(dtype='int64'),
+            "state": np.full(len(output_df), 5, dtype="int64"),
+            "generation": np.full(len(output_df), 0, dtype="int64"),
+            "root": output_df["track_id"].to_numpy(dtype="int64"),
+            "parent": output_df["closest_pollen_track"].to_numpy(dtype="int64"),
+            "object_class": output_df["object_class"].to_numpy(dtype="<U32"),
+        }
+
+        graph_dict = {}
+
+        return output_df, data_array, properties_dict, graph_dict
+
+    # Crop dfs and reset track ids so that they are all unique. This allows a
     # parent / child relationship to be encoded in a graph as input to Napari for
     # visualization.
-
-    # Original version
     pollen_df = pollen_df.iloc[:, :5]
     tube_df = tube_df.iloc[:, :5]
 
