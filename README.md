@@ -4,10 +4,10 @@ Quantifying the life of pollen using deep learning and multiple object tracking.
 ## Usage
 
 ### Model training
-Models are trained using the [Tensorflow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection). For this project, I used the CenterNet Hourglass-104 architecture. Training takes place using the `bash/train_centernet_hourglass104_1024x1024.sh` script, while evaluation is done with the `val_centernet_hourglass104_1024x1024.sh` script. These scripts were run inside a Docker container (`docker/Dockerfile`) on a [Jetstream2](https://jetstream-cloud.org/index.html) VM. Training was done using an Nvidia A100 GPU.
+Models are trained using the [Tensorflow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection). For this project, I used the CenterNet Hourglass-104 architecture. Training takes place using the `bash/train_centernet_hourglass104_1024x1024.sh` script, while evaluation is done with the `bash/val_centernet_hourglass104_1024x1024.sh` script. These scripts were run inside a Docker container (`docker/Dockerfile`) on a [Jetstream2](https://jetstream-cloud.org/index.html) VM. Training was done using an Nvidia A100 GPU.
 
 ### Inference
-Inference on pollen images is done in the `python/pollen_inference_hpc.py` script using the Tensorflow Object Detection API. It is designed to be run using Slurm at the University of Arizona HPC (`slurm/hpc_inference_array.slurm`). The job is arrayed in batches to maximize GPU use efficiency and runs in a Docker container through Apptainer. The container is described in `docker/Dockerfile`. Inference was done on using 4 Nvidia V100 GPUs.
+Inference on pollen images is done with the `python/pollen_inference_hpc.py` script using the [Tensorflow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection). It is designed to be run using Slurm at the University of Arizona HPC (`slurm/hpc_inference_array.slurm`). The job is arrayed in batches to maximize GPU use efficiency and runs in a Docker container through Apptainer. The container is described in `docker/Dockerfile`. Inference was done on using 4 Nvidia V100 GPUs.
 
 Here is example inference output for a single image. Predicted pollen grain and tube tip locations are marked with bounding boxes.
 ![Example inference output](/data/img/pollen_object_detection_output.jpg)
